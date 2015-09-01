@@ -1,10 +1,12 @@
 package com.pro.gen.worldcomponents;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomPlacement;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.PixmapCombos;
 
 /**
  * Created by Gallo on 8/15/2015.
@@ -16,13 +18,14 @@ public class StarMap extends Group {
     private boolean animateStars;
     private TintedImage[] starCluster;
     private RandomPlacement rp;
+    PixmapCombos p;
 
     public StarMap(float emptySize, float centerObjSize, boolean animateStars){
         this.emptySize = emptySize;
         this.centerObjSize = centerObjSize;
         this.animateStars = animateStars;
         this.setSize(emptySize, emptySize);
-
+        p = new PixmapCombos();
         generateClusters();
         attachActors();
     }
@@ -37,14 +40,19 @@ public class StarMap extends Group {
         }
     }
 
+    /**
+     * TODO: Actors need to be added in the correct order based on their image so that caching occurs and speeds up render times
+     * seperate out starCluster array and then combine once all starpieces have been generated.
+     * @param index
+     */
     public void generateTintedImage(int index){
         TintedImage starPiece;
         if(rp.getMapItem(index).getItem().getObjectName().equals(Constants.TWINKLE) && MathUtils.random()>0.75){
             starPiece = new TintedImage(rp.getMapItem(index).getItem().getObjectName(), Constants.STAR_PURPLE);
             starPiece.setSize(rp.getWidth(index), rp.getHeight(index));
             starPiece.setPosition(rp.getX(index), rp.getY(index));
-        }  else {
-            starPiece = new TintedImage(rp.getMapItem(index).getItem().getObjectName(), Constants.STAR_WHITE);
+        } else {
+            starPiece = new TintedImage(p.getTexture(), Color.CLEAR);
             starPiece.setSize(rp.getWidth(index), rp.getHeight(index));
             starPiece.setPosition(rp.getX(index), rp.getY(index));
         }

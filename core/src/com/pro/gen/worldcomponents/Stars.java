@@ -31,10 +31,6 @@ public class Stars {
         return stars;
     }
 
-    /**
-     *
-     * @return
-     */
     public MapItems[] getMixedStars(){
         MapItems[] stars = new MapItems[amount];
         for(int i = 0; i < amount; i++ ){
