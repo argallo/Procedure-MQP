@@ -2,6 +2,7 @@ package com.pro.gen;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,7 +21,7 @@ public class App implements ApplicationListener {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Viewport viewport;
-    //private FPSLogger fpsLogger;
+    private FPSLogger fpsLogger;
 
     @Override
     public void create () {
@@ -38,7 +39,7 @@ public class App implements ApplicationListener {
         //sets the input to actors that are found in the stage
         Gdx.input.setInputProcessor(stage);
 
-        //fpsLogger = new FPSLogger();
+        fpsLogger = new FPSLogger();
     }
 
     /**
@@ -59,7 +60,7 @@ public class App implements ApplicationListener {
         camera.update();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        //fpsLogger.log();
+        fpsLogger.log();
     }
 
     @Override

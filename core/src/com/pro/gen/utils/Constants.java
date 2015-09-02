@@ -19,7 +19,6 @@ public class Constants {
     public static final int GLOBE_REC_WIDTH = 1000;
     public static final int GLOBE_REC_HEIGHT = 500;
 
-
     //default Colors
     public static final Color UNIVERSE_BACKGROUND_COLOR = new Color(22/255f,37/255f,51/255f,1f);
     public static final Color STAR_WHITE = new Color(213/255f,213/255f,218/255f,1f);
