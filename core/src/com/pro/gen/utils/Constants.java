@@ -24,10 +24,12 @@ public class Constants {
     public static final Color STAR_WHITE = new Color(213/255f,213/255f,218/255f,1f);
     public static final Color STAR_PURPLE = new Color(110/255f,36/255f,185/255f,1f);
     public static final Color STAR_PURPLE_BRIGHT = new Color(173/255f,0,239/255f,1f);
+    public static final Color PINK = new Color(240/255f, 87/255f, 109/255f, 1f);
 
     //Image Paths
-    public static final String APP_BACKGROUND = "Background/blue.png";
+    public static final String BLUE = "Background/blue.png";
     public static final String WHITE = "Background/white.png";
+    public static final String SPLASH = "Background/splash.png";
 
    /* public static final String CIRCLE = "Objects/Large/white_circle_large.png";
     public static final String CIRCLE_HOLE = "Objects/Large/white_circlehole_large.png";
@@ -48,21 +50,30 @@ public class Constants {
     public static final String TWINKLE = "Objects/Small/white_twinkle_small.png";
 */
 
+    public static final String RECTANGLE = "Objects/Medium/white_rectangle_medium.png";
     public static final String CIRCLE = "Objects/Medium/white_circle_medium.png";
     public static final String CIRCLE_HOLE = "Objects/Large/white_circlehole_large.png";
     public static final String CIRCLE_SHADOW = "Objects/Medium/white_shadow_medium.png";
     public static final String CYLINDER = "Objects/Medium/white_cyl_medium.png";
+    public static final String CURVERECT = "Objects/Medium/white_curverectangle_medium.png";
     public static final String TWINKLE = "Objects/XSmall/white_twinkle_xsmall.png";
     public static final String CIRCLE_SMALL = "Objects/XSmall/white_circle_xsmall.png";
 
 
 
     public static final String[] APP_IMAGES = new String[]{
-            APP_BACKGROUND, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL
+            WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL
     };
 
     public static final String[] COMMON_IMAGES = new String[]{
-            //SPLASH_BACKGROUND,  GAME_BACKGROUND
+            RECTANGLE, BLUE, CYLINDER, CURVERECT
     };
 
+    public static final String[] SPLASH_IMAGES = new String[]{
+            SPLASH
+    };
+
+    public static final String[] CREATE_ACCOUNT_IMAGES = new String[]{
+
+    };
 }

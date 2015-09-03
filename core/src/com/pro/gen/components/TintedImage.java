@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.pro.gen.utils.Assets;
 
-import java.util.ArrayList;
-
 /**
  * Created by Gallo on 8/11/2015.
  */
@@ -17,7 +15,6 @@ public class TintedImage extends Actor {
     TextureRegion image;
     Color tint;
     Color batchColor;
-    ArrayList<TintedImage> tintedImages;
 
     public TintedImage (String imageName, Color tint){
         this(Assets.getInstance().getTexture(imageName).getTexture(), tint);

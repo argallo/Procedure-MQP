@@ -1,5 +1,6 @@
 package com.pro.gen.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.util.HashMap;
 
@@ -24,6 +26,9 @@ public class Assets extends AssetManager {
     private BitmapFont smallFont;
     private BitmapFont midFont;
     private BitmapFont largeFont;
+    private FreeTypeFontGenerator.FreeTypeFontParameter font;
+    private FreeTypeFontGenerator generator;
+
     private TextureLoader.TextureParameter textureParam;
     private ViewID currentID = ViewID.UNKNOWN;
 
@@ -39,6 +44,12 @@ public class Assets extends AssetManager {
         textureParam.minFilter = Texture.TextureFilter.Linear;
         textureParam.magFilter = Texture.TextureFilter.Linear;
 
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/arial.ttf"));
+        font = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        font.size = 50;
+        midFont = generator.generateFont(font);
+        font.size = 100;
+        largeFont = generator.generateFont(font);
     }
 
 
@@ -107,6 +118,10 @@ public class Assets extends AssetManager {
      */
     public String[] getAssetList(ViewID viewID){
         switch(viewID){
+            case SPLASH:
+                return Constants.SPLASH_IMAGES;
+            case CREATE_ACCOUNT:
+                return Constants.CREATE_ACCOUNT_IMAGES;
             case APP:
                 return Constants.APP_IMAGES;
             case UNKNOWN:
@@ -115,4 +130,9 @@ public class Assets extends AssetManager {
                 return null;
         }
     }
+
+    public BitmapFont getMidFont() {
+        return midFont;
+    }
+    public BitmapFont getLargeFont() { return largeFont; }
 }
