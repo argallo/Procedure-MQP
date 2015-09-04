@@ -4,7 +4,6 @@ import com.pro.gen.components.Background;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.utils.PreferenceKeys;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 
@@ -60,7 +59,7 @@ public class SplashView extends BaseView{
      */
     public void completeSplashView(){
         counting = false;
-        if(PreferenceManager.getInstance().getPreferences().getBoolean(PreferenceKeys.HAS_ACCOUNT, false)){
+        if(PreferenceManager.getInstance().getPreferences().getBoolean(PreferenceManager.HAS_ACCOUNT, false)){
             ViewManager.getInstance().transitionViewTo(ViewID.APP, TransitionType.DEFAULT_TRANSITION);
         } else {
             ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ACCOUNT, TransitionType.DEFAULT_TRANSITION);

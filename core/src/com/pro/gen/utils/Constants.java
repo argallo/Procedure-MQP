@@ -25,6 +25,7 @@ public class Constants {
     public static final Color STAR_PURPLE = new Color(110/255f,36/255f,185/255f,1f);
     public static final Color STAR_PURPLE_BRIGHT = new Color(173/255f,0,239/255f,1f);
     public static final Color PINK = new Color(240/255f, 87/255f, 109/255f, 1f);
+    public static final Color ORANGE = new Color(240/255f, 148/255f, 87/255f, 1f);
 
     //Image Paths
     public static final String BLUE = "Background/blue.png";

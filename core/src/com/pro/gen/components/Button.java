@@ -17,6 +17,7 @@ public class Button extends TintedImage {
     Label buttonLabel;
     Label.LabelStyle labelStyle;
     Color backgroundColor;
+    ButtonAction buttonAction;
 
     public Button(String mainImage, Color backgroundColor, String buttonText, BitmapFont fontType){
         super(mainImage, backgroundColor);
@@ -35,6 +36,8 @@ public class Button extends TintedImage {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 setTint(getBackgroundColor());
+                if(buttonAction != null)
+                    buttonAction.buttonPressed();
             }
         });
     }
@@ -59,5 +62,9 @@ public class Button extends TintedImage {
 
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public void setButtonAction(ButtonAction action){
+        buttonAction = action;
     }
 }

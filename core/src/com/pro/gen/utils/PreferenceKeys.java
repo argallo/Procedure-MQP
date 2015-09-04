@@ -5,8 +5,6 @@ package com.pro.gen.utils;
  */
 public class PreferenceKeys {
 
-    public static final String PREFERENCES = "Pref";
-    public static final String HAS_ACCOUNT = "HasAcc";
 
 
 }

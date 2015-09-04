@@ -9,13 +9,13 @@ import com.pro.gen.utils.Assets;
 /**
  * Created by Gallo on 9/3/2015.
  */
-public class TitleText extends Group {
+public class TitleLabel extends Group {
     private Label label;
     private Label labelShaow;
     private Label.LabelStyle style;
     private Label.LabelStyle styleShadow;
 
-    public TitleText(String title){
+    public TitleLabel(String title){
         style = new Label.LabelStyle(Assets.getInstance().getLargeFont(), Color.WHITE);
         styleShadow = new Label.LabelStyle(Assets.getInstance().getLargeFont(), Color.GRAY);
         label = new Label(title, style);

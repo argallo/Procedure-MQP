@@ -2,12 +2,15 @@ package com.pro.gen.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.pro.gen.utils.PreferenceKeys;
 
 /**
  * Created by Gallo on 9/2/2015.
  */
 public class PreferenceManager {
+
+    public static final String PREFERENCES = "Pref";
+    public static final String HAS_ACCOUNT = "HasAcc";
+    public static final String ACCOUNT_NAME = "AccName";
 
     private Preferences preferences;
 
@@ -18,7 +21,7 @@ public class PreferenceManager {
     }
 
     public PreferenceManager(){
-        preferences = Gdx.app.getPreferences(PreferenceKeys.PREFERENCES);
+        preferences = Gdx.app.getPreferences(PREFERENCES);
     }
 
     public Preferences getPreferences() {
