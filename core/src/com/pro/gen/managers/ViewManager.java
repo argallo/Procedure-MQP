@@ -35,7 +35,9 @@ public class ViewManager {
         stage.addInitialView(viewBuilder.build(viewID));
     }
 
-
+    public void unfocusAll(){
+        stage.unfocusAll();
+    }
 
 
 }

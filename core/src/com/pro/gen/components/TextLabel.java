@@ -27,5 +27,13 @@ public class TextLabel extends Group {
         label.setPosition(x,y);
     }
 
+    public String getText(){
+        return label.getText().toString();
+    }
+
+    public void setText(String text){
+        label.setText(text);
+    }
+
 
 }

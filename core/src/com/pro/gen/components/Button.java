@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Align;
  */
 public class Button extends TintedImage {
 
-    String buttonText;
     Label buttonLabel;
     Label.LabelStyle labelStyle;
     Color backgroundColor;
@@ -21,7 +20,6 @@ public class Button extends TintedImage {
 
     public Button(String mainImage, Color backgroundColor, String buttonText, BitmapFont fontType){
         super(mainImage, backgroundColor);
-        this.buttonText = buttonText;
         labelStyle = new Label.LabelStyle(fontType, Color.WHITE);
         buttonLabel = new Label(buttonText, labelStyle);
         buttonLabel.setAlignment(Align.center);
@@ -67,4 +65,13 @@ public class Button extends TintedImage {
     public void setButtonAction(ButtonAction action){
         buttonAction = action;
     }
+
+    public String getText(){
+        return buttonLabel.getText().toString();
+    }
+
+    public void setText(String text){
+        buttonLabel.setText(text);
+    }
+
 }

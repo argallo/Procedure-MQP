@@ -63,11 +63,11 @@ public class Constants {
 
 
     public static final String[] APP_IMAGES = new String[]{
-            WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL
+
     };
 
     public static final String[] COMMON_IMAGES = new String[]{
-            RECTANGLE, BLUE, CYLINDER, CURVERECT
+            RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL
     };
 
     public static final String[] SPLASH_IMAGES = new String[]{
