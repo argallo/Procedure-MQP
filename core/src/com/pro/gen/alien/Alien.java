@@ -23,22 +23,25 @@ public class Alien extends Group implements AlienPlan {
     @Override
     public void setAlienHead(AlienHead alienHead) {
         this.alienHead = alienHead;
-
+        this.addActor(alienHead);
     }
 
     @Override
     public void setAlienBody(AlienBody alienBody) {
         this.alienBody = alienBody;
+        this.addActor(alienBody);
     }
 
     @Override
     public void setAlienArms(AlienArms alienArms) {
         this.alienArms = alienArms;
+        this.addActor(alienArms);
     }
 
     @Override
     public void setAlienLegs(AlienLegs alienLegs) {
         this.alienLegs = alienLegs;
+        this.addActor(alienLegs);
     }
 
     @Override
