@@ -15,7 +15,11 @@ public class TextLabel extends Group {
     private Label.LabelStyle style;
 
     public TextLabel(String title){
-        style = new Label.LabelStyle(Assets.getInstance().getMidFont(), Color.WHITE);
+        this(title, Color.WHITE);
+    }
+
+    public TextLabel(String title, Color color){
+        style = new Label.LabelStyle(Assets.getInstance().getMidFont(), color);
         label = new Label(title, style);
         label.setAlignment(Align.center);
         addActor(label);

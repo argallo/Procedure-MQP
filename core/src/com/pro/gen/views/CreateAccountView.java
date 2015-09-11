@@ -2,6 +2,7 @@ package com.pro.gen.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -39,6 +40,9 @@ public class CreateAccountView extends BaseView {
     private static final String LOGIN = "Login";
     private static final String CREATE = "Create";
     private static final String SUBMIT = "Submit";
+    private static final String EMAIL_FAIL = "Email already active with another account";
+    private static final String USER_FAIL = "Username has already been taken, try again";
+    private static final String ERROR_FAIL = "Error couldn't connect, try again";
     private static final float ANIMATION_DURATION = 0.5f;
     private static final Interpolation INTERPOLATION = Interpolation.swing;
 
@@ -48,7 +52,7 @@ public class CreateAccountView extends BaseView {
     private Button loginCreate, optionButton;
     private TextBox usernameTBox, emailTBox, passwordTBox, confirmTBox;
     private TitleLabel titleLabel;
-    private TextLabel informationalHeaderLabel;
+    private TextLabel informationalHeaderLabel, errorLabel;
     private boolean isLogin = false;
 
     @Override
@@ -62,6 +66,7 @@ public class CreateAccountView extends BaseView {
         confirmTBox = new TextBox(35, CONFIRMPW, TextBox.ALL, true);
         titleLabel = new TitleLabel(TITLE);
         informationalHeaderLabel = new TextLabel(CREATE_ACCOUNT);
+        errorLabel = new TextLabel("", Color.RED);
     }
 
     @Override
@@ -84,6 +89,7 @@ public class CreateAccountView extends BaseView {
         confirmTBox.setPosition(650, 335);
         titleLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - titleLabel.getWidth() / 2, Constants.VIRTUAL_HEIGHT - titleLabel.getHeight());
         informationalHeaderLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - informationalHeaderLabel.getWidth() / 2, 400 + informationalHeaderLabel.getHeight() + 10);
+        errorLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - errorLabel.getWidth()/2, 250);
     }
 
     @Override
@@ -99,6 +105,7 @@ public class CreateAccountView extends BaseView {
         loginCreate.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
+                errorLabel.setText("");
                 if (validateFields()) {
                     if (isLogin) {
                         Map<String, String> params = new HashMap<String, String>();
@@ -187,18 +194,19 @@ public class CreateAccountView extends BaseView {
         optionButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
+                errorLabel.setText("");
                 if (optionButton.getText().equals(LOGIN)) {
                     optionButton.setText(CREATE);
                     informationalHeaderLabel.setText(LOGIN_ACCOUNT);
                     emailTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
                     confirmTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    isLogin = false;
+                    isLogin = true;
                 } else {
                     optionButton.setText(LOGIN);
                     informationalHeaderLabel.setText(CREATE_ACCOUNT);
                     emailTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
                     confirmTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    isLogin = true;
+                    isLogin = false;
                 }
             }
         });
@@ -213,6 +221,7 @@ public class CreateAccountView extends BaseView {
         addActor(confirmTBox);
         addActor(titleLabel);
         addActor(informationalHeaderLabel);
+        addActor(errorLabel);
         addActor(loginCreate);
         addActor(optionButton);
     }
@@ -246,17 +255,17 @@ public class CreateAccountView extends BaseView {
     }
 
 
-
+    //TODO: CREATE THESE METHODS THEN MAKE LOGINING IN WORK AND SAVE PREFERENCES
     public void emailTaken(){
-
+        errorLabel.setText(EMAIL_FAIL);
     }
 
     public void usernameTaken(){
-
+        errorLabel.setText(USER_FAIL);
     }
 
     public void error(){
-
+        errorLabel.setText(ERROR_FAIL);
     }
 
 }
