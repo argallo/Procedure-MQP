@@ -14,7 +14,7 @@ public class AlienHeadShape extends Group {
     private PositionPair earsConnection;
 
     public AlienHeadShape(){
-
+        
     }
 
     public PositionPair getEyeConnection() {
