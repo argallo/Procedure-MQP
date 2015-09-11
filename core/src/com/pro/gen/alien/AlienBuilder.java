@@ -9,6 +9,7 @@ public interface AlienBuilder {
     void buildAlienBody();
     void buildAlienArms();
     void buildAlienLegs();
+    void createConnections();
     Alien getAlien();
 
 

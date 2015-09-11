@@ -22,7 +22,6 @@ public class RandomAlienHeadBuilder implements AlienHeadBuilder {
     public void buildAlienEyes() {
         AlienFactory alienEyesFactory = new AlienEyesFactory();
         AlienEyes alienEyes = (AlienEyes)alienEyesFactory.generateFactoryItem(MathUtils.random());
-        alienHead.addActor(alienEyes);
         alienHead.setAlienEyes(alienEyes);
     }
 
@@ -30,7 +29,6 @@ public class RandomAlienHeadBuilder implements AlienHeadBuilder {
     public void buildAlienMouth() {
         AlienFactory alienMouthFactory = new AlienMouthFactory();
         AlienMouth alienMouth = (AlienMouth)alienMouthFactory.generateFactoryItem(MathUtils.random());
-        alienHead.addActor(alienMouth);
         alienHead.setAlienMouth(alienMouth);
     }
 
@@ -38,7 +36,6 @@ public class RandomAlienHeadBuilder implements AlienHeadBuilder {
     public void buildAlienHatorHair() {
         AlienFactory alienHatorHairFactory = new AlienHatorHairFactory();
         AlienHatorHair alienHatorHair = (AlienHatorHair)alienHatorHairFactory.generateFactoryItem(MathUtils.random());
-        alienHead.addActor(alienHatorHair);
         alienHead.setAlienHatorHair(alienHatorHair);
     }
 
@@ -46,7 +43,6 @@ public class RandomAlienHeadBuilder implements AlienHeadBuilder {
     public void buildAlienEars() {
         AlienFactory alienEarsFactory = new AlienEarsFactory();
         AlienEars alienEars = (AlienEars)alienEarsFactory.generateFactoryItem(MathUtils.random());
-        alienHead.addActor(alienEars);
         alienHead.setAlienEars(alienEars);
     }
 

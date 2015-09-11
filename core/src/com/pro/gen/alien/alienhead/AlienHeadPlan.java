@@ -13,5 +13,6 @@ public interface AlienHeadPlan {
 
     void setAlienEars(AlienEars alienEars);
 
+    String save();
 
 }

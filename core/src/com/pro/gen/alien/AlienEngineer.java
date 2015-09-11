@@ -21,6 +21,7 @@ public class AlienEngineer {
         this.alienBuilder.buildAlienBody();
         this.alienBuilder.buildAlienArms();
         this.alienBuilder.buildAlienLegs();
+        this.alienBuilder.createConnections();
     }
 
 }

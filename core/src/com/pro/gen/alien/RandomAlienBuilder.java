@@ -17,8 +17,6 @@ public class RandomAlienBuilder implements AlienBuilder {
     public void buildAlienHead() {
         AlienHeadEngineer alienHeadEngineer = new AlienHeadEngineer(new RandomAlienHeadBuilder());
         alienHeadEngineer.makeAlienHead();
-        //something like that?
-        alien.addActor(alien.getAlienHead());
         alien.setAlienHead(alienHeadEngineer.getAlienHead());
     }
 
@@ -35,6 +33,13 @@ public class RandomAlienBuilder implements AlienBuilder {
     @Override
     public void buildAlienLegs() {
 
+    }
+
+    @Override
+    public void createConnections() {
+        alien.getAlienLegs().connectTo(alien.getAlienBody().getLegConnection());
+        alien.getAlienArms().connectTo(alien.getAlienBody().getArmConnection());
+        alien.getAlienBody().connectTo(alien.getAlienHead().getBodyConnection());
     }
 
     @Override

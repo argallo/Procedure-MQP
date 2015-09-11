@@ -1,5 +1,8 @@
 package com.pro.gen.views;
 
+import com.pro.gen.alien.Alien;
+import com.pro.gen.alien.AlienEngineer;
+import com.pro.gen.alien.RandomAlienBuilder;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.TextBox;
@@ -7,7 +10,6 @@ import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TitleLabel;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.worldcomponents.AlienBuilder;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -23,7 +25,7 @@ public class CreateAlienView extends BaseView{
     private TextLabel name, nickname, height, earthWeight, bio, species, abilities, homePlanet;
     private TextBox nicknameTextbox;
     private Background background;
-    private AlienBuilder alienBuilder;
+    private Alien alien;
 
     @Override
     public void init() {
@@ -40,7 +42,8 @@ public class CreateAlienView extends BaseView{
         abilities = new TextLabel("Abilities: ");
         homePlanet = new TextLabel("Home Planet: ");
         nicknameTextbox = new TextBox(12, "", TextBox.CHARDIG);
-        alienBuilder = new AlienBuilder();
+        alien = createAlien();
+
     }
 
     @Override
@@ -53,8 +56,8 @@ public class CreateAlienView extends BaseView{
     public void setPositions() {
         chooseAlien.setPosition(Constants.VIRTUAL_WIDTH/2 - chooseAlien.getWidth()/2, Constants.VIRTUAL_HEIGHT - chooseAlien.getHeight());
         selectButton.setPosition(350,25);
-        randomizeButton.setPosition(25,25);
-        name.setPosition(Constants.VIRTUAL_WIDTH/2,500);
+        randomizeButton.setPosition(25, 25);
+        name.setPosition(Constants.VIRTUAL_WIDTH / 2, 500);
     }
 
     @Override
@@ -69,5 +72,11 @@ public class CreateAlienView extends BaseView{
         addActor(name);
         addActor(selectButton);
         addActor(randomizeButton);
+    }
+
+    public Alien createAlien(){
+        AlienEngineer alienEngineer = new AlienEngineer(new RandomAlienBuilder());
+        alienEngineer.makeAlien();
+        return alienEngineer.getAlien();
     }
 }

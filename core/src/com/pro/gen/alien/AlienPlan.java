@@ -18,5 +18,5 @@ public interface AlienPlan {
 
     void setAlienLegs(AlienLegs alienLegs);
 
-
+    String saveAlien();
 }

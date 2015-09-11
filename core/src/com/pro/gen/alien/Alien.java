@@ -16,9 +16,14 @@ public class Alien extends Group implements AlienPlan {
     private AlienArms alienArms;
     private AlienLegs alienLegs;
 
+    public Alien(){
+
+    }
+
     @Override
     public void setAlienHead(AlienHead alienHead) {
         this.alienHead = alienHead;
+
     }
 
     @Override
@@ -36,6 +41,11 @@ public class Alien extends Group implements AlienPlan {
         this.alienLegs = alienLegs;
     }
 
+    @Override
+    public String saveAlien() {
+        return getAlienLegs().save()+getAlienArms().save()+getAlienBody().save()+getAlienHead().save();
+    }
+
     public AlienArms getAlienArms() {
         return alienArms;
     }
@@ -51,5 +61,6 @@ public class Alien extends Group implements AlienPlan {
     public AlienLegs getAlienLegs() {
         return alienLegs;
     }
+
 
 }
