@@ -122,6 +122,8 @@ public class Assets extends AssetManager {
                 return Constants.SPLASH_IMAGES;
             case CREATE_ACCOUNT:
                 return Constants.CREATE_ACCOUNT_IMAGES;
+            case CREATE_ALIEN:
+                return Constants.CREATE_ALIEN_IMAGES;
             case APP:
                 return Constants.APP_IMAGES;
             case UNKNOWN:

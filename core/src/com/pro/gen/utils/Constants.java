@@ -77,4 +77,8 @@ public class Constants {
     public static final String[] CREATE_ACCOUNT_IMAGES = new String[]{
 
     };
+
+    public static final String[] CREATE_ALIEN_IMAGES = new String[]{
+
+    };
 }

@@ -46,8 +46,6 @@ public class CreateAccountView extends BaseView {
     private static final float ANIMATION_DURATION = 0.5f;
     private static final Interpolation INTERPOLATION = Interpolation.swing;
 
-
-
     private Background background;
     private Button loginCreate, optionButton;
     private TextBox usernameTBox, emailTBox, passwordTBox, confirmTBox;
@@ -66,6 +64,7 @@ public class CreateAccountView extends BaseView {
         confirmTBox = new TextBox(35, CONFIRMPW, TextBox.ALL, true);
         titleLabel = new TitleLabel(TITLE);
         informationalHeaderLabel = new TextLabel(CREATE_ACCOUNT);
+        //Use error label to also address other issues that might come up like not enough chars for username or pw
         errorLabel = new TextLabel("", Color.RED);
     }
 
@@ -107,6 +106,7 @@ public class CreateAccountView extends BaseView {
             public void buttonPressed() {
                 errorLabel.setText("");
                 if (validateFields()) {
+                    //TODO:LOGINING IN WORK AND SAVE PREFERENCES
                     if (isLogin) {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("username", usernameTBox.getText());
@@ -254,16 +254,23 @@ public class CreateAccountView extends BaseView {
         return isValid;
     }
 
-
-    //TODO: CREATE THESE METHODS THEN MAKE LOGINING IN WORK AND SAVE PREFERENCES
+    /**
+     * Called when email is already linked to a different account
+     */
     public void emailTaken(){
         errorLabel.setText(EMAIL_FAIL);
     }
 
+    /**
+     * Called when username has already been taken by another user
+     */
     public void usernameTaken(){
         errorLabel.setText(USER_FAIL);
     }
 
+    /**
+     * Called when something when wrong with connection
+     */
     public void error(){
         errorLabel.setText(ERROR_FAIL);
     }

@@ -4,6 +4,7 @@ import com.pro.gen.utils.ViewID;
 import com.pro.gen.views.AppView;
 import com.pro.gen.views.BaseView;
 import com.pro.gen.views.CreateAccountView;
+import com.pro.gen.views.CreateAlienView;
 import com.pro.gen.views.EmptyView;
 import com.pro.gen.views.SplashView;
 
@@ -22,6 +23,8 @@ public class ViewBuilderFactory {
                 return new SplashView();
             case CREATE_ACCOUNT:
                 return new CreateAccountView();
+            case CREATE_ALIEN:
+                return new CreateAlienView();
             case APP:
                 return new AppView();
             default:

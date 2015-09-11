@@ -62,7 +62,7 @@ public class SplashView extends BaseView{
         if(PreferenceManager.getInstance().getPreferences().getBoolean(PreferenceManager.HAS_ACCOUNT, false)){
             ViewManager.getInstance().transitionViewTo(ViewID.APP, TransitionType.DEFAULT_TRANSITION);
         } else {
-            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ACCOUNT, TransitionType.DEFAULT_TRANSITION);
+            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.DEFAULT_TRANSITION);
         }
     }
 
