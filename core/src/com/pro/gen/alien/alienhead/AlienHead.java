@@ -12,6 +12,10 @@ public class AlienHead extends Group implements AlienHeadPlan {
     private AlienHatorHair alienHatorHair;
     private AlienEars alienEars;
 
+    public AlienHead(){
+        //build alienhead shape
+    }
+
 
     @Override
     public void setAlienEyes(AlienEyes alienEyes) {
