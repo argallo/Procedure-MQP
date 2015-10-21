@@ -19,9 +19,9 @@ public class GlobeMap extends Group{
     public GlobeMap(GlobeObjectType globeObjectType){
         randomGlobeMapInfo = new RandomGlobeMapInfo(globeObjectType);
         globePieces = randomGlobeMapInfo.getMapActors();
-        speed = randomGlobeMapInfo.getSpeed();
         addActors();
         this.setSize(Constants.GLOBE_REC_WIDTH, Constants.GLOBE_REC_HEIGHT);
+        speed = (getWidth()*randomGlobeMapInfo.getSpeed())/Constants.VIRTUAL_HEIGHT;
     }
 
     public void addActors(){
@@ -44,6 +44,7 @@ public class GlobeMap extends Group{
         }
         this.setSize(width * 2, height);
         repeatDistance = -((width*5)/6);
+        setSpeed();
         this.setPosition(this.getX() + width, this.getY() + height);
     }
 
@@ -56,6 +57,10 @@ public class GlobeMap extends Group{
                 globePieces[i].setX(this.getWidth()/2);
             }
         }
+    }
+
+    public void setSpeed(){
+        speed = (getWidth()*randomGlobeMapInfo.getSpeed())/Constants.VIRTUAL_HEIGHT;
     }
 
 }

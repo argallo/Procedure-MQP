@@ -25,6 +25,11 @@ public class TintedImage extends Actor {
         this.tint = tint;
     }
 
+    public TintedImage (TextureRegion texture, Color tint){
+        image = texture;
+        this.tint = tint;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batchColor = batch.getColor();
@@ -42,5 +47,18 @@ public class TintedImage extends Actor {
 
     public Color getTint() {
         return tint;
+    }
+
+    public void setImage(TextureRegion image) {
+        this.image = image;
+    }
+
+    public void setImage(String image) {
+        this.image = new TextureRegion(Assets.getInstance().getTexture(image));
+    }
+
+
+    public static TintedImage Clone(TintedImage tintedImage){
+        return new TintedImage(tintedImage.image, tintedImage.tint);
     }
 }

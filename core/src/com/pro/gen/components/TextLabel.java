@@ -1,6 +1,7 @@
 package com.pro.gen.components;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -14,12 +15,20 @@ public class TextLabel extends Group {
     private Label label;
     private Label.LabelStyle style;
 
-    public TextLabel(String title){
-        this(title, Color.WHITE);
+    public TextLabel(String title, BitmapFont font){
+        this(title, Color.WHITE, font);
     }
 
     public TextLabel(String title, Color color){
-        style = new Label.LabelStyle(Assets.getInstance().getMidFont(), color);
+        this(title, color, Assets.getInstance().getMidFont());
+    }
+
+    public TextLabel(String title){
+        this(title, Color.WHITE, Assets.getInstance().getMidFont());
+    }
+
+    public TextLabel(String title, Color color, BitmapFont font){
+        style = new Label.LabelStyle(font, color);
         label = new Label(title, style);
         label.setAlignment(Align.center);
         addActor(label);

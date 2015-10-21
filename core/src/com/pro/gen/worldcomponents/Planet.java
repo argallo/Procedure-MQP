@@ -24,6 +24,7 @@ public class Planet extends Group {
     private PlanetAttr planetAttr;
     private TintedImage circleHole;
     private StarMap planetStars;
+    private boolean hasStars;
 
     /**
      * Planet base constructor. Normally called directly only for testing or possibly for reseting saved planet.
@@ -32,12 +33,13 @@ public class Planet extends Group {
      * @param clouds the clouds that will float around the planet
      * @param planetAttr planet attributes
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetAttr planetAttr){
+    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetAttr planetAttr, boolean hasStars){
         basePlanet = new TintedImage(Constants.CIRCLE, planetColor);
         planetShadow = new TintedImage(Constants.CIRCLE_SHADOW, ColorHelper.shadowOf(planetColor));
         this.lands = lands;
         this.clouds = clouds;
         this.planetAttr = planetAttr;
+        this.hasStars = hasStars;
         initCircleHole();
         attachActors();
         createAction();
@@ -46,8 +48,8 @@ public class Planet extends Group {
     /**
      * Generates random planet characteristics and sends them to the planet constructor
      */
-    public Planet(RandomPlanet rp){
-        this(rp.getPlanetColor(), rp.getLands(), rp.getClouds(), rp.getPlanetAttr());
+    public Planet(RandomPlanet rp, boolean hasStars){
+        this(rp.getPlanetColor(), rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars);
     }
 
     /**
@@ -55,7 +57,8 @@ public class Planet extends Group {
      */
     public void initCircleHole(){
         circleHole = new TintedImage(Constants.CIRCLE_HOLE, Constants.UNIVERSE_BACKGROUND_COLOR);
-        planetStars = new StarMap(DEFAULT_SIZE*3, DEFAULT_SIZE, false);
+        if(hasStars)
+            planetStars = new StarMap(DEFAULT_SIZE*3, DEFAULT_SIZE, false);
     }
 
     /**
@@ -67,7 +70,8 @@ public class Planet extends Group {
         addActor(clouds);
         addActor(planetShadow);
         addActor(circleHole);
-        addActor(planetStars);
+        if(hasStars)
+            addActor(planetStars);
     }
 
     /**
@@ -105,7 +109,8 @@ public class Planet extends Group {
         planetShadow.setPosition(this.getX() + width, this.getY() + height);
         lands.resizeLands(width, height);
         clouds.resizeLands(width, height);
-        planetStars.resizeStars(width * 3, height * 3);
+        if(hasStars)
+            planetStars.resizeStars(width * 3, height * 3);
     }
 
     /**

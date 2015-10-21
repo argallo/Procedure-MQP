@@ -16,7 +16,7 @@ import com.pro.gen.utils.ViewID;
 
 public class App implements ApplicationListener {
 
-    private static final ViewID INITIAL_SCREEN = ViewID.SPLASH;
+    private static final ViewID INITIAL_SCREEN = ViewID.CREATE_ALIEN;
     private AppStage stage;
     private OrthographicCamera camera;
     private SpriteBatch batch;

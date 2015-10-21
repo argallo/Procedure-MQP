@@ -152,7 +152,7 @@ public class CreateAccountView extends BaseView {
                                             // PreferenceManager.getInstance().getPreferences().putBoolean(PreferenceManager.HAS_ACCOUNT, true);
                                             // PreferenceManager.getInstance().getPreferences().putString(PreferenceManager.ACCOUNT_NAME, usernameTBox.getText());
                                             // PreferenceManager.getInstance().getPreferences().flush();
-                                            ViewManager.getInstance().transitionViewTo(ViewID.APP, TransitionType.SLIDE_R_TRANSITION);
+                                            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.SLIDE_R_TRANSITION);
                                         }
                                     });
                                 }

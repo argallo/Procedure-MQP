@@ -46,6 +46,9 @@ public class Assets extends AssetManager {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/arial.ttf"));
         font = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        font.size = 20;
+        smallFont = generator.generateFont(font);
+        font = new FreeTypeFontGenerator.FreeTypeFontParameter();
         font.size = 50;
         midFont = generator.generateFont(font);
         font.size = 100;
@@ -133,6 +136,7 @@ public class Assets extends AssetManager {
         }
     }
 
+    public BitmapFont getSmallFont() { return smallFont; }
     public BitmapFont getMidFont() {
         return midFont;
     }
