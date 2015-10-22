@@ -23,6 +23,7 @@ public class Assets extends AssetManager {
      */
     private HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
     private TextureAtlas textureAtlas;
+    private BitmapFont xsmallFont;
     private BitmapFont smallFont;
     private BitmapFont midFont;
     private BitmapFont largeFont;
@@ -47,8 +48,9 @@ public class Assets extends AssetManager {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/arial.ttf"));
         font = new FreeTypeFontGenerator.FreeTypeFontParameter();
         font.size = 20;
+        xsmallFont = generator.generateFont(font);
+        font.size = 35;
         smallFont = generator.generateFont(font);
-        font = new FreeTypeFontGenerator.FreeTypeFontParameter();
         font.size = 50;
         midFont = generator.generateFont(font);
         font.size = 100;
@@ -127,6 +129,8 @@ public class Assets extends AssetManager {
                 return Constants.CREATE_ACCOUNT_IMAGES;
             case CREATE_ALIEN:
                 return Constants.CREATE_ALIEN_IMAGES;
+            case MAIN_MENU:
+                return Constants.CREATE_ALIEN_IMAGES;
             case APP:
                 return Constants.APP_IMAGES;
             case UNKNOWN:
@@ -136,6 +140,7 @@ public class Assets extends AssetManager {
         }
     }
 
+    public BitmapFont getXSmallFont() { return xsmallFont; }
     public BitmapFont getSmallFont() { return smallFont; }
     public BitmapFont getMidFont() {
         return midFont;

@@ -20,7 +20,6 @@ public class StarMap extends Group {
     private float emptySize;
     private float centerObjSize;
     private boolean animateStars;
-    //private TintedImage[] starCluster;
     private ArrayList<TintedImage> subCluster1, subCluster2, subCluster3;
     private RandomPlacement rp;
     PixmapCombos p;
@@ -114,6 +113,14 @@ public class StarMap extends Group {
             subCluster3.get(i).setPosition(subCluster3.get(i).getX() * sizeChangeW, subCluster3.get(i).getY() * sizeChangeH);
         }
         this.setSize(width, height);
+    }
+
+
+    @Override
+    public void act(float delta) {
+       // for(int i = 0; i < subCluster1.size(); i++){
+      //      subCluster1.get(i).setPosition(subCluster1.get(i).getX()+MathUtils.random(-50, 50)*delta,subCluster1.get(i).getY()+MathUtils.random(-30, 30)*delta);
+     //   }
     }
 }
 

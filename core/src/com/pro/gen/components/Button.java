@@ -18,13 +18,19 @@ public class Button extends TintedImage {
     Color backgroundColor;
     ButtonAction buttonAction;
 
+    public Button(String mainImage, Color backgroundColor){
+        this(mainImage, backgroundColor, "", null);
+    }
+
     public Button(String mainImage, Color backgroundColor, String buttonText, BitmapFont fontType){
         super(mainImage, backgroundColor);
-        labelStyle = new Label.LabelStyle(fontType, Color.WHITE);
-        buttonLabel = new Label(buttonText, labelStyle);
-        buttonLabel.setAlignment(Align.center);
+        if(fontType != null) {
+            labelStyle = new Label.LabelStyle(fontType, Color.WHITE);
+            buttonLabel = new Label(buttonText, labelStyle);
+            buttonLabel.setAlignment(Align.center);
+        }
         this.backgroundColor = backgroundColor;
-        this.addListener(new InputListener(){
+        this.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 setTint(Color.RED);
@@ -34,7 +40,7 @@ public class Button extends TintedImage {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 setTint(getBackgroundColor());
-                if(buttonAction != null)
+                if (buttonAction != null)
                     buttonAction.buttonPressed();
             }
         });
@@ -43,19 +49,22 @@ public class Button extends TintedImage {
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(x, y);
-        buttonLabel.setPosition(x, y);
+        if(buttonLabel!= null)
+            buttonLabel.setPosition(x, y);
     }
 
     @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
-        buttonLabel.setSize(width, height);
+        if(buttonLabel!= null)
+            buttonLabel.setSize(width, height);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        buttonLabel.draw(batch, parentAlpha);
+        if(buttonLabel!= null)
+            buttonLabel.draw(batch, parentAlpha);
     }
 
     public Color getBackgroundColor() {

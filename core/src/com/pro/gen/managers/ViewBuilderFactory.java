@@ -6,6 +6,7 @@ import com.pro.gen.views.BaseView;
 import com.pro.gen.views.CreateAccountView;
 import com.pro.gen.views.CreateAlienView;
 import com.pro.gen.views.EmptyView;
+import com.pro.gen.views.MainMenuView;
 import com.pro.gen.views.SplashView;
 
 /**
@@ -25,6 +26,8 @@ public class ViewBuilderFactory {
                 return new CreateAccountView();
             case CREATE_ALIEN:
                 return new CreateAlienView();
+            case MAIN_MENU:
+                return new MainMenuView();
             case APP:
                 return new AppView();
             default:

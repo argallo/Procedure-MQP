@@ -68,4 +68,12 @@ public class CharacterPart extends Group {
                 characterPart.getHeight(), characterPart.getX(), characterPart.getY(), newList, characterPart.animation);
     }
 
+    /**
+     * This will need to list all variables in json format with recursive call to all subparts.
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "";
+    }
 }

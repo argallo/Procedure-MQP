@@ -37,7 +37,7 @@ public class TextLabel extends Group {
 
     @Override
     public void setPosition(float x, float y) {
-        label.setPosition(x,y);
+        label.setPosition(x, y);
     }
 
     public String getText(){
@@ -48,5 +48,10 @@ public class TextLabel extends Group {
         label.setText(text);
     }
 
+    public void wrapText(boolean wrap, float width, float height){
+        label.setWrap(wrap);
+        label.setSize(width, height);
+        this.setSize(width, height);
+    }
 
 }

@@ -44,15 +44,15 @@ public class CreateAlienView extends BaseView{
         chooseAlien = new TitleLabel(CHOOSE_ALIEN);
         selectButton = new Button(Constants.RECTANGLE, Constants.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
         randomizeButton = new Button(Constants.RECTANGLE, Constants.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
-        BitmapFont smallFont = Assets.getInstance().getSmallFont();
-        name = new TextLabel("Name: ", smallFont);
-        nickname = new TextLabel("Nickname: ", smallFont);
-        height = new TextLabel("Height: ", smallFont);
-        earthWeight = new TextLabel("Earth Weight: ", smallFont);
-        bio = new TextLabel("Bio: ", smallFont);
-        species = new TextLabel("Species: ", smallFont);
-        abilities = new TextLabel("Abilities: ", smallFont);
-        homePlanet = new TextLabel("Home Planet", smallFont);
+        BitmapFont xsmallFont = Assets.getInstance().getXSmallFont();
+        name = new TextLabel("Name: ", xsmallFont);
+        nickname = new TextLabel("Nickname: ", xsmallFont);
+        height = new TextLabel("Height: ", xsmallFont);
+        earthWeight = new TextLabel("Earth Weight: ", xsmallFont);
+        bio = new TextLabel("Bio: ", xsmallFont);
+        species = new TextLabel("Species: ", xsmallFont);
+        abilities = new TextLabel("Abilities: ", xsmallFont);
+        homePlanet = new TextLabel("Home Planet", xsmallFont);
         nicknameTextbox = new TextBox(12, "", TextBox.CHARDIG);
         planet = new Planet(new RandomPlanet(), false);
         alien = new FinalAlien(150, 300, new RandomAlien());
@@ -90,7 +90,7 @@ public class CreateAlienView extends BaseView{
         selectButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                ViewManager.getInstance().transitionViewTo(ViewID.APP, TransitionType.SLIDE_R_TRANSITION);
+                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
             }
         });
         randomizeButton.setButtonAction(new ButtonAction() {
