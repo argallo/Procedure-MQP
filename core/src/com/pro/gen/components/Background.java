@@ -9,7 +9,7 @@ import com.pro.gen.utils.Constants;
 public class Background extends TintedImage {
 
     public Background(String background) {
-        this(background, Color.CLEAR);
+        this(background, Color.WHITE);
     }
 
     public Background(String background, Color color) {

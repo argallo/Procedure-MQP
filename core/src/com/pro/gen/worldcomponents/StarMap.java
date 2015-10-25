@@ -31,9 +31,9 @@ public class StarMap extends Group {
         this.setSize(emptySize, emptySize);
 
         ComboImage comboImage = new ComboImage();
-        comboImage.addImage(Assets.getInstance().getTexture(Constants.TWINKLE).getTexture(),0,0,0,0, new Color(110/255f,36/255f,185/255f,1f));
-        comboImage.addImage(Assets.getInstance().getTexture(Constants.CIRCLE_SMALL).getTexture(),16,16,32,32, new Color(1f, 0f, 1f, 1f));
-        comboImage.addImage(Assets.getInstance().getTexture(Constants.CIRCLE_SMALL).getTexture(),24,24,16,16, new Color(1f, 1f, 1f, 1f));
+        comboImage.addImage(Assets.getInstance().getTextureRegion(Constants.TWINKLE).getTexture(),0,0,0,0, new Color(110/255f,36/255f,185/255f,1f));
+        comboImage.addImage(Assets.getInstance().getTextureRegion(Constants.CIRCLE_SMALL).getTexture(),16,16,32,32, new Color(1f, 0f, 1f, 1f));
+        comboImage.addImage(Assets.getInstance().getTextureRegion(Constants.CIRCLE_SMALL).getTexture(),24,24,16,16, new Color(1f, 1f, 1f, 1f));
         p = new PixmapCombos(comboImage);
         generateClusters();
         attachActors();

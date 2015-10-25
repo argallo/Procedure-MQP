@@ -3,8 +3,8 @@ package com.pro.gen.worldcomponents;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
-import com.pro.gen.components.ShipScreen;
 import com.pro.gen.random.RandomPlacement;
+import com.pro.gen.screens.ExploreScreen;
 import com.pro.gen.utils.Constants;
 
 /**
@@ -13,11 +13,11 @@ import com.pro.gen.utils.Constants;
 public class NewStarMap extends Group {
 
     private int amountOfStars;
-    private ShipScreen shipScreen;
+    private ExploreScreen screen;
 
-    public NewStarMap(int amountOfStars, float width, float height, ShipScreen shipScreen){
+    public NewStarMap(int amountOfStars, float width, float height, ExploreScreen screen){
         this.amountOfStars = amountOfStars;
-        this.shipScreen = shipScreen;
+        this.screen = screen;
         setSize(width, height);
         generateStars(width, height);
     }
@@ -32,7 +32,7 @@ public class NewStarMap extends Group {
             starPiece.setButtonAction(new ButtonAction() {
                 @Override
                 public void buttonPressed() {
-                    shipScreen.popUp();
+                    screen.popUp();
                 }
             });
             addActor(starPiece);

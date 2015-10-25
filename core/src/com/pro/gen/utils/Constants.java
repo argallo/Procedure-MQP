@@ -39,15 +39,19 @@ public class Constants {
     public static final String SHIP_BORDER = "Objects/Large/spacescreen_large.png";
 
     /* Medium */
+    public static final String ABS_PLANET = "Objects/Medium/abs_planet_medium.png";
     public static final String RECTANGLE = "Objects/Medium/white_rectangle_medium.png";
     public static final String CIRCLE = "Objects/Medium/white_circle_medium.png";
+    public static final String RING = "Objects/Medium/white_ring_medium.png";
     public static final String CIRCLE_SHADOW = "Objects/Medium/white_shadow_medium.png";
     public static final String CYLINDER = "Objects/Medium/white_cyl_medium.png";
     public static final String CURVERECT = "Objects/Medium/white_curverectangle_medium.png";
     public static final String BULDGE = "Objects/Medium/white_buldge_medium.png";
+    public static final String SUN = "Objects/Medium/white_sun_medium.png";
 
     /* Small */
     public static final String TRIANGLE = "Objects/Small/white_triangle_small.png";
+    public static final String LINE = "Objects/Small/white_line_small.png";
 
     /* X-Small */
     public static final String TWINKLE = "Objects/XSmall/white_twinkle_xsmall.png";
@@ -60,7 +64,7 @@ public class Constants {
     };
 
     public static final String[] COMMON_IMAGES = new String[]{
-            RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER
+            RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER, ABS_PLANET, SUN, RING, LINE
     };
 
     public static final String[] SPLASH_IMAGES = new String[]{

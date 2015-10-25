@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
-import com.pro.gen.components.ShipScreen;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
+import com.pro.gen.screens.ExploreScreen;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 
@@ -23,11 +23,11 @@ public class WarpToPopup extends Group {
     private Button yes, no;
     private TextLabel textLabel;
 
-    ShipScreen shipScreen;
+    ExploreScreen screen;
 
     //take in random name of star?
-    public WarpToPopup(ShipScreen shipScreen){
-        this.shipScreen = shipScreen;
+    public WarpToPopup(ExploreScreen screen){
+        this.screen = screen;
         init();
         setSizes();
         setPositions();
@@ -60,14 +60,14 @@ public class WarpToPopup extends Group {
         yes.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                shipScreen.popUpFly();
+                screen.popUpFly();
             }
         });
 
         no.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-               shipScreen.popUpCancel();
+                screen.popUpCancel();
             }
         });
     }

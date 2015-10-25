@@ -82,14 +82,25 @@ public class Assets extends AssetManager {
     }
 
     /**
-     * getTexture: uses the textures file path as the id so that it can
+     * getTextureRegion: uses the textures file path as the id so that it can
      * create a texture region of the image to return
      *
      * @param textureID The id of the texture
      * @return TextureRegion the texture found in assets
      */
-    public TextureRegion getTexture (String textureID) {
-        return new TextureRegion(this.get(textureID, Texture.class));
+    public TextureRegion getTextureRegion(String textureID) {
+        return new TextureRegion(this.getTexture(textureID));
+    }
+
+    /**
+     * getTextureRegion: uses the textures file path as the id so that it can
+     * create a texture region of the image to return
+     *
+     * @param textureID The id of the texture
+     * @return TextureRegion the texture found in assets
+     */
+    public Texture getTexture(String textureID) {
+        return this.get(textureID, Texture.class);
     }
 
     /**

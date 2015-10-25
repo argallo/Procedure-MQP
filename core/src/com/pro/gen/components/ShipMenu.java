@@ -18,9 +18,9 @@ public class ShipMenu extends Group {
 
     private Button exploreButton, inventoryButton, homeButton;
     private TintedImage shipBoarder;
-    private ShipScreen shipScreen;
+    private ShipHUD shipScreen;
 
-    public ShipMenu(ShipScreen shipScreen){
+    public ShipMenu(ShipHUD shipScreen){
         this.shipScreen = shipScreen;
         init();
         setSizes();
@@ -31,7 +31,7 @@ public class ShipMenu extends Group {
 
 
     private void init() {
-        shipBoarder = new TintedImage(Constants.SHIP_BORDER, Color.CLEAR);
+        shipBoarder = new TintedImage(Constants.SHIP_BORDER, Color.WHITE);
         shipBoarder.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         exploreButton = new Button(Constants.RECTANGLE, Constants.PURPLE, EXPLORE_BTN, Assets.getInstance().getSmallFont());
         inventoryButton = new Button(Constants.RECTANGLE, Constants.PURPLE, INVENTORY_BTN, Assets.getInstance().getSmallFont());
@@ -54,7 +54,7 @@ public class ShipMenu extends Group {
         exploreButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                shipScreen.viewScreen(ShipScreen.ShipScreenTypes.EXPLORE);
+                shipScreen.transitionTo(ShipHUD.ShipScreenTypes.EXPLORE);
                 // make screen slide out.
                 // make screen add stars.
                 // add exit button to screen or make buttons select and deselectable
@@ -63,7 +63,7 @@ public class ShipMenu extends Group {
         inventoryButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                shipScreen.viewScreen(ShipScreen.ShipScreenTypes.INVENTORY);
+                shipScreen.transitionTo(ShipHUD.ShipScreenTypes.INVENTORY);
             }
         });
     }

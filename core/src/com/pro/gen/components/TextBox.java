@@ -41,10 +41,10 @@ public class TextBox extends Group{
         this.password = password;
         this.filterType = filterType;
         style = new TextField.TextFieldStyle();
-        style.background = new TextureRegionDrawable(Assets.getInstance().getTexture(Constants.CURVERECT));
+        style.background = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Constants.CURVERECT));
         style.background.setLeftWidth(style.background.getLeftWidth() + 25);
         style.background.setRightWidth(style.background.getRightWidth() + 25);
-        style.cursor = new TextureRegionDrawable(Assets.getInstance().getTexture(Constants.BLUE));
+        style.cursor = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Constants.BLUE));
         style.font = Assets.getInstance().getMidFont();
         style.fontColor = Color.LIGHT_GRAY;
         style.focusedFontColor = Color.BLACK;
