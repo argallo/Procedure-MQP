@@ -18,6 +18,7 @@ public class TintedImage extends Image {
 
     Color tint;
     Color batchColor;
+    float alpha = 1;
 
     public TintedImage(String imageName, Color tint){
         this(Assets.getInstance().getTexture(imageName), tint);
@@ -50,7 +51,7 @@ public class TintedImage extends Image {
         validate();
 
         batchColor = batch.getColor();
-        batch.setColor(tint.r, tint.g, tint.b, tint.a * parentAlpha);
+        batch.setColor(tint.r, tint.g, tint.b, tint.a * parentAlpha * alpha);
 
         float x = getX();
         float y = getY();
@@ -78,6 +79,10 @@ public class TintedImage extends Image {
         return tint;
     }
 
+    public void setAlpha(float alpha){
+        this.alpha = alpha;
+    }
+
     public void setImage(String image) {
         setDrawable(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().getTextureRegion(image))));
     }
@@ -88,78 +93,3 @@ public class TintedImage extends Image {
 
 
 }
-   /* TextureRegion image;
-    Color tint;
-    Color batchColor;
-    protected float scalerX = 1;
-    protected float scalerY = 1;
-
-    public TintedImage (String imageName, Color tint){
-        this(Assets.getInstance().getTextureRegion(imageName).getTextureRegion(), tint);
-    }
-
-    public TintedImage (Texture texture, Color tint){
-        image = new TextureRegion(texture);
-        this.tint = tint;
-    }
-
-    public TintedImage (TextureRegion texture, Color tint){
-        image = texture;
-        this.tint = tint;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batchColor = batch.getColor();
-        if(tint != Color.CLEAR) {
-            batch.setColor(tint.r, tint.g, tint.b, parentAlpha);
-        }
-        if(this.scalerX == 1 && this.scalerY == 1) {
-            batch.draw(image, getX(), getY(), getWidth(), getHeight());
-        } else {
-            batch.draw(image, getX(), getY(), scalerX, scalerY);
-        }
-        if(this.getRotation() != 0){
-            batch.draw(image, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        }
-        batch.setColor(batchColor);
-        //super.draw(batch, parentAlpha); //This line causes MAJOR LAG on devices
-    }
-
-    public void setTint(Color tint) {
-        this.tint = tint;
-    }
-
-    public Color getTint() {
-        return tint;
-    }
-
-    public void setImage(TextureRegion image) {
-        this.image = image;
-    }
-
-    public void setImage(String image) {
-        this.image = new TextureRegion(Assets.getInstance().getTextureRegion(image));
-    }
-
-    @Override
-    public void setScale(float scaleX, float scaleY) {
-        this.scalerX = scaleX;
-        this.scalerY = scaleY;
-        setSize(scaleX, scaleY);
-        setX(getX() - scaleX / 2);
-        setY(getY() - scaleY / 2);
-    }
-
-    @Override
-    public void setRotation(float degrees) {
-        super.setRotation(degrees);
-
-    }
-
-    public static TintedImage Clone(TintedImage tintedImage){
-        return new TintedImage(tintedImage.image, tintedImage.tint);
-    }
-
-}
-*/

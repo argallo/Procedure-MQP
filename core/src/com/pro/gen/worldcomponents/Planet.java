@@ -52,6 +52,10 @@ public class Planet extends Group {
         this(rp.getPlanetColor(), rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars);
     }
 
+    public Planet(Color planetColor, RandomPlanet rp, boolean hasStars){
+        this(planetColor, rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars);
+    }
+
     /**
      * Initializes the circle hole which is used to give planets revolving effect
      */

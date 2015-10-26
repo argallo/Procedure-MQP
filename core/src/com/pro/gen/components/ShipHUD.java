@@ -4,8 +4,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.pro.gen.screens.PlanetScreen;
 import com.pro.gen.screens.ScreenFactory;
 import com.pro.gen.screens.ShipScreen;
+import com.pro.gen.screens.SolarSystemScreen;
 import com.pro.gen.utils.Constants;
 
 /**
@@ -86,27 +88,12 @@ public class ShipHUD extends Group{
     public void transitionTo(ShipScreenTypes shipScreenTypes){
         ShipScreen shipScreen = screenFactory.createScreen(shipScreenTypes);
 
-        if(this.shipScreenTypes == ShipScreenTypes.INSIDE){
-            //Only possible places from Inside that transition can be to.
-            if(shipScreenTypes == ShipScreenTypes.EXPLORE){
-                simpleTransition(shipScreen, shipScreenTypes);
-            } else if(shipScreenTypes == ShipScreenTypes.INVENTORY){
-                simpleTransition(shipScreen, shipScreenTypes);
-            } else if (shipScreenTypes == ShipScreenTypes.HOME) {
-                simpleTransition(shipScreen, shipScreenTypes);
-            }
-        } else if(this.shipScreenTypes == ShipScreenTypes.EXPLORE){
-            if(shipScreenTypes == ShipScreenTypes.SOLARSYSTEM){
-                hyperSpeedTransition(shipScreen, shipScreenTypes);   ////DIFFERENT
-            } else {
-                simpleTransition(shipScreen, shipScreenTypes);
-            }
-        } else if (this.shipScreenTypes == ShipScreenTypes.SOLARSYSTEM){
-            if(shipScreenTypes == ShipScreenTypes.PLANET){
-                zoomToPlanetTransition(shipScreen, shipScreenTypes);   ////DIFFERENT
-            } else {
-                simpleTransition(shipScreen, shipScreenTypes);
-            }
+        if(this.shipScreenTypes == ShipScreenTypes.EXPLORE && shipScreenTypes == ShipScreenTypes.SOLARSYSTEM){
+            hyperSpeedTransition(shipScreen, shipScreenTypes);
+        } else if (this.shipScreenTypes == ShipScreenTypes.SOLARSYSTEM && shipScreenTypes == ShipScreenTypes.PLANET){
+            zoomToPlanetTransition(shipScreen, shipScreenTypes);
+        } else {
+            simpleTransition(shipScreen, shipScreenTypes);
         }
     }
 
@@ -157,7 +144,7 @@ public class ShipHUD extends Group{
     }
 
     private void zoomToPlanetTransition(ShipScreen shipScreen, ShipScreenTypes shipScreenTypes){
-
+        ((PlanetScreen)shipScreen).createPlanetFromColor(((SolarSystemScreen) getShipScreen()).getSelectedPlanetColor());
     }
 
 

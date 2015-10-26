@@ -1,7 +1,6 @@
 package com.pro.gen.worldcomponents;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -105,12 +104,18 @@ public class Hexagon extends Group {
             @Override
             public boolean act(float delta) {
                 animating = true;
-                hexTop.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 3f, Interpolation.exp10Out)));
+
+                hexTop.addAction(Actions.sequence(Actions.moveTo(hexTop.getX()+hexTop.getWidth(),hexTop.getY()+hexTop.getHeight()),Actions.sizeTo(0, thickness), Actions.moveTo(hexTop.getX(),hexTop.getY(), 0.5f),Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
+                hexTopLeft.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.delay(0.5f), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
+                hexBottomLeft.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.delay(1f), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
+                hexBottom.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.delay(1.5f), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
+                hexBottomRight.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.delay(2f), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
+                hexTopRight.addAction(Actions.sequence(Actions.sizeTo(0, thickness), Actions.delay(2.5f), Actions.sizeBy(Hexagon.this.getWidth() / 2, thickness, 0.5f)));
                 return true;
             }
         };
 
-        this.addAction(Actions.sequence(Actions.visible(true), action, Actions.delay(1), new Action() {
+        this.addAction(Actions.sequence(Actions.visible(true), action, Actions.delay(3f), new Action() {
             @Override
             public boolean act(float delta) {
                 animating = false;
