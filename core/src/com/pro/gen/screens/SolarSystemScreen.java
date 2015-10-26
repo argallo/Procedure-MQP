@@ -1,7 +1,10 @@
 package com.pro.gen.screens;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.ShipHUD;
@@ -20,7 +23,7 @@ public class SolarSystemScreen extends ShipScreen {
     Button sun;
     MiniPlanetSystem[] planets;
     FlyPlanetPopup flyPlanetPopup;
-    Color selectedPlanetColor = Color.CLEAR;
+    MiniPlanet selectedPlanet;
 
     public SolarSystemScreen(ShipHUD shipHUD) {
         super(shipHUD);
@@ -84,20 +87,40 @@ public class SolarSystemScreen extends ShipScreen {
             if(!planets[i].getMiniPlanet().equals(planet))
                 planets[i].getMiniPlanet().setSelected(false);
         }
-        selectedPlanetColor = planet.getTint();
+        selectedPlanet = planet;
         addActor(flyPlanetPopup);
     }
 
     public void popUpFly(){
-        shipHUD.transitionTo(ShipHUD.ShipScreenTypes.PLANET);
+        this.setTouchable(Touchable.disabled);
         removeActor(flyPlanetPopup);
+        for(int i = 0; i < planets.length; i++) {
+            planets[i].fadeOut(selectedPlanet);
+        }
+        sun.addAction(Actions.alpha(0, 0.5f, Interpolation.exp10));
+        this.addAction(Actions.sequence(new Action() {
+            @Override
+            public boolean act(float delta) {
+                selectedPlanet.moveToCenter();
+                return true;
+            }
+        }, Actions.delay(1f), new Action() {
+            @Override
+            public boolean act(float delta) {
+                shipHUD.transitionTo(ShipHUD.ShipScreenTypes.PLANET);
+                return true;
+            }
+        }));
+
+
     }
 
     public void popUpCancel(){
+        selectedPlanet.setSelected(false);
         removeActor(flyPlanetPopup);
     }
 
-    public Color getSelectedPlanetColor() {
-        return selectedPlanetColor;
+    public MiniPlanet getSelectedPlanet() {
+        return selectedPlanet;
     }
 }

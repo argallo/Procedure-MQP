@@ -121,7 +121,7 @@ public class ShipHUD extends Group{
     }
 
     private void hyperSpeedTransition(final ShipScreen shipScreen, final ShipScreenTypes shipScreenTypes){
-        this.addActor(shipScreen);
+        this.addActorAt(0,shipScreen);
         shipScreen.setVisible(false);
         Action action = new Action() {
             @Override
@@ -143,8 +143,25 @@ public class ShipHUD extends Group{
         this.addAction(Actions.sequence(action));
     }
 
-    private void zoomToPlanetTransition(ShipScreen shipScreen, ShipScreenTypes shipScreenTypes){
-        ((PlanetScreen)shipScreen).createPlanetFromColor(((SolarSystemScreen) getShipScreen()).getSelectedPlanetColor());
+    private void zoomToPlanetTransition(final ShipScreen shipScreen, final ShipScreenTypes shipScreenTypes){
+        ((PlanetScreen)shipScreen).createPlanetFromColor(((SolarSystemScreen) getShipScreen()).getSelectedPlanet().getTint());
+        Action action = new Action() {
+            @Override
+            public boolean act(float delta) {
+                ((SolarSystemScreen) getShipScreen()).getSelectedPlanet().addAction(Actions.alpha(0, 0.2f));
+                shipScreen.addAction(Actions.sequence(Actions.scaleTo(0.25f, 0.25f), Actions.visible(true), Actions.scaleBy(0.75f,0.75f,0.7f, Interpolation.exp5In)));
+                return true;
+            }
+        };
+        this.addActorAt(0, shipScreen);
+        this.addAction(Actions.sequence(action, new Action() {
+            @Override
+            public boolean act(float delta) {
+                removeScreen();
+                setNewScreen(shipScreen, shipScreenTypes);
+                return true;
+            }
+        }));
     }
 
 

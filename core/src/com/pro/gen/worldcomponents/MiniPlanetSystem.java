@@ -1,8 +1,10 @@
 package com.pro.gen.worldcomponents;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.screens.SolarSystemScreen;
 import com.pro.gen.utils.Constants;
@@ -28,5 +30,12 @@ public class MiniPlanetSystem extends Group {
 
     public MiniPlanet getMiniPlanet() {
         return miniPlanet;
+    }
+
+    public void fadeOut(MiniPlanet selectedPlanet){
+        if (!miniPlanet.equals(selectedPlanet))
+            addAction(Actions.alpha(0, 0.5f, Interpolation.exp10));
+        else
+            orbit.addAction(Actions.alpha(0, 0.5f, Interpolation.exp10));
     }
 }

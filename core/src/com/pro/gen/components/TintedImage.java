@@ -18,7 +18,6 @@ public class TintedImage extends Image {
 
     Color tint;
     Color batchColor;
-    float alpha = 1;
 
     public TintedImage(String imageName, Color tint){
         this(Assets.getInstance().getTexture(imageName), tint);
@@ -51,7 +50,7 @@ public class TintedImage extends Image {
         validate();
 
         batchColor = batch.getColor();
-        batch.setColor(tint.r, tint.g, tint.b, tint.a * parentAlpha * alpha);
+        batch.setColor(tint.r, tint.g, tint.b, tint.a * parentAlpha * this.getColor().a);
 
         float x = getX();
         float y = getY();
@@ -77,10 +76,6 @@ public class TintedImage extends Image {
 
     public Color getTint() {
         return tint;
-    }
-
-    public void setAlpha(float alpha){
-        this.alpha = alpha;
     }
 
     public void setImage(String image) {

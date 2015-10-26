@@ -2,7 +2,9 @@ package com.pro.gen.worldcomponents;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TintedImage;
@@ -25,6 +27,7 @@ public class MiniPlanet extends Button {
     float small = 1.2f;
     float large = 1.5f;
     private boolean selected = false;
+    private boolean acting = true;
 
     public MiniPlanet(Color backgroundColor, SolarSystemScreen solarSystemScreen, float radiusAdd) {
         super(Constants.ABS_PLANET, backgroundColor);
@@ -37,8 +40,8 @@ public class MiniPlanet extends Button {
         createAction();
         highlightSmall = new TintedImage(Constants.CIRCLE_SMALL, Color.WHITE);
         highlightLarge = new TintedImage(Constants.CIRCLE_SMALL, Color.WHITE);
-        highlightSmall.setAlpha(0.7f);
-        highlightLarge.setAlpha(0.2f);
+        highlightSmall.setColor(0f,0f,0f,0.7f);
+        highlightLarge.setColor(0f, 0f,0f,0.2f);
     }
 
     public void createAction() {
@@ -55,9 +58,11 @@ public class MiniPlanet extends Button {
     @Override
     public void act(float delta) {
         super.act(delta);
-        miniLoop += delta * speed;
-        setPosition((radiusX + radiusAdd) * MathUtils.cos(miniLoop) + 640, (radiusY + radiusAdd) * MathUtils.sin(miniLoop) + 360);
-        setScale((MathUtils.sin(miniLoop) - 1.5f) * -30f, (MathUtils.sin(miniLoop) - 1.5f) * -30f);
+        if(acting) {
+            miniLoop += delta * speed;
+            setPosition((radiusX + radiusAdd) * MathUtils.cos(miniLoop) + 640, (radiusY + radiusAdd) * MathUtils.sin(miniLoop) + 360);
+            setScale((MathUtils.sin(miniLoop) - 1.5f) * -30f, (MathUtils.sin(miniLoop) - 1.5f) * -30f);
+        }
     }
 
     @Override
@@ -76,5 +81,11 @@ public class MiniPlanet extends Button {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public void moveToCenter(){
+        acting = false;
+        selected = false;
+        addAction(Actions.parallel(Actions.moveTo(640, 360, 1f, Interpolation.exp5In), Actions.scaleTo(100, 100, 1f, Interpolation.exp5In)));
     }
 }
