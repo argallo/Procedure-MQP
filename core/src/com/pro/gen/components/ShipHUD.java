@@ -1,14 +1,18 @@
 package com.pro.gen.components;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.pro.gen.managers.ViewManager;
 import com.pro.gen.screens.PlanetScreen;
 import com.pro.gen.screens.ScreenFactory;
 import com.pro.gen.screens.ShipScreen;
 import com.pro.gen.screens.SolarSystemScreen;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.TransitionType;
+import com.pro.gen.utils.ViewID;
 
 /**
  * Created by Gallo on 10/21/2015.
@@ -16,7 +20,7 @@ import com.pro.gen.utils.Constants;
 public class ShipHUD extends Group{
 
     public enum ShipScreenTypes {
-        INSIDE, EXPLORE, INVENTORY, HOME, SOLARSYSTEM, PLANET;
+        INSIDE, EXPLORE, INVENTORY, HOME, SOLARSYSTEM, PLANET, LAND;
     }
 
     private ShipScreen shipScreen;
@@ -40,6 +44,7 @@ public class ShipHUD extends Group{
         this.shipScreenTypes = shipScreenTypes;
         setupScreenSliders();
         buildActions();
+
     }
 
 
@@ -92,6 +97,8 @@ public class ShipHUD extends Group{
             hyperSpeedTransition(shipScreen, shipScreenTypes);
         } else if (this.shipScreenTypes == ShipScreenTypes.SOLARSYSTEM && shipScreenTypes == ShipScreenTypes.PLANET){
             zoomToPlanetTransition(shipScreen, shipScreenTypes);
+        } else if (this.shipScreenTypes == ShipScreenTypes.PLANET && shipScreenTypes == ShipScreenTypes.LAND){
+            fadeToLandTransition();
         } else {
             simpleTransition(shipScreen, shipScreenTypes);
         }
@@ -149,7 +156,7 @@ public class ShipHUD extends Group{
             @Override
             public boolean act(float delta) {
                 ((SolarSystemScreen) getShipScreen()).getSelectedPlanet().addAction(Actions.alpha(0, 0.2f));
-                shipScreen.addAction(Actions.sequence(Actions.scaleTo(0.25f, 0.25f), Actions.visible(true), Actions.scaleBy(0.75f,0.75f,0.7f, Interpolation.exp5In)));
+                shipScreen.addAction(Actions.sequence(Actions.scaleTo(0.25f, 0.25f), Actions.visible(true), Actions.scaleBy(0.75f, 0.75f, 0.7f, Interpolation.exp5In)));
                 return true;
             }
         };
@@ -164,7 +171,20 @@ public class ShipHUD extends Group{
         }));
     }
 
+    public void fadeToLandTransition(){
+        Background fadeout = new Background(Constants.PIXEL, Color.WHITE);
+        fadeout.addAction(Actions.alpha(0));
+        addActor(fadeout);
+        this.getParent().swapActor(1, 2);
+        fadeout.addAction(Actions.sequence(Actions.alpha(1, 1.5f, Interpolation.fade), new Action() {
+            @Override
+            public boolean act(float delta) {
+                ViewManager.getInstance().transitionViewTo(ViewID.LANDING, TransitionType.DEFAULT_TRANSITION);
+                return true;
+            }
+        }));
 
+    }
 
     private void setNewScreen(ShipScreen shipScreen, ShipScreenTypes shipScreenTypes){
         this.shipScreen = shipScreen;
@@ -178,7 +198,6 @@ public class ShipHUD extends Group{
     private void removeScreen(){
         removeActor(this.shipScreen);
     }
-
 
     public ShipScreen getShipScreen() {
         return shipScreen;

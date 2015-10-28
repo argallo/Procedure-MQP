@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomPlanet;
+import com.pro.gen.screens.PlanetScreen;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
@@ -25,6 +26,7 @@ public class Planet extends Group {
     private TintedImage circleHole;
     private StarMap planetStars;
     private boolean hasStars;
+    private PlanetScreen planetScreen;
 
     /**
      * Planet base constructor. Normally called directly only for testing or possibly for reseting saved planet.
@@ -33,13 +35,14 @@ public class Planet extends Group {
      * @param clouds the clouds that will float around the planet
      * @param planetAttr planet attributes
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetAttr planetAttr, boolean hasStars){
+    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetAttr planetAttr, boolean hasStars, PlanetScreen planetScreen){
         basePlanet = new TintedImage(Constants.CIRCLE, planetColor);
         planetShadow = new TintedImage(Constants.CIRCLE_SHADOW, ColorHelper.shadowOf(planetColor));
         this.lands = lands;
         this.clouds = clouds;
         this.planetAttr = planetAttr;
         this.hasStars = hasStars;
+        this.planetScreen = planetScreen;
         initCircleHole();
         attachActors();
         createAction();
@@ -48,12 +51,12 @@ public class Planet extends Group {
     /**
      * Generates random planet characteristics and sends them to the planet constructor
      */
-    public Planet(RandomPlanet rp, boolean hasStars){
-        this(rp.getPlanetColor(), rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars);
+    public Planet(RandomPlanet rp, boolean hasStars, PlanetScreen planetScreen){
+        this(rp.getPlanetColor(), rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars, planetScreen);
     }
 
-    public Planet(Color planetColor, RandomPlanet rp, boolean hasStars){
-        this(planetColor, rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars);
+    public Planet(Color planetColor, RandomPlanet rp, boolean hasStars, PlanetScreen planetScreen){
+        this(planetColor, rp.getLands(), rp.getClouds(), rp.getPlanetAttr(), hasStars, planetScreen);
     }
 
     /**
@@ -126,8 +129,7 @@ public class Planet extends Group {
             public void clicked(InputEvent event, float x, float y) {
                 if (isPlanetClick(x, y)) {
                     LogUtils.Log("Planet was clicked. Handle action");
-                    //fly animation into planet
-                    //fade out transition to side scroll view of planet
+                    planetScreen.planetClicked();
                 }
             }
         });

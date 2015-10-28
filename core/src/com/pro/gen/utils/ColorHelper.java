@@ -33,6 +33,31 @@ public class ColorHelper {
         return new Color(getRed(color)/255f,getGreen(color)/255f,getBlue(color)/255f,1f);
     }
 
+    public static Color lighten(Color color, float lightAmt){
+        float[] hsb = new float[3];
+        RGBtoHSB((int)(color.r*255), (int)(color.g*255), (int)(color.b*255), hsb);
+        hsb[1] = Math.max(hsb[1]-lightAmt, 0);
+        hsb[2] = 1;
+        int c = HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        color.r = getRed(c)/255f;
+        color.g = getGreen(c)/255f;
+        color.b = getBlue(c)/255f;
+        return color;
+    }
+
+    public static Color darken(Color color, float darkAmt){
+        float[] hsb = new float[3];
+        RGBtoHSB((int)(color.r*255), (int)(color.g*255), (int)(color.b*255), hsb);
+        hsb[2] = Math.max(hsb[2]-darkAmt, 0);
+        int c = HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        color.r = getRed(c)/255f;
+        color.g = getGreen(c)/255f;
+        color.b = getBlue(c)/255f;
+        return color;
+    }
+
+
+
     /**
      * Converts the components of a color, as specified by the HSB
      * model, to an equivalent set of values for the default RGB model.
@@ -88,6 +113,43 @@ public class ColorHelper {
         return 0xff000000 | (r << 16) | (g << 8) | (b << 0);
     }
 
+
+    public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals) {
+        float hue, saturation, brightness;
+        if (hsbvals == null) {
+            hsbvals = new float[3];
+        }
+        int cmax = (r > g) ? r : g;
+        if (b > cmax) cmax = b;
+        int cmin = (r < g) ? r : g;
+        if (b < cmin) cmin = b;
+
+        brightness = ((float) cmax) / 255.0f;
+        if (cmax != 0)
+            saturation = ((float) (cmax - cmin)) / ((float) cmax);
+        else
+            saturation = 0;
+        if (saturation == 0)
+            hue = 0;
+        else {
+            float redc = ((float) (cmax - r)) / ((float) (cmax - cmin));
+            float greenc = ((float) (cmax - g)) / ((float) (cmax - cmin));
+            float bluec = ((float) (cmax - b)) / ((float) (cmax - cmin));
+            if (r == cmax)
+                hue = bluec - greenc;
+            else if (g == cmax)
+                hue = 2.0f + redc - bluec;
+            else
+                hue = 4.0f + greenc - redc;
+            hue = hue / 6.0f;
+            if (hue < 0)
+                hue = hue + 1.0f;
+        }
+        hsbvals[0] = hue;
+        hsbvals[1] = saturation;
+        hsbvals[2] = brightness;
+        return hsbvals;
+    }
 
     /**
      * Returns the red component in the range 0-255 in the default sRGB

@@ -6,6 +6,8 @@ import com.pro.gen.views.BaseView;
 import com.pro.gen.views.CreateAccountView;
 import com.pro.gen.views.CreateAlienView;
 import com.pro.gen.views.EmptyView;
+import com.pro.gen.views.GroundView;
+import com.pro.gen.views.LandingView;
 import com.pro.gen.views.MainMenuView;
 import com.pro.gen.views.SplashView;
 
@@ -30,6 +32,10 @@ public class ViewBuilderFactory {
                 return new MainMenuView();
             case APP:
                 return new AppView();
+            case LANDING:
+                return new LandingView();
+            case LAND:
+                return new GroundView();
             default:
                 return new EmptyView();
         }

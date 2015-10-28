@@ -17,7 +17,7 @@ public class AppView extends BaseView {
 
     @Override
     public void init() {
-        planet = new Planet(new RandomPlanet(), true);
+        planet = new Planet(new RandomPlanet(), true, null);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class AppView extends BaseView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 removeActor(planet);
-                planet = new Planet(new RandomPlanet(), true);
+                planet = new Planet(new RandomPlanet(), true, null);
                 planet.setSize(600, 600);
                 planet.setPosition(340, 60);
                 addActor(planet);

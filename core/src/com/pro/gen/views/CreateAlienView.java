@@ -40,7 +40,7 @@ public class CreateAlienView extends BaseView{
 
     @Override
     public void init() {
-        background = new Background(Constants.RECTANGLE, Constants.UNIVERSE_BACKGROUND_COLOR);
+        background = new Background(Constants.PIXEL, Constants.UNIVERSE_BACKGROUND_COLOR);
         chooseAlien = new TitleLabel(CHOOSE_ALIEN);
         selectButton = new Button(Constants.RECTANGLE, Constants.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
         randomizeButton = new Button(Constants.RECTANGLE, Constants.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
@@ -54,7 +54,7 @@ public class CreateAlienView extends BaseView{
         abilities = new TextLabel("Abilities: ", xsmallFont);
         homePlanet = new TextLabel("Home Planet", xsmallFont);
         nicknameTextbox = new TextBox(12, "", TextBox.CHARDIG);
-        planet = new Planet(new RandomPlanet(), false);
+        planet = new Planet(new RandomPlanet(), false, null);
         alien = new FinalAlien(150, 300, new RandomAlien());
         //head.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0, 15f, 1f, Interpolation.pow2), Actions.moveBy(0, -15, 1f, Interpolation.pow2))));
 
@@ -101,7 +101,7 @@ public class CreateAlienView extends BaseView{
                 alien.setPosition(100,250);
                 addActor(alien);
                 removeActor(planet);
-                planet = new Planet(new RandomPlanet(), false);
+                planet = new Planet(new RandomPlanet(), false, null);
                 planet.setSize(200, 200);
                 planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
                 addActorAt(2, planet);

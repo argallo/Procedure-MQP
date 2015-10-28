@@ -144,6 +144,10 @@ public class Assets extends AssetManager {
                 return Constants.CREATE_ALIEN_IMAGES;
             case APP:
                 return Constants.APP_IMAGES;
+            case LANDING:
+                return Constants.LAND_IMAGES;
+            case LAND:
+                return Constants.GROUND_IMAGES;
             case UNKNOWN:
                 return Constants.COMMON_IMAGES;
             default:

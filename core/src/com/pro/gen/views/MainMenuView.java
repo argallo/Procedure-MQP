@@ -18,7 +18,7 @@ public class MainMenuView extends BaseView {
 
     @Override
     public void init() {
-        background = new Background(Constants.RECTANGLE, Constants.UNIVERSE_BACKGROUND_COLOR);
+        background = new Background(Constants.PIXEL, Constants.UNIVERSE_BACKGROUND_COLOR);
         shipHUD = new ShipHUD();
         menu = new ShipMenu(shipHUD);
     }
@@ -27,10 +27,6 @@ public class MainMenuView extends BaseView {
     public void setSizes() {
         background.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         menu.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-    }
-
-    @Override
-    public void setPositions() {
     }
 
     @Override

@@ -48,6 +48,7 @@ public class Constants {
     public static final String CURVERECT = "Objects/Medium/white_curverectangle_medium.png";
     public static final String BULDGE = "Objects/Medium/white_buldge_medium.png";
     public static final String SUN = "Objects/Medium/white_sun_medium.png";
+    public static final String SMALL_SHIP = "Objects/Medium/small_ship_medium.png";
 
     /* Small */
     public static final String TRIANGLE = "Objects/Small/white_triangle_small.png";
@@ -56,6 +57,7 @@ public class Constants {
     /* X-Small */
     public static final String TWINKLE = "Objects/XSmall/white_twinkle_xsmall.png";
     public static final String CIRCLE_SMALL = "Objects/XSmall/white_circle_xsmall.png";
+    public static final String PIXEL = "Objects/XSmall/white_pixel_xsmall.png";
 
 
 
@@ -64,7 +66,7 @@ public class Constants {
     };
 
     public static final String[] COMMON_IMAGES = new String[]{
-            RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER, ABS_PLANET, SUN, RING, LINE
+            RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER, ABS_PLANET, SUN, RING, LINE, PIXEL, SMALL_SHIP
     };
 
     public static final String[] SPLASH_IMAGES = new String[]{
@@ -76,6 +78,14 @@ public class Constants {
     };
 
     public static final String[] CREATE_ALIEN_IMAGES = new String[]{
+
+    };
+
+    public static final String[] LAND_IMAGES = new String[]{
+
+    };
+
+    public static final String[] GROUND_IMAGES = new String[]{
 
     };
 }
