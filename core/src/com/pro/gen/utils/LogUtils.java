@@ -35,4 +35,7 @@ public class LogUtils {
         Log(message);
     }
 
+    public static void Log(boolean message){
+        Log(message ? "true" : "false");
+    }
 }

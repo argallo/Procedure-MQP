@@ -1,7 +1,9 @@
 package com.pro.gen.simplealien;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.Animation;
+import com.pro.gen.utils.LogUtils;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,15 @@ public class FinalAlien extends Group {
     public void act(float delta) {
         super.act(delta);
         moveX(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        LogUtils.Log(this.getStage().getCamera().frustum.boundsInFrustum(this.getX(), this.getY(), 0, this.getWidth(), this.getHeight(), 0));
+        //if(this.getStage().getCamera().frustum.boundsInFrustum(this.getX(), this.getY(), 0, this.getWidth(), this.getHeight(), 0)) {
+            super.draw(batch, parentAlpha);
+        //}
+
     }
 
     private void moveX(float delta){

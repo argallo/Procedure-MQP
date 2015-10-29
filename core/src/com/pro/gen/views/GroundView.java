@@ -1,10 +1,8 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomTerrain;
@@ -24,31 +22,40 @@ public class GroundView extends BaseView{
     TintedImage land;
     FinalAlien alien;
 
+    int move = 0;
+    int right = 1;
+    int left = 2;
+
+    float warmup = 1;
+    float interpolate = 0;
+
     @Override
     public void init() {
         background = new Background(Constants.PIXEL, ColorHelper.generateLightColor());
 
         Color color = ColorHelper.generateGoodColor();
-        color = ColorHelper.lighten(color, 0.01f);
+        color = ColorHelper.lighten(color, 0.0f);
 
 
         image3 = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image3.setSize(Constants.VIRTUAL_WIDTH*2, Constants.VIRTUAL_HEIGHT);
-        image3.setY(200);
+        image3.setSize(6000, Constants.VIRTUAL_HEIGHT);
+        image3.setY(250);
 
 
-        color = ColorHelper.lighten(color, 0.2f);
+        color = ColorHelper.lighten(color, 0.1f);
         image2 = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image2.setSize(Constants.VIRTUAL_WIDTH*2, Constants.VIRTUAL_HEIGHT);
-        image2.setY(100);
+        image2.setSize(6000, Constants.VIRTUAL_HEIGHT);
+        image2.setY(220);
 
         color = ColorHelper.lighten(color, 0.2f);
 
         image = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image.setSize(Constants.VIRTUAL_WIDTH*2, Constants.VIRTUAL_HEIGHT);
+        image.setSize(6000, Constants.VIRTUAL_HEIGHT);
+        image.setY(200);
 
 
-        image.addListener(new ClickListener() {
+
+        /*image.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //TODO: fix out of memory error from doing silly testing, optimize random terrain code.
@@ -66,30 +73,102 @@ public class GroundView extends BaseView{
                 image2.setX(0);
                 image3.setX(0);
                 removeActor(alien);
-                alien = new FinalAlien(100,200,new RandomAlien());
-                alien.setPosition(100,100);
+                alien = new FinalAlien(100, 250, new RandomAlien());
+                alien.setPosition(100, 250);
+                alien.setScale(0.5f, 0.5f);
                 addActor(alien);
                 land.setTint(ColorHelper.generateGoodColor());
+                background.setTint(ColorHelper.generateLightColor());
             }
         });
 
-        land = new TintedImage(Constants.RECTANGLE, ColorHelper.generateGoodColor());
+        */
+
+        land = new TintedImage(Constants.PIXEL, ColorHelper.generateGoodColor());
         land.setSize(Constants.VIRTUAL_WIDTH, 250);
 
         alien = new FinalAlien(100,250,new RandomAlien());
-        alien.setPosition(100,100);
+        alien.setPosition(100, 250);
+        alien.setScale(0.5f, 0.5f);
 
+        this.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(x > Constants.VIRTUAL_WIDTH/2){
+                    move = right;
+                } else {
+                    move = left;
+                }
+                interpolate = 0;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                if((move == right && x > Constants.VIRTUAL_WIDTH/2) ||(move == left && x < Constants.VIRTUAL_WIDTH/2)) {
+                    move = 0;
+                }
+            }
+        });
 
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        image.setX(image.getX() - (125 * delta));
-        image2.setX(image2.getX() - (75 * delta));
-        image3.setX(image3.getX()-(50*delta));
-        alien.setX(alien.getX()+(50*delta));
+
+        if(move == right){
+            getStage().getCamera().translate(300 * delta, 0, 0);
+            background.setX(background.getX() + 300*delta);
+            alien.setX(alien.getX()+(600*delta));
+        } else if(move == left){
+            getStage().getCamera().translate(-300*delta, 0,0);
+        }
+
+/*        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+            interpolate = 0;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            move = right;
+
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            move = left;
+        } else {
+            if(move == right){
+                alien.addAction(Actions.moveBy(40, 0, 0.3f, Interpolation.pow5Out));
+            }
+            move = 0;
+        }
+*/
+        /*
+        //TODO: USE CAMERA TO DO SCROLLING OF SCENE RATHER THAN MOVING ALL THINGS
+        if(move == right){
+            if(alien.getX()>900) {
+                //image.setX(image.getX() - (400 * delta));
+                //image2.setX(image2.getX() - (200 * delta));
+                //image3.setX(image3.getX() - (100 * delta));
+                this.getStage().getCamera().translate(300*delta,0,0);
+                background.setX(background.getX()+300*delta);
+            } else {
+                if(interpolate < 1)
+                    interpolate += delta*3;
+                alien.setX(alien.getX()+(300*(interpolate)*delta));
+            }
+        } else if(move == left){
+            if(alien.getX() < 300) {
+                image.setX(image.getX() + (400 * delta));
+                image2.setX(image2.getX() + (200 * delta));
+                image3.setX(image3.getX() + (100 * delta));
+            } else {
+                if(interpolate < 1)
+                    interpolate += delta*3;
+                alien.setX(alien.getX()-(300*(interpolate)*delta));
+            }
+        }
+        */
     }
+
 
     @Override
     public void addActors() {

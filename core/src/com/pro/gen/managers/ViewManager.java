@@ -1,5 +1,6 @@
 package com.pro.gen.managers;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.pro.gen.components.AppStage;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.TransitionType;
@@ -10,6 +11,7 @@ import com.pro.gen.utils.ViewID;
  */
 public class ViewManager {
 
+    private Camera camera;
     private AppStage stage;
     private ViewBuilderFactory viewBuilder = new ViewBuilderFactory();
     private TransitionManager transitionManager = new TransitionManager();
@@ -50,6 +52,5 @@ public class ViewManager {
     public void unfocusAll(){
         stage.unfocusAll();
     }
-
 
 }

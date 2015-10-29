@@ -18,6 +18,8 @@ public class RandomTerrain {
     private Texture texture;
     private ArrayList<RectBuilders> rectangles;
 
+    private static final int TERRAIN_WIDTH = 6000;
+
     public RandomTerrain(){
         rectangles = new ArrayList<RectBuilders>();
         initPixmap();
@@ -30,16 +32,16 @@ public class RandomTerrain {
 
     public void createRectangles(){
         int currentX = 0;
-        while (currentX < Constants.VIRTUAL_WIDTH*2){
+        while (currentX < TERRAIN_WIDTH){
             int width = MathUtils.random(30, 200);
             int y;
-            if(currentX<300 || currentX>1000){
-                y = MathUtils.random(200, 720);
-            } else if (currentX<500 || currentX>700){
-                y = MathUtils.random(300, 720);
-            } else {
+            //if(currentX<300 || currentX>1000){
+            //    y = MathUtils.random(200, 720);
+          //  } else if (currentX<500 || currentX>700){
+          //      y = MathUtils.random(300, 720);
+          //  } else {
                 y = MathUtils.random(500, 720);
-            }
+           // }
 
 
 
@@ -71,6 +73,7 @@ public class RandomTerrain {
                 int topY = rectangles.get(i).getHeight();
 
                 pixmap.fillTriangle(startCutX, startCutY, topX, topY, endCutX, endCutY );
+
             }
             if(rectangles.get(i).getLeft() == RectBuilders.DOWN && i>0){
                 int startCutX = MathUtils.random(rectangles.get(i).getX(), rectangles.get(i).getX()+rectangles.get(i).getWidth());
@@ -92,7 +95,7 @@ public class RandomTerrain {
         //tex.getTextureData().prepare();
        // Pixmap p = tex.getTextureData().consumePixmap();
 
-        pixmap = new Pixmap(Constants.VIRTUAL_WIDTH*2, Constants.VIRTUAL_HEIGHT, Pixmap.Format.RGBA8888);
+        pixmap = new Pixmap(TERRAIN_WIDTH, Constants.VIRTUAL_HEIGHT, Pixmap.Format.RGBA8888);
         //pixmap.drawPixmap(p, 0,0,tex.getWidth(),tex.getHeight(),0,0,Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
        // p.dispose();
         pixmap.setBlending(Pixmap.Blending.None);
