@@ -41,6 +41,7 @@ public abstract class BaseView extends Group implements Cullable{
         super.act(delta);
         if(getStage()!= null) {
             //LogUtils.Log(getStage().getCamera().position.x-getStage().getCamera().viewportWidth/2, getStage().getCamera().position.y-getStage().getCamera().viewportHeight/2, getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+            //TODO: Extend camera to boolean has position changed?
             rectangle.set(getStage().getCamera().position.x-getStage().getCamera().viewportWidth/2, getStage().getCamera().position.y-getStage().getCamera().viewportHeight/2, getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
             setCullingArea(rectangle);
         }

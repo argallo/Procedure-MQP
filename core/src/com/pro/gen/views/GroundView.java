@@ -4,12 +4,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.pro.gen.components.Background;
+import com.pro.gen.components.Button;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomTerrain;
 import com.pro.gen.simplealien.FinalAlien;
 import com.pro.gen.simplealien.RandomAlien;
+import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.worldcomponents.ParallaxBackground;
+
+import java.util.Arrays;
 
 /**
  * Created by Gallo on 10/27/2015.
@@ -18,9 +23,10 @@ public class GroundView extends BaseView{
 
     Background background;
     RandomTerrain randomTerrain;
-    TintedImage image, image2, image3;
-    TintedImage land;
+    ParallaxBackground terrain1, terrain2, terrain3;
+    TintedImage land, ship;
     FinalAlien alien;
+    Button leave;
 
     int move = 0;
     int right = 1;
@@ -36,26 +42,30 @@ public class GroundView extends BaseView{
         Color color = ColorHelper.generateGoodColor();
         color = ColorHelper.lighten(color, 0.0f);
 
+        randomTerrain = new RandomTerrain(15);
 
-        image3 = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image3.setSize(6000, Constants.VIRTUAL_HEIGHT);
-        image3.setY(250);
+
+        terrain3 = new ParallaxBackground(this, Arrays.copyOfRange(randomTerrain.getTextures(), 0, 4), new Color(color), 290, 10, 0.4f);
+        //image3 = new TintedImage(randomTerrain.getRandomTexture(), new Color(color));
+        //image3.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/4);
+        //image3.setY(300);
 
 
         color = ColorHelper.lighten(color, 0.1f);
-        image2 = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image2.setSize(6000, Constants.VIRTUAL_HEIGHT);
-        image2.setY(220);
+        terrain2 = new ParallaxBackground(this, Arrays.copyOfRange(randomTerrain.getTextures(), 5, 9), new Color(color), 265,10, 0.3f);
+        //image2 = new TintedImage(randomTerrain.getRandomTexture(), new Color(color));
+        //image2.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/4);
+        //image2.setY(270);
 
         color = ColorHelper.lighten(color, 0.2f);
+        terrain1 = new ParallaxBackground(this, Arrays.copyOfRange(randomTerrain.getTextures(), 10, 14), new Color(color), 240,10, 0.2f);
+        //image = new TintedImage(randomTerrain.getRandomTexture(), new Color(color));
+        //image.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/4);
+        //image.setY(240);
 
-        image = new TintedImage(new RandomTerrain().getTexture(), new Color(color));
-        image.setSize(6000, Constants.VIRTUAL_HEIGHT);
-        image.setY(200);
 
-
-
-        /*image.addListener(new ClickListener() {
+        /*
+        image.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //TODO: fix out of memory error from doing silly testing, optimize random terrain code.
@@ -81,20 +91,26 @@ public class GroundView extends BaseView{
                 background.setTint(ColorHelper.generateLightColor());
             }
         });
-
         */
+        ship = new TintedImage(Constants.SMALL_SHIP, Color.WHITE);
+        ship.setSize(250, 500);
+        ship.setPosition(Constants.VIRTUAL_WIDTH / 2 - ship.getWidth() / 2, 100);
+
+        leave = new Button(Constants.CURVERECT, Color.GREEN, "Leave", Assets.getInstance().getSmallFont());
+        leave.setSize(150, 50);
+        leave.setPosition(Constants.VIRTUAL_WIDTH / 2 - leave.getWidth() / 2, 620);
 
         land = new TintedImage(Constants.PIXEL, ColorHelper.generateGoodColor());
         land.setSize(Constants.VIRTUAL_WIDTH, 250);
 
         alien = new FinalAlien(100,250,new RandomAlien());
-        alien.setPosition(100, 250);
+        alien.setPosition(Constants.VIRTUAL_WIDTH/2-alien.getWidth()/2, 250);
         alien.setScale(0.5f, 0.5f);
 
         this.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(x > Constants.VIRTUAL_WIDTH/2){
+                if(x > getStage().getCamera().position.x){
                     move = right;
                 } else {
                     move = left;
@@ -105,7 +121,7 @@ public class GroundView extends BaseView{
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if((move == right && x > Constants.VIRTUAL_WIDTH/2) ||(move == left && x < Constants.VIRTUAL_WIDTH/2)) {
+                if((move == right && x > getStage().getCamera().position.x) ||(move == left && x < getStage().getCamera().position.x)) {
                     move = 0;
                 }
             }
@@ -118,11 +134,27 @@ public class GroundView extends BaseView{
         super.act(delta);
 
         if(move == right){
-            getStage().getCamera().translate(300 * delta, 0, 0);
-            background.setX(background.getX() + 300*delta);
-            alien.setX(alien.getX()+(600*delta));
+            if(alien.getX() > getStage().getCamera().position.x+50) {
+                getStage().getCamera().translate(300 * delta, 0, 0);
+                background.setX(background.getX() + 300 * delta);
+                alien.setX(alien.getX() + (300 * delta));
+                land.setX(land.getX() + (300 * delta));
+                terrain3.setX((100 * delta));
+                terrain2.setX((50 * delta));
+            } else {
+                alien.setX(alien.getX() + (300 * delta));
+            }
         } else if(move == left){
-            getStage().getCamera().translate(-300*delta, 0,0);
+            if(alien.getX() < getStage().getCamera().position.x-50-alien.getWidth()/2) {
+                getStage().getCamera().translate(-300 * delta, 0, 0);
+                background.setX(background.getX() - 300 * delta);
+                alien.setX(alien.getX() - (300 * delta));
+                land.setX(land.getX() - (300 * delta));
+                terrain3.setX(-(100 * delta));
+                terrain2.setX(-(50 * delta));
+            } else {
+                alien.setX(alien.getX() - (300 * delta));
+            }
         }
 
 /*        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
@@ -172,10 +204,12 @@ public class GroundView extends BaseView{
 
     @Override
     public void addActors() {
-        addActor(background);
-        addActor(image3);
-        addActor(image2);
-        addActor(image);
+        addActorAt(0, background);
+        //addActor(image3);
+       // addActor(image2);
+       // addActor(image);
+        addActor(ship);
+        addActor(leave);
         addActor(land);
         addActor(alien);
     }

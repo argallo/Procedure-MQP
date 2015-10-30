@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.RectBuilders;
 
 import java.util.ArrayList;
@@ -15,40 +14,48 @@ import java.util.ArrayList;
 public class RandomTerrain {
 
     private Pixmap pixmap;
-    private Texture texture;
+    private Texture[] texture;
     private ArrayList<RectBuilders> rectangles;
 
-    private static final int TERRAIN_WIDTH = 6000;
+    private static final int TERRAIN_WIDTH = 1024;
+    private static final int TERRAIN_HEIGHT = 256;
 
-    public RandomTerrain(){
-        rectangles = new ArrayList<RectBuilders>();
-        initPixmap();
-        createRectangles();
-        createTriangleCuts();
-        texture = new Texture(pixmap);
-        pixmap.dispose();
+    public RandomTerrain(int textureAmts){
+        texture = new Texture[textureAmts];
+        for(int i = 0; i < textureAmts; i++) {
+            rectangles = new ArrayList<RectBuilders>();
+            initPixmap();
+            createRectangles();
+            createTriangleCuts();
+            texture[i] = new Texture(pixmap);
+            pixmap.dispose();
+        }
 
     }
 
     public void createRectangles(){
         int currentX = 0;
         while (currentX < TERRAIN_WIDTH){
-            int width = MathUtils.random(30, 200);
+            int width = MathUtils.random(30, 80);
             int y;
+
+            //int width = MathUtils.random(10,100);
+            //int y = MathUtils.random(350,500);
             //if(currentX<300 || currentX>1000){
-            //    y = MathUtils.random(200, 720);
+                //y = MathUtils.random(200, 720);
           //  } else if (currentX<500 || currentX>700){
           //      y = MathUtils.random(300, 720);
           //  } else {
-                y = MathUtils.random(500, 720);
+               y = MathUtils.random(0, 200);
            // }
-
+            //int width = MathUtils.random(1, 10);
+            //int y = MathUtils.random(700, 920);
 
 
             pixmap.fillRectangle(currentX, 0, width, y);
 
             if(rectangles.isEmpty()){
-                rectangles.add(new RectBuilders(currentX, 0, width, Constants.VIRTUAL_HEIGHT-y, RectBuilders.UP));
+                rectangles.add(new RectBuilders(currentX, 0, width, TERRAIN_HEIGHT-y, RectBuilders.UP));
             } else {
                 int height = y;
                 boolean left = rectangles.get(rectangles.size()-1).getHeight() < height ? RectBuilders.UP : RectBuilders.DOWN;
@@ -91,21 +98,18 @@ public class RandomTerrain {
     }
 
     public void initPixmap(){
-        //Texture tex = Assets.getInstance().getTexture(Constants.RECTANGLE);
-        //tex.getTextureData().prepare();
-       // Pixmap p = tex.getTextureData().consumePixmap();
-
-        pixmap = new Pixmap(TERRAIN_WIDTH, Constants.VIRTUAL_HEIGHT, Pixmap.Format.RGBA8888);
-        //pixmap.drawPixmap(p, 0,0,tex.getWidth(),tex.getHeight(),0,0,Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-       // p.dispose();
+        pixmap = new Pixmap(TERRAIN_WIDTH, TERRAIN_HEIGHT, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         pixmap.setColor(Color.CLEAR);
     }
 
-    public Texture getTexture() {
-        return texture;
+    public Texture getRandomTexture() {
+        return texture[MathUtils.random(0,texture.length-1)];
     }
 
+    public Texture[] getTextures() {
+        return texture;
+    }
 }
