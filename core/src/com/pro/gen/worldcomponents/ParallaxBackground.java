@@ -26,11 +26,16 @@ public class ParallaxBackground  {
 
     }
 
-
     public void setX(float amount){
         for(TintedImage chunck : chuncks){
             chunck.setX(chunck.getX()+amount);
         }
     }
+
+    public void setTint(Color color){
+        for(TintedImage chunck : chuncks){
+            chunck.setTint(color);
+        }
+     }
 
 }

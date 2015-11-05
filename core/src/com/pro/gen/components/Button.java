@@ -54,6 +54,13 @@ public class Button extends TintedImage {
     }
 
     @Override
+    public void setX(float x) {
+        super.setX(x);
+        if(buttonLabel!= null)
+            buttonLabel.setX(x);
+    }
+
+    @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
         if(buttonLabel!= null)

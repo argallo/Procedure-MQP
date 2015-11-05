@@ -13,6 +13,18 @@ public class ColorHelper {
      * Generates a color at random that isnt too dark or too light
      * @return a random color
      */
+    public static Color generateDarkColor(){
+        float h = MathUtils.random();
+        float s = 1;
+        float b = 1;
+        int color = HSBtoRGB(h, s, b);
+        return new Color(getRed(color)/255f,getGreen(color)/255f,getBlue(color)/255f,1f);
+    }
+
+    /**
+     * Generates a color at random that isnt too dark or too light
+     * @return a random color
+     */
     public static Color generateGoodColor(){
         float h = MathUtils.random();
         float s = MathUtils.random(0.5f)+0.5f;
@@ -56,6 +68,21 @@ public class ColorHelper {
         return color;
     }
 
+
+    public static Color changeHue(Color color, float hueAmt){
+        float[] hsb = new float[3];
+        RGBtoHSB((int)(color.r*255), (int)(color.g*255), (int)(color.b*255), hsb);
+        if(hsb[0]+hueAmt > 1){
+            hsb[0] = 1 - (hsb[0] + 1);
+        } else {
+            hsb[0] = Math.max(hsb[0] + hueAmt, 0);
+        }
+        int c = HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        color.r = getRed(c)/255f;
+        color.g = getGreen(c)/255f;
+        color.b = getBlue(c)/255f;
+        return color;
+    }
 
 
     /**
