@@ -10,8 +10,6 @@ import java.util.ArrayList;
  */
 public class FinalAlien extends Group {
 
-    public static final int MSPEED = 200;
-
     ArrayList<CharacterPart> characterParts;
     int currentDirection;
 
@@ -50,10 +48,14 @@ public class FinalAlien extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        moveX(delta);
+        //moveX(delta);
     }
 
-    private void moveX(float delta){
+    public int getCurrentDirection() {
+        return currentDirection;
+    }
+
+    /*  private void moveX(float delta){
         if(currentDirection == Animation.LEFT){
             this.setX(this.getX()-(delta*MSPEED));
         }
@@ -61,4 +63,5 @@ public class FinalAlien extends Group {
             this.setX(this.getX()+(delta*MSPEED));
         }
     }
+    */
 }

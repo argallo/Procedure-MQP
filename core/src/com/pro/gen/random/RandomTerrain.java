@@ -37,20 +37,7 @@ public class RandomTerrain {
         int currentX = 0;
         while (currentX < TERRAIN_WIDTH){
             int width = MathUtils.random(30, 80);
-            int y;
-
-            //int width = MathUtils.random(10,100);
-            //int y = MathUtils.random(350,500);
-            //if(currentX<300 || currentX>1000){
-                //y = MathUtils.random(200, 720);
-          //  } else if (currentX<500 || currentX>700){
-          //      y = MathUtils.random(300, 720);
-          //  } else {
-               y = MathUtils.random(0, 200);
-           // }
-            //int width = MathUtils.random(1, 10);
-            //int y = MathUtils.random(700, 920);
-
+            int y = MathUtils.random(0, 200);
 
             pixmap.fillRectangle(currentX, 0, width, y);
 
