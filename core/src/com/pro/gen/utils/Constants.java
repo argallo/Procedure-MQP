@@ -58,6 +58,7 @@ public class Constants {
     /* Small */
     public static final String TRIANGLE = "Objects/Small/white_triangle_small.png";
     public static final String LINE = "Objects/Small/white_line_small.png";
+    public static final String PISTOL = "Objects/Small/lasergun_small.png";
 
     /* X-Small */
     public static final String TWINKLE = "Objects/XSmall/white_twinkle_xsmall.png";
@@ -72,7 +73,7 @@ public class Constants {
 
     public static final String[] COMMON_IMAGES = new String[]{
             RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER, ABS_PLANET, SUN, RING, LINE, PIXEL, SMALL_SHIP,
-            ALIEN,ALIEN_LEFT,ALIENT_RIGHT
+            ALIEN,ALIEN_LEFT,ALIENT_RIGHT, PISTOL
     };
 
     public static final String[] SPLASH_IMAGES = new String[]{

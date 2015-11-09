@@ -14,6 +14,7 @@ import com.pro.gen.simplealien.RandomAlien;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.weapons.SimplePistol;
 import com.pro.gen.worldcomponents.ParallaxBackground;
 
 /**
@@ -28,7 +29,7 @@ public class GroundView extends BaseView{
     TintedImage land, ship;
     FinalAlien alien;
 
-    Button leave, buttonLeft, buttonRight;
+    Button fire, leave, buttonLeft, buttonRight;
     boolean leftDown = false;
     boolean rightDown = false;
 
@@ -57,15 +58,27 @@ public class GroundView extends BaseView{
         alien = new FinalAlien(100,250,new RandomAlien());
         alien.setPosition(Constants.VIRTUAL_WIDTH / 2 - alien.getWidth() / 2, 250);
         alien.setScale(0.5f, 0.5f);
+        alien.attachWeapon(new SimplePistol());
 
         buttonLeft = new Button(Constants.CIRCLE, Color.BLUE,"Left", Assets.getInstance().getSmallFont());
         buttonRight = new Button(Constants.CIRCLE, Color.BLUE,"Right", Assets.getInstance().getSmallFont());
+        fire = new Button(Constants.CIRCLE, Color.GREEN,"Fire", Assets.getInstance().getSmallFont());
 
         buttonLeft.setSize(100,100);
         buttonRight.setSize(100,100);
+        fire.setSize(100, 100);
 
-        buttonLeft.setPosition(20, 20);
+        fire.setPosition(20, 20);
+        buttonLeft.setPosition(Constants.VIRTUAL_WIDTH - buttonRight.getWidth() - 130, 20);
         buttonRight.setPosition(Constants.VIRTUAL_WIDTH - buttonRight.getWidth() - 20, 20);
+
+        fire.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                alien.getWeapon().fire();
+                return true;
+            }
+        });
 
         buttonLeft.addListener(new InputListener() {
             @Override
@@ -111,6 +124,7 @@ public class GroundView extends BaseView{
         cameraUpdater.register(land);
         cameraUpdater.register(buttonRight);
         cameraUpdater.register(buttonLeft);
+        cameraUpdater.register(fire);
         cameraUpdater.register(terrain);
 
     }
@@ -131,6 +145,7 @@ public class GroundView extends BaseView{
         addActor(alien);
         addActor(buttonLeft);
         addActor(buttonRight);
+        addActor(fire);
     }
 
 

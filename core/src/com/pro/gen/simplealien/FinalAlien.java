@@ -2,6 +2,7 @@ package com.pro.gen.simplealien;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.Animation;
+import com.pro.gen.weapons.Weapon;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class FinalAlien extends Group {
 
     ArrayList<CharacterPart> characterParts;
     int currentDirection;
+    Weapon weapon;
 
     public FinalAlien(float width, float height, RandomAlien randomAlien){
         setSize(width, height);
@@ -45,23 +47,22 @@ public class FinalAlien extends Group {
         }
     }
 
+    public void attachWeapon(Weapon weapon){
+        this.weapon = weapon;
+        addActor(weapon);
+    }
+
+
     @Override
     public void act(float delta) {
         super.act(delta);
-        //moveX(delta);
     }
 
     public int getCurrentDirection() {
         return currentDirection;
     }
 
-    /*  private void moveX(float delta){
-        if(currentDirection == Animation.LEFT){
-            this.setX(this.getX()-(delta*MSPEED));
-        }
-        else if(currentDirection == Animation.RIGHT){
-            this.setX(this.getX()+(delta*MSPEED));
-        }
+    public Weapon getWeapon() {
+        return weapon;
     }
-    */
 }

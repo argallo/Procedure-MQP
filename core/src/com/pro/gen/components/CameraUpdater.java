@@ -58,14 +58,13 @@ public class CameraUpdater {
      * @param sign whether the movement is positive (right) or negative (left)
      */
     public void moveCameraComponents(float delta, int sign){
-        if(player.getX() > player.getStage().getCamera().position.x+MOVEMENT_GAP ||
-                player.getX() < player.getStage().getCamera().position.x-MOVEMENT_GAP-player.getWidth()/2) {
+        player.setX(player.getX() + (sign*(CAMERA_SPEED * delta)));
+        if(player.getX() > player.getStage().getCamera().position.x+MOVEMENT_GAP || player.getX() < player.getStage().getCamera().position.x-MOVEMENT_GAP-player.getWidth()/2) {
             player.getStage().getCamera().translate((sign*CAMERA_SPEED) * delta, 0, 0);
             for(int i = 0; i < cameraActors.size(); i++){
                 cameraActors.get(i).setX(cameraActors.get(i).getX() + (sign*((CAMERA_SPEED * speeds.get(i))* delta)));
             }
         }
-        player.setX(player.getX() + (sign*(CAMERA_SPEED * delta)));
     }
 
 }
