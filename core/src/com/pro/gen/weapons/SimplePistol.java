@@ -9,14 +9,16 @@ import com.pro.gen.utils.Constants;
  */
 public class SimplePistol extends Weapon {
 
-    public SimplePistol() {
-        super(Constants.PISTOL, Color.WHITE);
+    CollisionChecker checker;
+    public SimplePistol(CollisionChecker checker) {
+        super(Constants.PISTOL, Color.WHITE, new SimpleBullet());
+        this.checker = checker;
         setSize(80, 40);
         setPosition(53, 60);
     }
 
     @Override
     public void fire() {
-        this.addActor(new Bullet(Constants.RECTANGLE, Color.RED, Animation.RIGHT, getX() + getWidth() - 6, getY() + getHeight() / 2+4, new CollisionChecker()));
+        this.addActor(new Bullet(Constants.RECTANGLE, Color.RED, Animation.RIGHT, getX() + getWidth() - 6, getY() + getHeight() / 2+4, checker));
     }
 }

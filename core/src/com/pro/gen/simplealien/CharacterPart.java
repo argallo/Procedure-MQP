@@ -1,5 +1,6 @@
 package com.pro.gen.simplealien;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.pro.gen.components.Animation;
 import com.pro.gen.components.AnimationList;
@@ -66,6 +67,20 @@ public class CharacterPart extends Group {
 
         return new CharacterPart(TintedImage.Clone(characterPart.image), characterPart.getWidth(),
                 characterPart.getHeight(), characterPart.getX(), characterPart.getY(), newList, characterPart.animation);
+    }
+
+    public void red(){
+        image.setTint(Color.RED);
+        for(CharacterPart part : subParts){
+            part.red();
+        }
+    }
+
+    public void unRed(){
+        image.setPreviousColor();
+        for(CharacterPart part : subParts){
+            part.unRed();
+        }
     }
 
     /**

@@ -16,8 +16,13 @@ import com.pro.gen.utils.Assets;
  */
 public class TintedImage extends Image {
 
-    Color tint;
-    Color batchColor;
+    private Color tint;
+    private Color batchColor;
+    private Color previousColor = Color.WHITE;
+
+    public TintedImage(String imageName){
+        this(imageName, Color.WHITE);
+    }
 
     public TintedImage(String imageName, Color tint){
         this(Assets.getInstance().getTexture(imageName), tint);
@@ -71,11 +76,16 @@ public class TintedImage extends Image {
     }
 
     public void setTint(Color tint) {
+        previousColor = this.tint;
         this.tint = tint;
     }
 
     public Color getTint() {
         return tint;
+    }
+
+    public void setPreviousColor(){
+        this.tint = previousColor;
     }
 
     public void setImage(String image) {
@@ -85,6 +95,7 @@ public class TintedImage extends Image {
     public static TintedImage Clone(TintedImage tintedImage){
         return new TintedImage(tintedImage.getDrawable(), tintedImage.tint);
     }
+
 
 
 }

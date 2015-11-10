@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.utils.LogUtils;
 import com.pro.gen.views.BaseView;
 
 /**
@@ -25,10 +24,9 @@ public class ParallaxBackground extends Actor {
         this.terrainChunks = new TintedImage[terrains][chuckSize];
         for(int j = 0; j < terrainChunks.length; j++){
             for(int i = 0; i < terrainChunks[j].length; i++){
-                LogUtils.Log(MathUtils.random(j*(textures.length/terrains)));
                 terrainChunks[j][i] = new TintedImage(textures[MathUtils.random(j*(textures.length/terrains), (((j+1)*(textures.length/terrains))-1))], new Color(color));
                 terrainChunks[j][i].setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT * (peaks-(j*PEAK_OFFSET)));
-                terrainChunks[j][i].setPosition((i-(chuckSize/2)) * Constants.VIRTUAL_WIDTH, height-(j*TERRAIN_OFFSET));
+                terrainChunks[j][i].setPosition(i * Constants.VIRTUAL_WIDTH, height-(j*TERRAIN_OFFSET));
                 baseView.addActor(terrainChunks[j][i]);
             }
             color = ColorHelper.lighten(color, LIGHTING_OFFSET);

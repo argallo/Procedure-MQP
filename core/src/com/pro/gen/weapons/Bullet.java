@@ -27,7 +27,7 @@ public class Bullet extends TintedImage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(!collisionChecker.collided()){
+        if(!collisionChecker.collided(this)){
             if(bx-getCoordsX() == 0 || bx == Integer.MIN_VALUE) {
                 setX(getX() + (direction == Animation.LEFT ? (-1 * SPEED * delta) : (SPEED * delta)));
             } else {
@@ -39,7 +39,6 @@ public class Bullet extends TintedImage {
         if(getX() > 1500){
             remove();
         }
-
         bx = getCoordsX();
     }
 

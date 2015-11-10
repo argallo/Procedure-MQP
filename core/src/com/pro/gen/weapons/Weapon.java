@@ -8,8 +8,11 @@ import com.pro.gen.components.TintedGroup;
  */
 public abstract class Weapon extends TintedGroup{
 
-    public Weapon(String imageName, Color tint) {
+    Bullet bullet;
+
+    public Weapon(String imageName, Color tint, Bullet bullet) {
         super(imageName, tint);
+        this.bullet = bullet;
     }
 
     public abstract void fire();

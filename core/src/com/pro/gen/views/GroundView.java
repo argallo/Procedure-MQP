@@ -1,9 +1,6 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.pro.gen.components.Animation;
 import com.pro.gen.components.BackgroundSky;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.CameraUpdater;
@@ -11,9 +8,13 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomTerrain;
 import com.pro.gen.simplealien.FinalAlien;
 import com.pro.gen.simplealien.RandomAlien;
+import com.pro.gen.twod.levelpieces.LevelEnemies;
+import com.pro.gen.twod.levelpieces.LevelEnemyStructures;
+import com.pro.gen.twod.uibuttons.UIButtonGroup;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.weapons.CollisionChecker;
 import com.pro.gen.weapons.SimplePistol;
 import com.pro.gen.worldcomponents.ParallaxBackground;
 
@@ -24,15 +25,17 @@ public class GroundView extends BaseView{
 
     CameraUpdater cameraUpdater;
     BackgroundSky background;
-    RandomTerrain randomTerrain;
     ParallaxBackground terrain;
     TintedImage land, ship;
     FinalAlien alien;
+    LevelEnemies levelEnemies;
+    LevelEnemyStructures levelEnemyStructures;
 
-    Button fire, leave, buttonLeft, buttonRight;
-    boolean leftDown = false;
-    boolean rightDown = false;
+    public static final int WORLD_LENGTH = 10; //TODO: change to be based off planet level?
 
+    Button leave;
+
+    UIButtonGroup uiButtonGroup;
 
 
     @Override
@@ -41,8 +44,7 @@ public class GroundView extends BaseView{
         Color color = ColorHelper.generateDarkColor();
         Color backgroundColor = ColorHelper.changeHue(new Color(color), 0.3f);
         background = new BackgroundSky(Constants.PIXEL, new Color(backgroundColor));
-        randomTerrain = new RandomTerrain(15);
-        terrain = new ParallaxBackground(this, randomTerrain.getTextures(), color, 290, 10, 0.4f, 3);
+        terrain = new ParallaxBackground(this, new RandomTerrain(15).getTextures(), color, 290, WORLD_LENGTH, 0.4f, 3);
 
         ship = new TintedImage(Constants.SMALL_SHIP, Color.WHITE);
         ship.setSize(250, 500);
@@ -55,76 +57,24 @@ public class GroundView extends BaseView{
         land = new TintedImage(Constants.PIXEL, ColorHelper.generateGoodColor());
         land.setSize(Constants.VIRTUAL_WIDTH, 250);
 
+
+
+
+
+        CollisionChecker check = new CollisionChecker(alien); //fix this
+
+
         alien = new FinalAlien(100,250,new RandomAlien());
         alien.setPosition(Constants.VIRTUAL_WIDTH / 2 - alien.getWidth() / 2, 250);
         alien.setScale(0.5f, 0.5f);
-        alien.attachWeapon(new SimplePistol());
-
-        buttonLeft = new Button(Constants.CIRCLE, Color.BLUE,"Left", Assets.getInstance().getSmallFont());
-        buttonRight = new Button(Constants.CIRCLE, Color.BLUE,"Right", Assets.getInstance().getSmallFont());
-        fire = new Button(Constants.CIRCLE, Color.GREEN,"Fire", Assets.getInstance().getSmallFont());
-
-        buttonLeft.setSize(100,100);
-        buttonRight.setSize(100,100);
-        fire.setSize(100, 100);
-
-        fire.setPosition(20, 20);
-        buttonLeft.setPosition(Constants.VIRTUAL_WIDTH - buttonRight.getWidth() - 130, 20);
-        buttonRight.setPosition(Constants.VIRTUAL_WIDTH - buttonRight.getWidth() - 20, 20);
-
-        fire.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                alien.getWeapon().fire();
-                return true;
-            }
-        });
-
-        buttonLeft.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                alien.switchDirections(Animation.LEFT);
-                leftDown = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (!rightDown) {
-                    alien.switchDirections(Animation.CALM);
-                } else {
-                    alien.switchDirections(Animation.RIGHT);
-                }
-                leftDown = false;
-            }
-        });
-
-        buttonRight.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                alien.switchDirections(Animation.RIGHT);
-                rightDown = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (!leftDown) {
-                    alien.switchDirections(Animation.CALM);
-                } else {
-                 alien.switchDirections(Animation.LEFT);
-                }
-                rightDown = false;
-            }
-        });
-
+        alien.attachWeapon(new SimplePistol(check));
 
         cameraUpdater = new CameraUpdater(alien);
+
+        uiButtonGroup = new UIButtonGroup(cameraUpdater, alien);
+
         cameraUpdater.register(background);
         cameraUpdater.register(land);
-        cameraUpdater.register(buttonRight);
-        cameraUpdater.register(buttonLeft);
-        cameraUpdater.register(fire);
         cameraUpdater.register(terrain);
 
     }
@@ -143,9 +93,9 @@ public class GroundView extends BaseView{
         addActor(leave);
         addActor(land);
         addActor(alien);
-        addActor(buttonLeft);
-        addActor(buttonRight);
-        addActor(fire);
+        addActor(uiButtonGroup);
+        levelEnemies = new LevelEnemies(this, WORLD_LENGTH);
+
     }
 
 
