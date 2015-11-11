@@ -73,7 +73,7 @@ public class FinalAlien extends Group {
         return weapon;
     }
 
-    public void red(){
+    public void red(int hitAmt){
         if(!isRed) {
             isRed = true;
             this.addAction(Actions.sequence(new Action() {
@@ -96,6 +96,12 @@ public class FinalAlien extends Group {
             }));
         }
 
+    }
+
+    public void ragdoll(){
+        for(CharacterPart part : characterParts){
+            part.ragdoll();
+        }
     }
 
 }

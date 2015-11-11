@@ -1,7 +1,9 @@
 package com.pro.gen.simplealien;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Animation;
 import com.pro.gen.components.AnimationList;
 import com.pro.gen.components.TintedImage;
@@ -24,6 +26,7 @@ public class CharacterPart extends Group {
         this.animation = animation;
         setSize(width, height);
         setPosition(x, y);
+        //setOrigin(width/2, height/2);
         this.image.setSize(getWidth(), getHeight());
         this.addActor(this.image);
         this.subParts = subParts;
@@ -81,6 +84,13 @@ public class CharacterPart extends Group {
         for(CharacterPart part : subParts){
             part.unRed();
         }
+    }
+
+    public void ragdoll(){
+        //TODO: make collisions only check against visible items, remove hover animation to save on frames
+        //TODO: make aliens check collisions instead of bullets seeing less aliens on screen then possible bullets
+        //TODO: stress tests?
+        addAction(Actions.parallel(Actions.moveTo(-getY(), getX(), 1f, Interpolation.exp10In),Actions.rotateBy(90, 1f, Interpolation.exp10In)));
     }
 
     /**

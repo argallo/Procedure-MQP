@@ -15,18 +15,25 @@ public class LevelEnemies {
 
     private int worldLength;
     private GroundView groundView;
+    private EnemyAlien[] enemyAliens;
 
     public LevelEnemies(GroundView groundView, int worldLength){
         this.groundView = groundView;
         this.worldLength = worldLength;
         int enemies = MathUtils.random(5, 10);
+        enemyAliens = new EnemyAlien[enemies];
         for(int i = 0; i < enemies; i++){
             EnemyAlien enemyAlien = new EnemyAlien(100,250, new RandomAlien());
             enemyAlien.setPosition(MathUtils.random(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_WIDTH*(worldLength-1)), 250);
             enemyAlien.setScale(0.5f, 0.5f);
+            enemyAliens[i] = enemyAlien;
             groundView.addActor(enemyAlien);
         }
 
+    }
+
+    public EnemyAlien[] getEnemyAliens(){
+        return enemyAliens;
     }
 
 }

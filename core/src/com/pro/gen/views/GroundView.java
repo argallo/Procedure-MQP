@@ -30,6 +30,7 @@ public class GroundView extends BaseView{
     FinalAlien alien;
     LevelEnemies levelEnemies;
     LevelEnemyStructures levelEnemyStructures;
+    CollisionChecker check;
 
     public static final int WORLD_LENGTH = 10; //TODO: change to be based off planet level?
 
@@ -61,13 +62,13 @@ public class GroundView extends BaseView{
 
 
 
-        CollisionChecker check = new CollisionChecker(alien); //fix this
+
 
 
         alien = new FinalAlien(100,250,new RandomAlien());
         alien.setPosition(Constants.VIRTUAL_WIDTH / 2 - alien.getWidth() / 2, 250);
         alien.setScale(0.5f, 0.5f);
-        alien.attachWeapon(new SimplePistol(check));
+
 
         cameraUpdater = new CameraUpdater(alien);
 
@@ -94,8 +95,10 @@ public class GroundView extends BaseView{
         addActor(land);
         addActor(alien);
         addActor(uiButtonGroup);
-        levelEnemies = new LevelEnemies(this, WORLD_LENGTH);
 
+        levelEnemies = new LevelEnemies(this, WORLD_LENGTH);
+        check = new CollisionChecker(levelEnemies);
+        alien.attachWeapon(new SimplePistol(check));
     }
 
 

@@ -11,14 +11,16 @@ import com.pro.gen.components.TintedImage;
 public class Bullet extends TintedImage {
 
     CollisionChecker collisionChecker;
-    int direction;
+    private int direction;
+    private int damage;
     private final static float SPEED = 950;
     float bx = Integer.MIN_VALUE;
 
-    public Bullet(String imageName, Color tint, int direction, float x, float y, CollisionChecker collisionChecker) {
+    public Bullet(String imageName, Color tint, int direction, float x, float y, CollisionChecker collisionChecker, int damage) {
         super(imageName, tint);
         this.collisionChecker = collisionChecker;
         this.direction = direction;
+        this.damage = damage;
         setSize(10, 6);
         setPosition(x, y);
     }
@@ -47,4 +49,7 @@ public class Bullet extends TintedImage {
         return localToStageCoordinates(parentToLocalCoordinates(new Vector2(0,0))).x;
     }
 
+    public int getDamage() {
+        return damage;
+    }
 }
