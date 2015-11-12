@@ -19,7 +19,8 @@ public class Heads {
         TintedImage headImage = new TintedImage(Constants.CIRCLE, ColorHelper.generateGoodColor());
         ArrayList<CharacterPart> headComponents = Eyes.twoCircleEye(width, height / 3);
         headComponents.addAll(Mouth.getRandomMouth(width, height));
-        CharacterPart head = new CharacterPart(headImage, width, width, 0, height-height/3, headComponents, AnimationList.Float(3f, 20f));
+        //CharacterPart head = new CharacterPart(headImage, width, width, 0, height-height/3, headComponents, AnimationList.Float(3f, 20f));
+        CharacterPart head = new CharacterPart(headImage, width, width, 0, height-height/3, headComponents, AnimationList.None());
         return head;
     }
 

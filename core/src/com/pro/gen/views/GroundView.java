@@ -5,7 +5,6 @@ import com.pro.gen.components.BackgroundSky;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.CameraUpdater;
 import com.pro.gen.components.TintedImage;
-import com.pro.gen.random.RandomTerrain;
 import com.pro.gen.simplealien.FinalAlien;
 import com.pro.gen.simplealien.RandomAlien;
 import com.pro.gen.twod.levelpieces.LevelEnemies;
@@ -16,7 +15,6 @@ import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.weapons.CollisionChecker;
 import com.pro.gen.weapons.SimplePistol;
-import com.pro.gen.worldcomponents.ParallaxBackground;
 
 /**
  * Created by Gallo on 10/27/2015.
@@ -25,7 +23,7 @@ public class GroundView extends BaseView{
 
     CameraUpdater cameraUpdater;
     BackgroundSky background;
-    ParallaxBackground terrain;
+    //ParallaxBackground terrain;
     TintedImage land, ship;
     FinalAlien alien;
     LevelEnemies levelEnemies;
@@ -45,7 +43,7 @@ public class GroundView extends BaseView{
         Color color = ColorHelper.generateDarkColor();
         Color backgroundColor = ColorHelper.changeHue(new Color(color), 0.3f);
         background = new BackgroundSky(Constants.PIXEL, new Color(backgroundColor));
-        terrain = new ParallaxBackground(this, new RandomTerrain(15).getTextures(), color, 290, WORLD_LENGTH, 0.4f, 3);
+       // terrain = new ParallaxBackground(this, new RandomTerrain(15).getTextures(), color, 290, WORLD_LENGTH, 0.4f, 3);
 
         ship = new TintedImage(Constants.SMALL_SHIP, Color.WHITE);
         ship.setSize(250, 500);
@@ -76,7 +74,7 @@ public class GroundView extends BaseView{
 
         cameraUpdater.register(background);
         cameraUpdater.register(land);
-        cameraUpdater.register(terrain);
+        //cameraUpdater.register(terrain);
 
     }
 
@@ -96,8 +94,8 @@ public class GroundView extends BaseView{
         addActor(alien);
         addActor(uiButtonGroup);
 
-        levelEnemies = new LevelEnemies(this, WORLD_LENGTH);
-        check = new CollisionChecker(levelEnemies);
+        check = new CollisionChecker();
+        levelEnemies = new LevelEnemies(this, 400, check);
         alien.attachWeapon(new SimplePistol(check));
     }
 

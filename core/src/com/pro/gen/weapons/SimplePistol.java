@@ -11,7 +11,7 @@ public class SimplePistol extends Weapon {
 
     CollisionChecker checker;
     public SimplePistol(CollisionChecker checker) {
-        super(Constants.PISTOL, Color.WHITE, new SimpleBullet(checker));
+        super(Constants.PISTOL, Color.WHITE, new SimpleBullet());
         this.checker = checker;
         setSize(80, 40);
         setPosition(53, 60);
@@ -19,6 +19,8 @@ public class SimplePistol extends Weapon {
 
     @Override
     public void fire() {
-        this.addActor(new Bullet(Constants.RECTANGLE, Color.RED, Animation.RIGHT, getX() + getWidth() - 6, getY() + getHeight() / 2+4, checker, 15));
+        Bullet bullet = new Bullet(Constants.RECTANGLE, Color.RED, Animation.RIGHT, getX() + getWidth() - 6, getY() + getHeight() / 2+4, 15);
+        checker.addCollider(bullet);
+        this.addActor(bullet);
     }
 }

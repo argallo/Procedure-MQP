@@ -25,7 +25,8 @@ public class Bodys {
 
 
         TintedImage bodyImage = new TintedImage(Constants.BULDGE, ColorHelper.generateGoodColor());
-        CharacterPart body = new CharacterPart(bodyImage, bodyWidth, bodyHeight, bodyX, bodyY, new ArrayList<CharacterPart>(), AnimationList.Float(3f, 20f));
+        //CharacterPart body = new CharacterPart(bodyImage, bodyWidth, bodyHeight, bodyX, bodyY, new ArrayList<CharacterPart>(), AnimationList.Float(3f, 20f));
+        CharacterPart body = new CharacterPart(bodyImage, bodyWidth, bodyHeight, bodyX, bodyY, new ArrayList<CharacterPart>(), AnimationList.None());
         return body;
     }
 

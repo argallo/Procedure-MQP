@@ -50,6 +50,11 @@ public class TintedImage extends Image {
         super(drawable);
     }
 
+    public TintedImage(Color tint){
+        super();
+        this.tint = tint;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         validate();

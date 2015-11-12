@@ -26,7 +26,8 @@ public class Arms {
 
         Color color = ColorHelper.generateGoodColor();
         CharacterPart leftArm = new CharacterPart(new TintedImage(Constants.CIRCLE_SMALL, color), armWidth, armHeight, -140, 0, new ArrayList<CharacterPart>(), AnimationList.None());
-        CharacterPart rightArm = new CharacterPart(new TintedImage(Constants.CIRCLE_SMALL, color), armWidth, armHeight, armX+70, armY, new ArrayList<CharacterPart>(Arrays.asList(leftArm)), AnimationList.Float(3f, 20f));
+        //CharacterPart rightArm = new CharacterPart(new TintedImage(Constants.CIRCLE_SMALL, color), armWidth, armHeight, armX+70, armY, new ArrayList<CharacterPart>(Arrays.asList(leftArm)), AnimationList.Float(3f, 20f));
+        CharacterPart rightArm = new CharacterPart(new TintedImage(Constants.CIRCLE_SMALL, color), armWidth, armHeight, armX+70, armY, new ArrayList<CharacterPart>(Arrays.asList(leftArm)), AnimationList.None());
 
         return rightArm;
     }

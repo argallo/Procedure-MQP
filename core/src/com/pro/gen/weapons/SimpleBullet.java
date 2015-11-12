@@ -9,8 +9,8 @@ import com.pro.gen.utils.Constants;
  */
 public class SimpleBullet extends Bullet {
 
-    public SimpleBullet(CollisionChecker checker) {
-        super(Constants.RECTANGLE, Color.RED, Animation.RIGHT, 0, 0,  checker, 15); //fix later
+    public SimpleBullet() {
+        super(Constants.RECTANGLE, Color.RED, Animation.RIGHT, 0, 0, 15); //fix later
     }
 
 

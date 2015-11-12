@@ -25,7 +25,8 @@ public class Legs {
 
         Color color = ColorHelper.generateGoodColor();
         CharacterPart leftLeg = new CharacterPart(new TintedImage(Constants.BULDGE, color), legWidth, legHeight, -40, 0, new ArrayList<CharacterPart>(), AnimationList.None());
-        CharacterPart rightLeg = new CharacterPart(new TintedImage(Constants.BULDGE, color), legWidth, legHeight, legX+20, legY, new ArrayList<CharacterPart>(Arrays.asList(leftLeg)), AnimationList.Float(3f, 20f));
+        //CharacterPart rightLeg = new CharacterPart(new TintedImage(Constants.BULDGE, color), legWidth, legHeight, legX+20, legY, new ArrayList<CharacterPart>(Arrays.asList(leftLeg)), AnimationList.Float(3f, 20f));
+        CharacterPart rightLeg = new CharacterPart(new TintedImage(Constants.BULDGE, color), legWidth, legHeight, legX+20, legY, new ArrayList<CharacterPart>(Arrays.asList(leftLeg)), AnimationList.None());
 
         return rightLeg;
     }

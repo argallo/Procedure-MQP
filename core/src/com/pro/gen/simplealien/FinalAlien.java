@@ -1,9 +1,13 @@
 package com.pro.gen.simplealien;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Animation;
+import com.pro.gen.components.TintedImage;
+import com.pro.gen.utils.Constants;
 import com.pro.gen.weapons.Weapon;
 
 import java.util.ArrayList;
@@ -11,25 +15,27 @@ import java.util.ArrayList;
 /**
  * Created by Gallo on 10/2/2015.
  */
-public class FinalAlien extends Group {
+public class FinalAlien extends TintedImage {
 
+    /*
     ArrayList<CharacterPart> characterParts;
     int currentDirection;
     Weapon weapon;
     boolean isRed = false;
     //TintedImage hitboxes;
 
+
+
     public FinalAlien(float width, float height, RandomAlien randomAlien){
-        setSize(width, height);
         currentDirection = Animation.CALM;
         randomAlien.generateAlien(width, height);
         characterParts = randomAlien.getParts();
-        for(CharacterPart part : characterParts){
-            addActor(part);
-        }
+
+
        // hitboxes = new TintedImage(Constants.RECTANGLE, Color.RED);
        // hitboxes.setSize(getWidth(), getHeight());
        // addActor(hitboxes);
+
     }
 
     public void switchDirections(){
@@ -56,13 +62,15 @@ public class FinalAlien extends Group {
 
     public void attachWeapon(Weapon weapon){
         this.weapon = weapon;
-        addActor(weapon);
     }
 
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        for(CharacterPart part: characterParts){
+            part.act(delta);
+        }
     }
 
     public int getCurrentDirection() {
@@ -73,23 +81,34 @@ public class FinalAlien extends Group {
         return weapon;
     }
 
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        for(CharacterPart part: characterParts){
+            part.draw(batch, parentAlpha);
+        }
+    }
+
     public void red(int hitAmt){
         if(!isRed) {
             isRed = true;
             this.addAction(Actions.sequence(new Action() {
                 @Override
                 public boolean act(float delta) {
-                    for (CharacterPart part : characterParts) {
-                        part.red();
-                    }
+                    setTint(Color.RED);
+                    //for (CharacterPart part : characterParts) {
+                    //    part.red();
+                   // }
                     return true;
                 }
             }, Actions.delay(0.1f), new Action() {
                 @Override
                 public boolean act(float delta) {
-                    for (CharacterPart part : characterParts) {
-                        part.unRed();
-                    }
+                   setPreviousColor();
+                   // for (CharacterPart part : characterParts) {
+                   //      part.unRed();
+                   // }
                     isRed = false;
                     return true;
                 }
@@ -99,9 +118,32 @@ public class FinalAlien extends Group {
     }
 
     public void ragdoll(){
+        addAction(Actions.parallel(Actions.moveTo(-getY(), getX(), 1f, Interpolation.exp10In), Actions.rotateBy(90, 1f, Interpolation.exp10In)));
+    }
+
+
+
+    public void ragdoll(){
         for(CharacterPart part : characterParts){
             part.ragdoll();
         }
     }
 
+    @Override
+    public void setScale(float scaleX, float scaleY) {
+        super.setScale(scaleX, scaleY);
+        for(CharacterPart part : characterParts){
+            part.setScale(scaleX, scaleY);
+        }
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        for(CharacterPart part : characterParts){
+            part.setPosition(x, y);
+        }
+    }
+
+    */
 }
