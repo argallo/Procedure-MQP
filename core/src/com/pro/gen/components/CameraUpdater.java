@@ -1,7 +1,7 @@
 package com.pro.gen.components;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.pro.gen.simplealien.FinalAlien;
+import com.pro.gen.aliens.Alien;
 import com.pro.gen.utils.Constants;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class CameraUpdater {
 
-    FinalAlien player; // need to change
+    Alien player; // need to change
     private final static float CAMERA_SPEED = 300;
     private final static float MOVEMENT_GAP = 50;
 
@@ -20,7 +20,7 @@ public class CameraUpdater {
     private boolean leftDown = false;
     private boolean rightDown = false;
 
-    public CameraUpdater(FinalAlien player){
+    public CameraUpdater(Alien player){
         this.player = player;
         cameraActors = new ArrayList<Actor>();
         speeds = new ArrayList<Float>();

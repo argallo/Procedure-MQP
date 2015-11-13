@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.pro.gen.aliens.Alien;
 import com.pro.gen.components.Animation;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.CameraUpdater;
-import com.pro.gen.simplealien.FinalAlien;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 
@@ -20,7 +20,7 @@ public class UIButtonGroup extends Group{
     Button buttonFire;
 
 
-    public UIButtonGroup(CameraUpdater cameraUpdater, final FinalAlien alien){
+    public UIButtonGroup(CameraUpdater cameraUpdater, final Alien alien){
         this.setSize(Constants.VIRTUAL_WIDTH-40, 100);
         this.setPosition(20, 20);
 

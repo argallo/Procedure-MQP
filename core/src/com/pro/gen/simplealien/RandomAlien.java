@@ -10,7 +10,7 @@ public class RandomAlien {
     float width, height;
     ArrayList<CharacterPart> character;
 
-
+/*
     public void generateAlien(float width, float height){
         this.width = width;
         this.height = height;
@@ -41,6 +41,6 @@ public class RandomAlien {
         character.add(Arms.simpleArms(width, height));
     }
 
-
+*/
 
 }

@@ -1,21 +1,23 @@
 package com.pro.gen.simplealien;
 
+import com.badlogic.gdx.graphics.Color;
+import com.pro.gen.aliens.Alien;
+import com.pro.gen.aliens.AlienBuilder;
 import com.pro.gen.weapons.CollisionChecker;
 
 /**
  * Created by Gallo on 11/10/2015.
  */
-public class EnemyAlien extends FinalAlien {
+public class EnemyAlien extends Alien {
 
     HealthBar healthBar;
     CollisionChecker checker;
     private boolean isdead = false;
 
-    public EnemyAlien(float width, float height, RandomAlien randomAlien, CollisionChecker checker) {
-        super(width, height, randomAlien);
+    public EnemyAlien(AlienBuilder randomAlien, CollisionChecker checker) {
+        super(Color.WHITE, randomAlien);
         this.checker = checker;
         healthBar = new HealthBar(200);
-        //healthBar.addToActor(this);
         healthBar.setPosition(5, getHeight()+50);
     }
 

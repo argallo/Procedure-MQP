@@ -1,6 +1,9 @@
 package com.pro.gen.views;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.pro.gen.aliens.Alien;
+import com.pro.gen.aliens.SimpleAlienBuilder;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
@@ -10,8 +13,6 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.random.RandomPlanet;
-import com.pro.gen.simplealien.FinalAlien;
-import com.pro.gen.simplealien.RandomAlien;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.TransitionType;
@@ -33,7 +34,7 @@ public class CreateAlienView extends BaseView{
     private TextBox nicknameTextbox;
     private Background background;
     TintedImage head;
-    FinalAlien alien;
+    Alien alien;
 
     Planet planet;
     int alienLeft = 0;
@@ -55,7 +56,7 @@ public class CreateAlienView extends BaseView{
         homePlanet = new TextLabel("Home Planet", xsmallFont);
         nicknameTextbox = new TextBox(12, "", TextBox.CHARDIG);
         planet = new Planet(new RandomPlanet(), false, null);
-        alien = new FinalAlien(150, 300, new RandomAlien());
+        alien = new Alien(Color.WHITE, new SimpleAlienBuilder());
         //head.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0, 15f, 1f, Interpolation.pow2), Actions.moveBy(0, -15, 1f, Interpolation.pow2))));
 
     }
@@ -97,7 +98,7 @@ public class CreateAlienView extends BaseView{
             @Override
             public void buttonPressed() {
                 removeActor(alien);
-                alien = new FinalAlien(150, 300, new RandomAlien());
+                alien = new Alien(Color.WHITE, new SimpleAlienBuilder());
                 alien.setPosition(100,250);
                 addActor(alien);
                 removeActor(planet);

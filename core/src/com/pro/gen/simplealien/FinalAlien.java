@@ -1,21 +1,9 @@
 package com.pro.gen.simplealien;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.pro.gen.components.Animation;
-import com.pro.gen.components.TintedImage;
-import com.pro.gen.utils.Constants;
-import com.pro.gen.weapons.Weapon;
-
-import java.util.ArrayList;
-
 /**
  * Created by Gallo on 10/2/2015.
  */
-public class FinalAlien extends TintedImage {
+public class FinalAlien {
 
     /*
     ArrayList<CharacterPart> characterParts;

@@ -1,8 +1,8 @@
 package com.pro.gen.twod.levelpieces;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.pro.gen.aliens.SimpleAlienBuilder;
 import com.pro.gen.simplealien.EnemyAlien;
-import com.pro.gen.simplealien.RandomAlien;
 import com.pro.gen.views.GroundView;
 import com.pro.gen.weapons.CollisionChecker;
 
@@ -23,7 +23,7 @@ public class LevelEnemies {
         int enemies = MathUtils.random(50, 55);
         enemyAliens = new EnemyAlien[enemies];
         for(int i = 0; i < enemies; i++){
-            EnemyAlien enemyAlien = new EnemyAlien(100,250, new RandomAlien(), checker);
+            EnemyAlien enemyAlien = new EnemyAlien(new SimpleAlienBuilder(), checker);
             //enemyAlien.setPosition(MathUtils.random(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_WIDTH*(worldLength-1)), 250);
             enemyAlien.setPosition(MathUtils.random(400, 900), 250);
             enemyAlien.setScale(0.5f, 0.5f);
