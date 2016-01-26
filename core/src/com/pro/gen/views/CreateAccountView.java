@@ -20,6 +20,8 @@ import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
+import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.znewmqp.Tint;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,9 +57,9 @@ public class CreateAccountView extends BaseView {
 
     @Override
     public void init() {
-        background = new Background(Constants.RECTANGLE, Constants.UNIVERSE_BACKGROUND_COLOR);
-        loginCreate = new Button(Constants.RECTANGLE, Constants.PINK, SUBMIT, Assets.getInstance().getMidFont());
-        optionButton = new Button(Constants.RECTANGLE, Constants.PINK, LOGIN, Assets.getInstance().getMidFont());
+        background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
+        loginCreate = new Button(Pic.Pixel, Tint.PINK, SUBMIT, Assets.getInstance().getMidFont());
+        optionButton = new Button(Pic.Pixel, Tint.PINK, LOGIN, Assets.getInstance().getMidFont());
         usernameTBox = new TextBox(12, USERNAME, TextBox.CHARDIG);
         emailTBox = new TextBox(35, EMAIL, TextBox.EMAIL);
         passwordTBox = new TextBox(35, PASSWORD, TextBox.ALL, true);

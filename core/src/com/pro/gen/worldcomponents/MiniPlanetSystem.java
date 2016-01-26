@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
-import com.pro.gen.screens.SolarSystemScreen;
-import com.pro.gen.utils.Constants;
+import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.znewmqp.SolarSystem;
 
 /**
  * Created by Gallo on 10/26/2015.
@@ -18,9 +18,9 @@ public class MiniPlanetSystem extends Group {
     private TintedImage orbit;
 
 
-    public MiniPlanetSystem(Color color, SolarSystemScreen solarSystemScreen, int radiusAdd){
-        miniPlanet = new MiniPlanet(color, solarSystemScreen, radiusAdd);
-        orbit = new TintedImage(Constants.RING, Color.WHITE);
+    public MiniPlanetSystem(Color color, SolarSystem solarSystem, int radiusAdd){
+        miniPlanet = new MiniPlanet(color, solarSystem, radiusAdd);
+        orbit = new TintedImage(Pic.Ring, Color.WHITE);
         orbit.setSize((MiniPlanet.radiusX + radiusAdd)*2, (MiniPlanet.radiusY + radiusAdd)*2);
         orbit.setPosition((MiniPlanet.radiusY * 2) - radiusAdd, (MiniPlanet.radiusY * 2) - radiusAdd);
         orbit.setTouchable(Touchable.disabled);
@@ -34,8 +34,8 @@ public class MiniPlanetSystem extends Group {
 
     public void fadeOut(MiniPlanet selectedPlanet){
         if (!miniPlanet.equals(selectedPlanet))
-            addAction(Actions.alpha(0, 0.5f, Interpolation.exp10));
+            addAction(Actions.sequence(Actions.sizeTo(1,1,0.5f, Interpolation.exp10), Actions.visible(false)));
         else
-            orbit.addAction(Actions.alpha(0, 0.5f, Interpolation.exp10));
+            orbit.addAction(Actions.sequence(Actions.sizeTo(1, 1, 0.5f, Interpolation.exp10), Actions.visible(false)));
     }
 }

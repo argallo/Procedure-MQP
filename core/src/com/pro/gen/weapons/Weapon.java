@@ -1,12 +1,12 @@
 package com.pro.gen.weapons;
 
 import com.badlogic.gdx.graphics.Color;
-import com.pro.gen.components.TintedGroup;
+import com.pro.gen.components.TintedImage;
 
 /**
  * Created by Gallo on 11/6/2015.
  */
-public abstract class Weapon extends TintedGroup{
+public abstract class Weapon extends TintedImage{
 
     Bullet bullet;
 

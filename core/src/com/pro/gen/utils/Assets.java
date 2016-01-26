@@ -4,25 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-
-import java.util.HashMap;
+import com.pro.gen.znewmqp.Pic;
 
 /**
  * Created by Gallo on 8/11/2015.
  */
 public class Assets extends AssetManager {
 
-    /**
-     * texturesMap
-     *
-     */
-    private HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
+
     private TextureAtlas textureAtlas;
+
+    //Font vars
     private BitmapFont xsmallFont;
     private BitmapFont smallFont;
     private BitmapFont midFont;
@@ -31,7 +27,7 @@ public class Assets extends AssetManager {
     private FreeTypeFontGenerator generator;
 
     private TextureLoader.TextureParameter textureParam;
-    private ViewID currentID = ViewID.UNKNOWN;
+
 
     private static final Assets INSTANCE = new Assets();
 
@@ -44,7 +40,14 @@ public class Assets extends AssetManager {
         textureParam = new TextureLoader.TextureParameter();
         textureParam.minFilter = Texture.TextureFilter.Linear;
         textureParam.magFilter = Texture.TextureFilter.Linear;
+        createFonts();
 
+    }
+
+    /**
+     * Creates the different fonts that will be used in the application
+     */
+    public void createFonts(){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/arial.ttf"));
         font = new FreeTypeFontGenerator.FreeTypeFontParameter();
         font.size = 20;
@@ -57,28 +60,37 @@ public class Assets extends AssetManager {
         largeFont = generator.generateFont(font);
     }
 
+    /**
+     * Splash background image will not be in the texture atlas that way we can show this image
+     * while we load the texture atlas images.
+     * @return the texture region containing the splash texture
+     */
+    public TextureRegion getSplash(){
+        load(Pic.Splash, Texture.class, textureParam);
+        finishLoading();
+        return new TextureRegion(get(Pic.Splash,Texture.class));
+    }
 
     /**
-     * loadAssets: loads all assets whose filepaths are associated with the screenID
-     *
-     * @param viewID The id of the current screen
-     * @param isfinishLoading whether the function should block until all images are loaded
+     * Splash image is only needed during the splash loading screen and will not be used again
+     * so we can dispose of it to free up space.
      */
-    public void loadAssets(ViewID viewID, boolean isfinishLoading) {
-        String[] assets = getAssetList(viewID);
-        for(String asset : assets) {
-            load(asset, Texture.class, textureParam);
-        }
-        if(isfinishLoading) {
-            finishLoading();
-        }
+    public void disposeSplash(){
+        unload(Pic.Splash);
     }
 
     /**
      * loads assets that will stay loaded for all screens
      */
     public void loadCommonAssets() {
-        loadAssets(ViewID.UNKNOWN, true);
+        load("Appimages/textureatlas.atlas", TextureAtlas.class);
+        load(Pic.UI_Full, Texture.class, textureParam);
+        load(Pic.UI_Open, Texture.class, textureParam);
+        load(Pic.Ship, Texture.class, textureParam);
+        load(Pic.Ship_V, Texture.class, textureParam);
+        load(Pic.Planet_BG, Texture.class, textureParam);
+        load(Pic.Blank_Popup, Texture.class, textureParam);
+        finishLoading();
     }
 
     /**
@@ -89,25 +101,44 @@ public class Assets extends AssetManager {
      * @return TextureRegion the texture found in assets
      */
     public TextureRegion getTextureRegion(String textureID) {
-        return new TextureRegion(this.getTexture(textureID));
+        if(textureID.endsWith(".png")){
+            return new TextureRegion(get(textureID, Texture.class));
+        } else {
+            return get("Appimages/textureatlas.atlas", TextureAtlas.class).findRegion(textureID);
+        }
     }
 
-    /**
-     * getTextureRegion: uses the textures file path as the id so that it can
-     * create a texture region of the image to return
-     *
-     * @param textureID The id of the texture
-     * @return TextureRegion the texture found in assets
-     */
-    public Texture getTexture(String textureID) {
-        return this.get(textureID, Texture.class);
+    public BitmapFont getXSmallFont() {
+        return xsmallFont;
     }
+    public BitmapFont getSmallFont() {
+        return smallFont;
+    }
+    public BitmapFont getMidFont() {
+        return midFont;
+    }
+    public BitmapFont getLargeFont() {
+        return largeFont;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * disposeAssets: uses the current screenID to dispose of all loaded assets
      *
      * @param viewID The id of the current screen
-     */
+
     public void unloadAssets(ViewID viewID) {
         if(viewID != ViewID.UNKNOWN) {
             String[] assets = getAssetList(viewID);
@@ -118,7 +149,7 @@ public class Assets extends AssetManager {
     }
 
 
-    public void setCurrentID(ViewID currentID) {
+   /* public void setCurrentID(ViewID currentID) {
         this.currentID = currentID;
     }
 
@@ -126,12 +157,13 @@ public class Assets extends AssetManager {
         return currentID;
     }
 
+
     /**
      * getAssetList: gets the list of assets file paths that are associated with the current screenID
      *
      * @param viewID The id of the current screen
      * @return the string array containing the current screens image file paths
-     */
+
     public String[] getAssetList(ViewID viewID){
         switch(viewID){
             case SPLASH:
@@ -154,11 +186,23 @@ public class Assets extends AssetManager {
                 return null;
         }
     }
+    */
 
-    public BitmapFont getXSmallFont() { return xsmallFont; }
-    public BitmapFont getSmallFont() { return smallFont; }
-    public BitmapFont getMidFont() {
-        return midFont;
+    /**
+     * loadAssets: loads all assets whose filepaths are associated with the screenID
+     *
+     * @param viewID The id of the current screen
+     * @param isfinishLoading whether the function should block until all images are loaded
+
+    public void loadAssets(ViewID viewID, boolean isfinishLoading) {
+    String[] assets = getAssetList(viewID);
+    for(String asset : assets) {
+    load(asset, Texture.class, textureParam);
     }
-    public BitmapFont getLargeFont() { return largeFont; }
+    if(isfinishLoading) {
+    finishLoading();
+    }
+    }
+     */
+
 }

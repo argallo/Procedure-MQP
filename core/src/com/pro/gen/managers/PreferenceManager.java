@@ -27,4 +27,12 @@ public class PreferenceManager {
     public Preferences getPreferences() {
         return preferences;
     }
+
+    /**
+     * Determine if a user already has an account
+     * @return true if the user currently has an account saved locally
+     */
+    public boolean hasAccount(){
+        return preferences.getBoolean(HAS_ACCOUNT, false);
+    }
 }

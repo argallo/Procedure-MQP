@@ -1,18 +1,12 @@
 package com.pro.gen.simplealien;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.pro.gen.aliens.AlienParts;
-import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.utils.Constants;
-
 /**
  * Created by Gallo on 10/3/2015.
  */
 public class Arms {
 
 
-
+/*
     public static AlienParts simpleArms(float width, float height){
         float armWidth = MathUtils.random(width * 0.16f, width * 0.2f);
         float armHeight = armWidth;
@@ -35,6 +29,6 @@ public class Arms {
 
     }
 
-
+*/
 
 }

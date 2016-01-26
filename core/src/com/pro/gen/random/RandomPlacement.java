@@ -1,39 +1,38 @@
 package com.pro.gen.random;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.pro.gen.worldcomponents.MapItems;
+import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.Item;
 
 /**
  * Created by Gallo on 8/15/2015.
  */
 public class RandomPlacement {
 
+    private float avoidDiameter;
+
+    private int size;
+    private int WIDTH;
+    private int HEIGHT;
 
     private float[] widths;
     private float[] heights;
     private float[] xs;
     private float[] ys;
 
-    private int size;
-    private MapItems[] mapItems;
-    private float recWidth;
-    private float recHeight;
-    private float planetDiameter;
+    private Item item;
 
-    public RandomPlacement(MapItems[] mapItems, float recWidth, float recHeight, float planetDiameter){
-        this.size = mapItems.length;
-        this.mapItems = mapItems;
-        this.recWidth = recWidth;
-        this.recHeight = recHeight;
-        this.planetDiameter = planetDiameter;
-        init();
+    public RandomPlacement(Item item, int width, int height, int size){
+        this(item, width, height, size, 0);
     }
 
-    public RandomPlacement(MapItems[] mapItems, float recWidth, float recHeight){
-        this(mapItems, recWidth, recHeight, 0);
-    }
 
-    public void init(){
+    public RandomPlacement(Item item, int width, int height, int size, float avoidDiameter){
+        this.item = item;
+        this.WIDTH = width;
+        this.HEIGHT = height;
+        this.size = size;
+        this.avoidDiameter = avoidDiameter;
         widths = new float[size];
         heights = new float[size];
         xs = new float[size];
@@ -45,15 +44,16 @@ public class RandomPlacement {
         }
     }
 
+
     public void generateSize(int index){
-        widths[index] = MathUtils.random(mapItems[index].getMaxSize())+mapItems[index].getMinSize();
-        heights[index] = widths[index]/mapItems[index].getItem().getAspectRatioRange().randomAspectInRange();
+        widths[index] = MathUtils.random(item.getMaxSize()) + item.getMinSize();
+        heights[index] = widths[index]/item.getAspectRatioRange().randomAspectInRange();
     }
 
     public void generatePosition(int index){
-        float x = MathUtils.random(recWidth-widths[index]);
-        float y = MathUtils.random(recHeight-heights[index]);
-        if(!overlapping(index, x, y)) {
+        float x = MathUtils.random(WIDTH-widths[index]);
+        float y = MathUtils.random(HEIGHT-heights[index]);
+        if(!overlapping(index, x, y) && avoided(x,y)) {
             xs[index] = x;
             ys[index] = y;
         } else {
@@ -76,12 +76,19 @@ public class RandomPlacement {
                 }
             }
         }
-        if(planetDiameter > 0){
-            if(x+widths[index] > planetDiameter && x < planetDiameter*2){
-                if(y+heights[index] > planetDiameter && y < planetDiameter*2){
-                    return true;
-                }
-            }
+        return false;
+    }
+
+    /**
+     * Determines whether the x y position avoids the avoidDiameter used for handling planets with stars
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return true if the x y position avoids the avoidDiameter in the center of the screen
+     */
+    public boolean avoided(float x, float y){
+        if(x+item.getMaxSize()< Constants.VIRTUAL_WIDTH/2-avoidDiameter/2 || x > Constants.VIRTUAL_WIDTH/2+avoidDiameter/2 ||
+            y+item.getMaxSize()< Constants.VIRTUAL_HEIGHT/2-avoidDiameter/2 || y > Constants.VIRTUAL_HEIGHT/2+avoidDiameter/2){
+            return true;
         }
         return false;
     }
@@ -102,8 +109,8 @@ public class RandomPlacement {
         return ys[index];
     }
 
-    public MapItems getMapItem(int index){
-        return mapItems[index];
+    public String getName(){
+        return item.getObjectName();
     }
 
     public int getSize(){

@@ -21,6 +21,5 @@ public class SimplePistol extends Weapon {
     public void fire() {
         Bullet bullet = new Bullet(Constants.RECTANGLE, Color.RED, Animation.RIGHT, getX() + getWidth() - 6, getY() + getHeight() / 2+4, 15);
         checker.addCollider(bullet);
-        this.addActor(bullet);
     }
 }

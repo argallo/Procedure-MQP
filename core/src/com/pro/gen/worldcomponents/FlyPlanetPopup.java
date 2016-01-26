@@ -9,6 +9,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.screens.SolarSystemScreen;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.znewmqp.Tint;
 
 /**
  * Created by Gallo on 10/26/2015.
@@ -35,7 +36,7 @@ public class FlyPlanetPopup extends Group {
     }
 
     public void init(){
-        border = new TintedImage(Constants.RECTANGLE, Constants.PURPLE);
+        border = new TintedImage(Constants.RECTANGLE, Tint.PURPLE);
         yes = new Button(Constants.RECTANGLE, Color.GRAY, YES, Assets.getInstance().getXSmallFont());
         no = new Button(Constants.RECTANGLE, Color.GRAY, NO, Assets.getInstance().getXSmallFont());
         textLabel = new TextLabel(POPTEXT, Assets.getInstance().getSmallFont());
@@ -59,14 +60,14 @@ public class FlyPlanetPopup extends Group {
         yes.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                screen.popUpFly();
+                //screen.popUpFly();
             }
         });
 
         no.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                screen.popUpCancel();
+                //screen.popUpCancel();
             }
         });
     }

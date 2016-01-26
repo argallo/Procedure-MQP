@@ -1,8 +1,9 @@
 package com.pro.gen.simplealien;
 
-import com.badlogic.gdx.graphics.Color;
 import com.pro.gen.aliens.Alien;
-import com.pro.gen.aliens.AlienBuilder;
+import com.pro.gen.utils.Assets;
+import com.pro.gen.utils.Constants;
+import com.pro.gen.views.GroundView;
 import com.pro.gen.weapons.CollisionChecker;
 
 /**
@@ -14,11 +15,12 @@ public class EnemyAlien extends Alien {
     CollisionChecker checker;
     private boolean isdead = false;
 
-    public EnemyAlien(AlienBuilder randomAlien, CollisionChecker checker) {
-        super(Color.WHITE, randomAlien);
+
+    public EnemyAlien(CollisionChecker checker, GroundView groundView) {
+        super(Assets.getInstance().getTextureRegion(Constants.ALIEN), checker);
         this.checker = checker;
         healthBar = new HealthBar(200);
-        healthBar.setPosition(5, getHeight()+50);
+        healthBar.addToActor(groundView);
     }
 
 
@@ -29,7 +31,7 @@ public class EnemyAlien extends Alien {
             checker.collided(this); // probably should move effects of this being true to out here
         }
         if(!isdead) {
-            //setX(getX() - 50 * delta);
+            setX(getX() - 50 * delta);
         }
     }
 
@@ -39,11 +41,31 @@ public class EnemyAlien extends Alien {
         healthBar.lowerHealth(hitAmt);
         if(healthBar.depleated()){
             isdead = true;
+            healthBar.remove();
             ragdoll();
         }
     }
 
     public boolean isdead() {
         return isdead;
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        healthBar.setPosition(x+getWidth()/2-healthBar.backgroundBar.getWidth()/2, y+getHeight()+50);
+    }
+
+    @Override
+    public void setX(float x) {
+        super.setX(x);
+        healthBar.setX(x+getWidth()/2-healthBar.backgroundBar.getWidth()/2);
+    }
+
+    @Override
+    public void setSize(float width, float height) {
+        super.setSize(width, height);
+        if(healthBar!=null)
+            healthBar.setPosition(getX()+getWidth()/2-healthBar.backgroundBar.getWidth()/2, getY()+height+5);
     }
 }

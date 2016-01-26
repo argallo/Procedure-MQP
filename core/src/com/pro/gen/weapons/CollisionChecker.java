@@ -3,6 +3,7 @@ package com.pro.gen.weapons;
 import com.badlogic.gdx.math.Vector2;
 import com.pro.gen.simplealien.EnemyAlien;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.views.GroundView;
 
 import java.util.ArrayList;
 
@@ -12,9 +13,11 @@ import java.util.ArrayList;
 public class CollisionChecker {
 
     private ArrayList<Bullet> bullets;
+    private GroundView view;
 
-    public CollisionChecker(){
+    public CollisionChecker(GroundView view){
         bullets = new ArrayList<Bullet>();
+        this.view = view;
     }
     
     public boolean collided(EnemyAlien enemyAlien){
@@ -38,6 +41,7 @@ public class CollisionChecker {
 
     public void addCollider(Bullet bullet){
         bullets.add(bullet);
+        view.addActor(bullet);
     }
 
 }

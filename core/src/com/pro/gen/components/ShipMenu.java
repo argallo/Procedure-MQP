@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.znewmqp.Tint;
 
 /**
  * Created by Gallo on 10/21/2015.
@@ -33,9 +34,9 @@ public class ShipMenu extends Group {
     private void init() {
         shipBoarder = new TintedImage(Constants.SHIP_BORDER, Color.WHITE);
         shipBoarder.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-        exploreButton = new Button(Constants.RECTANGLE, Constants.PURPLE, EXPLORE_BTN, Assets.getInstance().getSmallFont());
-        inventoryButton = new Button(Constants.RECTANGLE, Constants.PURPLE, INVENTORY_BTN, Assets.getInstance().getSmallFont());
-        homeButton = new Button(Constants.RECTANGLE, Constants.PURPLE, Home_BTN, Assets.getInstance().getSmallFont());
+        exploreButton = new Button(Constants.RECTANGLE, Tint.PURPLE, EXPLORE_BTN, Assets.getInstance().getSmallFont());
+        inventoryButton = new Button(Constants.RECTANGLE, Tint.PURPLE, INVENTORY_BTN, Assets.getInstance().getSmallFont());
+        homeButton = new Button(Constants.RECTANGLE, Tint.PURPLE, Home_BTN, Assets.getInstance().getSmallFont());
     }
 
     private void setSizes() {

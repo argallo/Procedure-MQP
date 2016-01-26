@@ -20,8 +20,8 @@ public class HealthBar {
         backgroundBar = new TintedImage(Constants.RECTANGLE, Color.RED);
         forgroundBar = new TintedImage(Constants.RECTANGLE, Color.GREEN);
 
-        backgroundBar.setSize(100,15);
-        forgroundBar.setSize(100,15);
+        backgroundBar.setSize(100,10);
+        forgroundBar.setSize(100,10);
     }
 
     public void lowerHealth(int hitamt){
@@ -38,9 +38,19 @@ public class HealthBar {
         forgroundBar.setPosition(x, y);
     }
 
+    public void setX(float x){
+        backgroundBar.setX(x);
+        forgroundBar.setX(x);
+    }
+
     public void addToActor(Group group){
         group.addActor(backgroundBar);
         group.addActor(forgroundBar);
+    }
+
+    public void remove(){
+        backgroundBar.remove();
+        forgroundBar.remove();
     }
 
     public int getHealthPoints() {

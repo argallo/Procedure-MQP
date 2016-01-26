@@ -6,13 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.managers.ViewManager;
-import com.pro.gen.screens.PlanetScreen;
 import com.pro.gen.screens.ScreenFactory;
 import com.pro.gen.screens.ShipScreen;
-import com.pro.gen.screens.SolarSystemScreen;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
+import com.pro.gen.znewmqp.Tint;
 
 /**
  * Created by Gallo on 10/21/2015.
@@ -52,8 +51,8 @@ public class ShipHUD extends Group{
      * Creates two screen sliders that can be used during transitions of screens on the HUD
      */
     private void setupScreenSliders(){
-        slidingScreenLeft = new TintedImage(Constants.RECTANGLE, Constants.ORANGE);
-        slidingScreenRight = new TintedImage(Constants.RECTANGLE, Constants.ORANGE);
+        slidingScreenLeft = new TintedImage(Constants.RECTANGLE, Tint.ORANGE);
+        slidingScreenRight = new TintedImage(Constants.RECTANGLE, Tint.ORANGE);
         slidingScreenLeft.setSize(Constants.VIRTUAL_WIDTH/2, Constants.VIRTUAL_HEIGHT);
         slidingScreenRight.setSize(Constants.VIRTUAL_WIDTH/2, Constants.VIRTUAL_HEIGHT);
         slidingScreenLeft.setPosition(-slidingScreenLeft.getWidth(), 0);
@@ -151,7 +150,7 @@ public class ShipHUD extends Group{
     }
 
     private void zoomToPlanetTransition(final ShipScreen shipScreen, final ShipScreenTypes shipScreenTypes){
-        ((PlanetScreen)shipScreen).createPlanetFromColor(((SolarSystemScreen) getShipScreen()).getSelectedPlanet().getTint());
+      /*  ((PlanetScreen)shipScreen).createPlanetFromColor(((SolarSystemScreen) getShipScreen()).getSelectedPlanet().getTint());
         Action action = new Action() {
             @Override
             public boolean act(float delta) {
@@ -169,6 +168,7 @@ public class ShipHUD extends Group{
                 return true;
             }
         }));
+        */
     }
 
     public void fadeToLandTransition(){

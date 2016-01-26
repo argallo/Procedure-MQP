@@ -8,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.pro.gen.utils.Assets;
-import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
+import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.znewmqp.Tint;
 
 import java.security.MessageDigest;
 
@@ -41,15 +42,15 @@ public class TextBox extends Group{
         this.password = password;
         this.filterType = filterType;
         style = new TextField.TextFieldStyle();
-        style.background = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Constants.CURVERECT));
+        style.background = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Pic.Curve_rectangle));
         style.background.setLeftWidth(style.background.getLeftWidth() + 25);
         style.background.setRightWidth(style.background.getRightWidth() + 25);
-        style.cursor = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Constants.BLUE));
+        style.cursor = new TextureRegionDrawable(Assets.getInstance().getTextureRegion(Pic.Blue));
         style.font = Assets.getInstance().getMidFont();
         style.fontColor = Color.LIGHT_GRAY;
         style.focusedFontColor = Color.BLACK;
         textField = new TextField(backgroundText, style);
-        backgroundFocused = new TintedImage(Constants.CURVERECT, Constants.ORANGE);
+        backgroundFocused = new TintedImage(Pic.Curve_rectangle, Tint.ORANGE);
         backgroundFocused.setPosition(-2,-2);
         backgroundFocused.setVisible(false);
         textField.addListener(new FocusListener() {

@@ -7,6 +7,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.views.LandingView;
+import com.pro.gen.znewmqp.Pic;
 
 /**
  * Created by Gallo on 10/27/2015.
@@ -26,19 +27,19 @@ public class SkyDown extends Group {
     public SkyDown(Color initialColor, LandingView landView){
         this.initialColor = initialColor;
         this.landView = landView;
-        sky1 = new TintedImage(Constants.RECTANGLE, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
+        sky1 = new TintedImage(Pic.Pixel, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
         sky1.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/2);
         sky1.setPosition(0, Constants.VIRTUAL_HEIGHT / 2);
         lighten();
-        sky2 = new TintedImage(Constants.RECTANGLE, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
+        sky2 = new TintedImage(Pic.Pixel, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
         sky2.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/2);
         sky2.setPosition(0, 0);
         lighten();
-        sky3 = new TintedImage(Constants.RECTANGLE, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
+        sky3 = new TintedImage(Pic.Pixel, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
         sky3.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/2);
         sky3.setPosition(0, -Constants.VIRTUAL_HEIGHT / 2);
         lighten();
-        sky4 = new TintedImage(Constants.RECTANGLE, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
+        sky4 = new TintedImage(Pic.Pixel, new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a));
         sky4.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT/2);
         sky4.setPosition(0, -Constants.VIRTUAL_HEIGHT);
         lighten();
@@ -51,7 +52,7 @@ public class SkyDown extends Group {
         addActor(sky4);
 
         for(int i = 0; i < stars.length; i++){
-            stars[i] = new TintedImage(Constants.CIRCLE_SMALL, Color.WHITE);
+            stars[i] = new TintedImage(Pic.Circle_Small, Color.WHITE);
             float size = MathUtils.random(1.1f, 3f);
             stars[i].setSize(size, size);
             stars[i].setPosition(10+MathUtils.random(0, Constants.VIRTUAL_WIDTH-10), 10 + MathUtils.random(0, Constants.VIRTUAL_HEIGHT-10));
@@ -100,7 +101,7 @@ public class SkyDown extends Group {
             }
         }
 
-        if(resets > 4){
+        if(resets > 3){
             landView.finishLanding();
         }
     }

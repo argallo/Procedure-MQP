@@ -1,15 +1,10 @@
 package com.pro.gen.views;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.pro.gen.aliens.Alien;
-import com.pro.gen.aliens.SimpleAlienBuilder;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
-import com.pro.gen.components.TextBox;
 import com.pro.gen.components.TextLabel;
-import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.random.RandomPlanet;
@@ -18,6 +13,8 @@ import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.Planet;
+import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.znewmqp.Tint;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -30,34 +27,24 @@ public class CreateAlienView extends BaseView{
 
     private TitleLabel chooseAlien;
     private Button selectButton, randomizeButton;
-    private TextLabel name, nickname, height, earthWeight, bio, species, abilities, homePlanet;
-    private TextBox nicknameTextbox;
+    private TextLabel name, nickname, height, earthWeight, species, homePlanet;
     private Background background;
-    TintedImage head;
-    Alien alien;
-
-    Planet planet;
-    int alienLeft = 0;
+    private Planet planet;
 
     @Override
     public void init() {
-        background = new Background(Constants.PIXEL, Constants.UNIVERSE_BACKGROUND_COLOR);
+        background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         chooseAlien = new TitleLabel(CHOOSE_ALIEN);
-        selectButton = new Button(Constants.RECTANGLE, Constants.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
-        randomizeButton = new Button(Constants.RECTANGLE, Constants.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
+        selectButton = new Button(Pic.Pixel, Tint.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
+        randomizeButton = new Button(Pic.Pixel, Tint.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
         BitmapFont xsmallFont = Assets.getInstance().getXSmallFont();
         name = new TextLabel("Name: ", xsmallFont);
         nickname = new TextLabel("Nickname: ", xsmallFont);
         height = new TextLabel("Height: ", xsmallFont);
         earthWeight = new TextLabel("Earth Weight: ", xsmallFont);
-        bio = new TextLabel("Bio: ", xsmallFont);
         species = new TextLabel("Species: ", xsmallFont);
-        abilities = new TextLabel("Abilities: ", xsmallFont);
         homePlanet = new TextLabel("Home Planet", xsmallFont);
-        nicknameTextbox = new TextBox(12, "", TextBox.CHARDIG);
-        planet = new Planet(new RandomPlanet(), false, null);
-        alien = new Alien(Color.WHITE, new SimpleAlienBuilder());
-        //head.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0, 15f, 1f, Interpolation.pow2), Actions.moveBy(0, -15, 1f, Interpolation.pow2))));
+        planet = new Planet(new RandomPlanet());
 
     }
 
@@ -77,12 +64,10 @@ public class CreateAlienView extends BaseView{
         nickname.setPosition(Constants.VIRTUAL_WIDTH / 2, 470);
         height.setPosition(Constants.VIRTUAL_WIDTH / 2, 440);
         earthWeight.setPosition(Constants.VIRTUAL_WIDTH / 2, 410);
-        bio.setPosition(Constants.VIRTUAL_WIDTH / 2, 380);
         species.setPosition(Constants.VIRTUAL_WIDTH / 2, 350);
-        abilities.setPosition(Constants.VIRTUAL_WIDTH / 2, 320);
         homePlanet.setPosition(Constants.VIRTUAL_WIDTH*0.68f, 290);
         planet.setPosition(Constants.VIRTUAL_WIDTH*0.65f, 80);
-        alien.setPosition(100,250);
+
 
     }
 
@@ -97,15 +82,12 @@ public class CreateAlienView extends BaseView{
         randomizeButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                removeActor(alien);
-                alien = new Alien(Color.WHITE, new SimpleAlienBuilder());
-                alien.setPosition(100,250);
-                addActor(alien);
                 removeActor(planet);
-                planet = new Planet(new RandomPlanet(), false, null);
+                planet = new Planet(new RandomPlanet());
                 planet.setSize(200, 200);
                 planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
                 addActorAt(2, planet);
+
             }
         });
     }
@@ -119,11 +101,8 @@ public class CreateAlienView extends BaseView{
         addActor(nickname);
         addActor(height);
         addActor(earthWeight);
-        addActor(bio);
         addActor(species);
-        addActor(abilities);
         addActor(homePlanet);
-        addActor(alien);
         addActor(selectButton);
         addActor(randomizeButton);
     }

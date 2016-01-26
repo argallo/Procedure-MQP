@@ -1,0 +1,276 @@
+
+textureatlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ring
+  rotate: false
+  xy: 1, 223
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+upgrades_tab
+  rotate: false
+  xy: 1, 80
+  size: 363, 141
+  orig: 363, 141
+  offset: 0, 0
+  index: -1
+header_bar
+  rotate: false
+  xy: 1, 1
+  size: 394, 77
+  orig: 394, 77
+  offset: 0, 0
+  index: -1
+curverectangle
+  rotate: false
+  xy: 366, 146
+  size: 400, 75
+  orig: 400, 75
+  offset: 0, 0
+  index: -1
+solar_planet
+  rotate: false
+  xy: 803, 823
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+sun_large
+  rotate: false
+  xy: 803, 621
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+title_bar
+  rotate: false
+  xy: 366, 104
+  size: 274, 40
+  orig: 274, 40
+  offset: 0, 0
+  index: -1
+ship_gun
+  rotate: false
+  xy: 803, 523
+  size: 197, 96
+  orig: 197, 96
+  offset: 0, 0
+  index: -1
+planet_list_holo
+  rotate: false
+  xy: 803, 381
+  size: 113, 140
+  orig: 113, 140
+  offset: 0, 0
+  index: -1
+curvesquare
+  rotate: false
+  xy: 397, 2
+  size: 150, 100
+  orig: 150, 100
+  offset: 0, 0
+  index: -1
+fuel_unit_icon
+  rotate: false
+  xy: 803, 271
+  size: 100, 108
+  orig: 100, 108
+  offset: 0, 0
+  index: -1
+planet_list_holo_left
+  rotate: false
+  xy: 918, 381
+  size: 53, 140
+  orig: 53, 140
+  offset: 0, 0
+  index: -1
+mine_action_button
+  rotate: false
+  xy: 549, 8
+  size: 94, 94
+  orig: 94, 94
+  offset: 0, 0
+  index: -1
+planet_list_holo_right
+  rotate: false
+  xy: 905, 239
+  size: 53, 140
+  orig: 53, 140
+  offset: 0, 0
+  index: -1
+destroy_icon
+  rotate: false
+  xy: 645, 68
+  size: 150, 76
+  orig: 150, 76
+  offset: 0, 0
+  index: -1
+cylinder
+  rotate: false
+  xy: 645, 19
+  size: 150, 47
+  orig: 150, 47
+  offset: 0, 0
+  index: -1
+b_crystal
+  rotate: false
+  xy: 768, 146
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
+army_icon
+  rotate: false
+  xy: 797, 54
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+luck_icon
+  rotate: false
+  xy: 797, 1
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+speed_icon
+  rotate: false
+  xy: 850, 1
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+automine_icon
+  rotate: false
+  xy: 973, 471
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+health_icon
+  rotate: false
+  xy: 973, 419
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+capsule
+  rotate: false
+  xy: 850, 147
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+mine_icon
+  rotate: false
+  xy: 889, 56
+  size: 88, 89
+  orig: 88, 89
+  offset: 0, 0
+  index: -1
+triangle
+  rotate: false
+  xy: 903, 9
+  size: 52, 45
+  orig: 52, 45
+  offset: 0, 0
+  index: -1
+g_crystal
+  rotate: false
+  xy: 942, 162
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
+power_crystal
+  rotate: false
+  xy: 979, 85
+  size: 35, 75
+  orig: 35, 75
+  offset: 0, 0
+  index: -1
+back_button
+  rotate: false
+  xy: 960, 321
+  size: 58, 58
+  orig: 58, 58
+  offset: 0, 0
+  index: -1
+switch_mode_button
+  rotate: false
+  xy: 960, 261
+  size: 58, 58
+  orig: 58, 58
+  offset: 0, 0
+  index: -1
+blue
+  rotate: false
+  xy: 642, 143
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+pixel
+  rotate: false
+  xy: 642, 140
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+
+textureatlas2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+circle_hole
+  rotate: false
+  xy: 1, 556
+  size: 597, 400
+  orig: 597, 400
+  offset: 0, 0
+  index: -1
+circle_hole_right
+  rotate: false
+  xy: 1, 154
+  size: 597, 400
+  orig: 597, 400
+  offset: 0, 0
+  index: -1
+circle_large
+  rotate: false
+  xy: 600, 556
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+planet_shadow
+  rotate: false
+  xy: 600, 154
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+mega_crystal
+  rotate: false
+  xy: 1, 78
+  size: 90, 74
+  orig: 90, 74
+  offset: 0, 0
+  index: -1
+r_crystal
+  rotate: false
+  xy: 1, 1
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
+circle_small
+  rotate: false
+  xy: 93, 88
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

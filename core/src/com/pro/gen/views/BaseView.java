@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.Cullable;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.znewmqp.Tint;
 
 
 /**
@@ -14,6 +15,7 @@ public abstract class BaseView extends Group implements Cullable{
     private Rectangle rectangle;
 
     public BaseView() {
+        Tint.resetTints();
         rectangle = new Rectangle(0,0,Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         init();

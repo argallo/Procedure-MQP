@@ -1,25 +1,83 @@
 package com.pro.gen.worldcomponents;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomGlobeMapInfo;
-import com.pro.gen.utils.Constants;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gallo on 8/14/2015.
  */
-public class GlobeMap extends Group{
+public class GlobeMap extends Group {
 
-    private RandomGlobeMapInfo randomGlobeMapInfo;
-    private TintedImage[] globePieces;
+    private ArrayList<TintedImage> globePieces;
     private float speed;
+
+    public GlobeMap(RandomGlobeMapInfo randomGlobeMapInfo){
+        this(randomGlobeMapInfo.getGlobePieces(), randomGlobeMapInfo.getSpeed());
+    }
+
+    public GlobeMap(ArrayList<TintedImage> globePieces, float speed){
+        this.globePieces = globePieces;
+        this.speed = speed;
+        attachActors();
+    }
+
+    private void attachActors(){
+        for(TintedImage piece: globePieces){
+            addActor(piece);
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        for(TintedImage piece: globePieces){
+            piece.setX(piece.getX() - (speed * getWidth() / 1500));
+            if(piece.getX()+piece.getWidth() < getWidth()/4){
+                piece.setX(getWidth()-piece.getWidth());
+            }
+        }
+
+    }
+
+    public void resizeGlobe(float width, float height){
+        this.setSize(width, height);
+        for(TintedImage piece: globePieces){
+            piece.setSize(piece.getWidth()*width/1500, piece.getHeight()*height/500);
+            piece.setPosition(piece.getX() * width / 1500, piece.getY() * height / 500);
+        }
+    }
+
+    public void burn(Color color){
+        for(TintedImage piece: globePieces){
+            piece.addAction(Actions.color(color, 8f));
+        }
+        addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                if(speed > 0){
+                    speed -=delta/2.2f;
+                    return false;
+                }
+                return true;
+            }
+        });
+    }
+
+}
+
+
+    /*private float speed;
     private float repeatDistance = -((Constants.GLOBE_REC_WIDTH*5)/12);
 
 
-    public GlobeMap(GlobeObjectType globeObjectType){
-        randomGlobeMapInfo = new RandomGlobeMapInfo(globeObjectType);
+    public GlobeMap(RandomGlobeMapInfo randomGlobeMapInfo){
         globePieces = randomGlobeMapInfo.getMapActors();
-        addActors();
         this.setSize(Constants.GLOBE_REC_WIDTH, Constants.GLOBE_REC_HEIGHT);
         speed = (getWidth()*randomGlobeMapInfo.getSpeed())/Constants.VIRTUAL_HEIGHT;
     }
@@ -30,11 +88,11 @@ public class GlobeMap extends Group{
         }
     }
 
-    /**
+
      * resize land information based on groups new width and height
      * @param width width of the planet. Land is twice this size to account for back of planet
      * @param height height of the planet
-     */
+
     public void resizeLands(float width, float height){
         float sizeChangeW = width*2/this.getWidth();
         float sizeChangeH = height/this.getHeight();
@@ -64,3 +122,4 @@ public class GlobeMap extends Group{
     }
 
 }
+*/

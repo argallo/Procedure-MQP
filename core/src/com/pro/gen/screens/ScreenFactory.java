@@ -25,7 +25,8 @@ public class ScreenFactory {
             case INVENTORY:
                 return new InventoryScreen(shipHUD);
             case SOLARSYSTEM:
-                return new SolarSystemScreen(shipHUD);
+                //return new SolarSystemScreen(shipHUD);
+                return null;
             case PLANET:
                 return new PlanetScreen(shipHUD);
             default:

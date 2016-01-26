@@ -1,73 +1,93 @@
 package com.pro.gen.aliens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.pro.gen.components.TintedImage;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.pro.gen.utils.Assets;
 
 import java.util.ArrayList;
 
 /**
  * Created by Gallo on 11/12/2015.
  */
-public class AlienParts extends TintedImage {
+public class AlienParts {
 
-    ArrayList<AlienParts> subParts;
-    String imageName;
-    int currentDirection;
+    private ArrayList<AlienParts> subParts;
+    private String imageName;
+    private Color tint;
+    private int x, y, width, height;
+
+    public AlienParts(String imageName) {
+        this(imageName, new ArrayList<AlienParts>());
+    }
 
     public AlienParts(String imageName, Color tint) {
         this(imageName, tint, new ArrayList<AlienParts>());
     }
 
+    public AlienParts(String imageName, ArrayList<AlienParts> subParts) {
+        this(imageName, Color.WHITE, new ArrayList<AlienParts>());
+    }
+
     public AlienParts(String imageName, Color tint, ArrayList<AlienParts> subParts) {
-        super(imageName, tint);
         this.subParts = subParts;
         this.imageName = imageName;
+        this.tint = tint;
+        x = y = width = height = 0;
     }
 
     public void addSubPart(AlienParts part){
         subParts.add(part);
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        for(AlienParts part : subParts){
-            part.act(delta);
-        }
+     public void setSize(int width, int height){
+         this.width = width;
+         this.height = height;
+     }
+
+    public void setPosition(int x, int y){
+        setX(x);
+        setY(y);
     }
 
-    public void draw(Batch batch, float parentAlpha, float parentX, float parentY, float scaleX, float scaleY) {
-        setScale(scaleX, scaleY);
-        setPosition(getX()*scaleX, getY()*scaleY);
-        setPosition(getX()+parentX, getY()+parentY);
-        super.draw(batch, parentAlpha);
-        for(AlienParts part : subParts){
-            part.draw(batch, parentAlpha, getX(), getY(), getScaleX(), getScaleY());
-        }
-        setPosition(getX()-parentX, getY()-parentY);
-        setPosition(getX()/scaleX, getY()/scaleY);
-        setScale(1,1);
+    public void setX(int x) {
+        this.x = x;
     }
 
-    @Override
-    public void setTint(Color tint) {
-        super.setTint(tint);
-        for(AlienParts part : subParts){
-            part.setTint(tint);
-        }
+    public void setY(int y) {
+        this.y = y;
     }
 
-    public void directionChanged(int direction){
-        currentDirection = direction;
-        for(AlienParts part : subParts){
-            part.directionChanged(direction);
-        }
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Color getTint() {
+        return tint;
+    }
+
+    public ArrayList<AlienParts> getSubParts() {
+        return subParts;
+    }
+
+    public TextureRegion getImage() {
+        return Assets.getInstance().getTextureRegion(imageName);
     }
 
     public static AlienParts Clone(AlienParts alienParts){
 
-        AlienParts cloned = new AlienParts(alienParts.imageName, alienParts.getTint());
+        AlienParts cloned = new AlienParts(alienParts.imageName);
         for(AlienParts part : alienParts.subParts) {
             cloned.addSubPart(AlienParts.Clone(part));
         }

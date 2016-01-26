@@ -1,25 +1,10 @@
 package com.pro.gen.screens;
 
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.pro.gen.components.Button;
-import com.pro.gen.components.ButtonAction;
-import com.pro.gen.components.ShipHUD;
-import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.utils.Constants;
-import com.pro.gen.utils.LogUtils;
-import com.pro.gen.worldcomponents.FlyPlanetPopup;
-import com.pro.gen.worldcomponents.MiniPlanet;
-import com.pro.gen.worldcomponents.MiniPlanetSystem;
-
 /**
  * Created by Gallo on 10/22/2015.
  */
-public class SolarSystemScreen extends ShipScreen {
-
+public class SolarSystemScreen {//extends ShipScreen {
+/*
     Button sun;
     MiniPlanetSystem[] planets;
     FlyPlanetPopup flyPlanetPopup;
@@ -123,4 +108,5 @@ public class SolarSystemScreen extends ShipScreen {
     public MiniPlanet getSelectedPlanet() {
         return selectedPlanet;
     }
+*/
 }

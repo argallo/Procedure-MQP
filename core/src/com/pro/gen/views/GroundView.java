@@ -1,6 +1,8 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pro.gen.aliens.Alien;
 import com.pro.gen.aliens.SimpleAlienBuilder;
 import com.pro.gen.components.BackgroundSky;
@@ -32,6 +34,8 @@ public class GroundView extends BaseView{
     LevelEnemyStructures levelEnemyStructures;
     CollisionChecker check;
 
+    TintedImage image;
+
     public static final int WORLD_LENGTH = 10; //TODO: change to be based off planet level?
 
     Button leave;
@@ -41,6 +45,7 @@ public class GroundView extends BaseView{
 
     @Override
     public void init() {
+        check = new CollisionChecker(this);
 
         Color color = ColorHelper.generateDarkColor();
         Color backgroundColor = ColorHelper.changeHue(new Color(color), 0.3f);
@@ -59,10 +64,18 @@ public class GroundView extends BaseView{
         land.setSize(Constants.VIRTUAL_WIDTH, 250);
 
 
+        //Color cc = ColorHelper.generateGoodColor();
+        //Texture head = PixmapColorize.genTexture(Constants.ALIEN_HEAD, cc);
+        //Texture eye =PixmapColorize.genTexture(Constants.ALIEN_EYE, cc);
+        //Texture leg =PixmapColorize.genTexture(Constants.ALIEN_LEG, cc);
 
-        alien = new Alien(Color.WHITE, new SimpleAlienBuilder());
+
+        SimpleAlienBuilder alienBuilder = new SimpleAlienBuilder();
+        Texture alienTexture = alienBuilder.build(80, 158, ColorHelper.generateGoodColor());
+        alien = new Alien(new TextureRegion(alienTexture), check);
+        alien.setWeapon(new SimplePistol(check));
         alien.setPosition(Constants.VIRTUAL_WIDTH / 2 - alien.getWidth() / 2, 250);
-        alien.setScale(0.5f, 0.5f);
+        alien.setSize(80, 158);
 
 
         cameraUpdater = new CameraUpdater(alien);
@@ -81,7 +94,6 @@ public class GroundView extends BaseView{
         cameraUpdater.updateCamera(delta);
     }
 
-
     @Override
     public void addActors() {
         addActorAt(0, background);
@@ -91,9 +103,7 @@ public class GroundView extends BaseView{
         addActor(alien);
         addActor(uiButtonGroup);
 
-        check = new CollisionChecker();
-        levelEnemies = new LevelEnemies(this, 400, check);
-        alien.attachWeapon(new SimplePistol(check));
+        levelEnemies = new LevelEnemies(this, 10, check);
     }
 
 

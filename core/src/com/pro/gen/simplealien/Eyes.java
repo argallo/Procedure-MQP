@@ -3,7 +3,6 @@ package com.pro.gen.simplealien;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.pro.gen.aliens.AlienParts;
-import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 
 /**
@@ -40,7 +39,7 @@ public class Eyes {
      float glareY = MathUtils.random(blackSize*0.05f, blackSize*0.8f);
      */
 
-
+/*
 
     public static AlienParts[] CircleEyes(float headX, float headY, float width, float height){
         float whiteSize = MathUtils.random(width*0.35f, width*0.45f);
@@ -89,6 +88,15 @@ public class Eyes {
 
         return new AlienParts[]{leftWhiteEye, rightWhiteEye};
     }
+*/
 
+    public static AlienParts Eye(int width, int height, Color color){
+        int whiteSize = MathUtils.random(Math.round(width * 0.5f), Math.round(width * 0.52f));
+
+        AlienParts eye = new AlienParts(Constants.ALIEN_EYE, color);
+        eye.setSize(whiteSize, whiteSize);
+        eye.setPosition(width/2-whiteSize/2,height/2-whiteSize/2+7);
+        return eye;
+    }
 
 }

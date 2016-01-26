@@ -1,9 +1,9 @@
 package com.pro.gen.views;
 
-import com.pro.gen.components.Background;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
-import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 
@@ -14,7 +14,7 @@ public class SplashView extends BaseView{
 
     public static final int SPLASH_TIME = 3; //approx seconds
 
-    private Background splashLogo;
+    private Image splashLogo;
     private boolean counting = true;
     private float counter = 0;
 
@@ -27,7 +27,9 @@ public class SplashView extends BaseView{
 
     @Override
     public void init() {
-        splashLogo = new Background(Constants.SPLASH);
+        splashLogo = new Image(Assets.getInstance().getSplash());
+        //for now just load texture atlas but as it becomes bigger we may need to modify the act method to load in increments
+        Assets.getInstance().loadCommonAssets();
     }
 
     public void addActors(){
@@ -59,9 +61,11 @@ public class SplashView extends BaseView{
      */
     public void completeSplashView(){
         counting = false;
-        if(PreferenceManager.getInstance().getPreferences().getBoolean(PreferenceManager.HAS_ACCOUNT, false)){
-            ViewManager.getInstance().transitionViewTo(ViewID.APP, TransitionType.DEFAULT_TRANSITION);
+        if(PreferenceManager.getInstance().hasAccount()){
+            //Users account can be found in local storage, go straight to Home Screen
+            ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
         } else {
+            //User either does not have an account or is not logged in. Go to login screen
             ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.DEFAULT_TRANSITION);
         }
     }

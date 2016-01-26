@@ -2,7 +2,6 @@ package com.pro.gen.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.pro.gen.components.ShipHUD;
-import com.pro.gen.utils.Constants;
 import com.pro.gen.worldcomponents.NewStarMap;
 import com.pro.gen.worldcomponents.WarpToPopup;
 
@@ -17,7 +16,7 @@ public class ExploreScreen extends ShipScreen{
     public ExploreScreen(ShipHUD shipHUD) {
         super(shipHUD);
         warpToPopup = new WarpToPopup(this);
-        map = new NewStarMap(200, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT-100, this);
+       // map = new NewStarMap(200, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT-100, this);
         addActor(map);
     }
 

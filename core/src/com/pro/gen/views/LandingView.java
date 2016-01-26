@@ -12,6 +12,7 @@ import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.SkyDown;
+import com.pro.gen.znewmqp.Pic;
 
 /**
  * Created by Gallo on 10/27/2015.
@@ -33,7 +34,7 @@ public class LandingView extends BaseView {
 
     @Override
     public void init() {
-        ship = new TintedImage(Constants.SMALL_SHIP, Color.WHITE);
+        ship = new TintedImage(Pic.Ship_V, Color.WHITE);
         // make this color from the planets land Color?
         skyDown = new SkyDown(ColorHelper.generateGoodColor(), this);
     }
@@ -55,12 +56,13 @@ public class LandingView extends BaseView {
     }
 
     public void finishLanding(){
-        Background whiteFade = new Background(Constants.PIXEL, Color.WHITE);
+        Background whiteFade = new Background(Pic.Pixel, new Color(Color.WHITE));
+        whiteFade.setVisible(false);
         addActor(whiteFade);
-        whiteFade.addAction(Actions.sequence(Actions.alpha(1, 1.5f, Interpolation.fade), new Action() {
+        whiteFade.addAction(Actions.sequence(Actions.fadeOut(0f),Actions.visible(true),Actions.fadeIn(2f), new Action() {
             @Override
             public boolean act(float delta) {
-                ViewManager.getInstance().transitionViewTo(ViewID.LAND, TransitionType.DEFAULT_TRANSITION);
+                ViewManager.getInstance().transitionViewTo(ViewID.MINE, TransitionType.DEFAULT_TRANSITION);
                 return true;
             }
         }));

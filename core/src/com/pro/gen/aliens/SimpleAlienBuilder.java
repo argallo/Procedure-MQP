@@ -1,9 +1,10 @@
 package com.pro.gen.aliens;
 
-import com.pro.gen.simplealien.Arms;
-import com.pro.gen.simplealien.Bodys;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.pro.gen.simplealien.Heads;
 import com.pro.gen.simplealien.Legs;
+import com.pro.gen.utils.TextureBuilder;
 
 import java.util.ArrayList;
 
@@ -13,34 +14,37 @@ import java.util.ArrayList;
 public class SimpleAlienBuilder implements AlienBuilder {
 
     private ArrayList<AlienParts> alienParts;
+    private TextureBuilder textureBuilder;
 
     public SimpleAlienBuilder(){
         alienParts = new ArrayList<AlienParts>();
+        textureBuilder = new TextureBuilder();
     }
 
-    public void buildHead(float width, float height){
-        alienParts.add(Heads.simpleHead(width, height));
+   public void buildHead(int width, int height, Color color){
+        alienParts.add(Heads.simpleHead(width, height, color));
     }
 
-    public void buildBody(float width, float height){
-        alienParts.add(Bodys.simpleBody(width, height));
+    public void buildBody(int width, int height, Color color){
+        //alienParts.add(Bodys.simpleBody(width, height));
     }
 
-    public void buildLegs(float width, float height){
-        alienParts.add(Legs.simpleLegs(width, height));
+    public void buildLegs(int width, int height, Color color){
+        alienParts.add(Legs.Legs(width, height, color));
     }
 
-    public void buildArms(float width, float height){
-        alienParts.add(Arms.simpleArms(width, height));
+    public void buildArms(int width, int height, Color color){
+        //alienParts.add(Arms.simpleArms(width, height));
     }
 
     @Override
-    public ArrayList<AlienParts> build(float width, float height) {
-        buildLegs(width, height);
-        buildBody(width, height);
-        buildHead(width, height);
-        buildArms(width, height);
-        return alienParts;
+    public Texture build(int width, int height, Color color) {
+        buildLegs(width, height, color);
+        buildBody(width, height, color);
+        buildHead(width, height, color);
+        buildArms(width, height, color);
+
+        return textureBuilder.createTexture(alienParts, width, height);
     }
 
 

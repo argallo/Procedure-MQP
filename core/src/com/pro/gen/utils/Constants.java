@@ -1,7 +1,6 @@
 package com.pro.gen.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 
 
 /**
@@ -16,17 +15,9 @@ public class Constants {
     public static final int VIRTUAL_WIDTH = 1280;
     public static final int VIRTUAL_HEIGHT = 720;
 
-    public static final int GLOBE_REC_WIDTH = 1000;
-    public static final int GLOBE_REC_HEIGHT = 500;
 
-    //default Colors
-    public static final Color UNIVERSE_BACKGROUND_COLOR = new Color(22/255f,37/255f,51/255f,1f);
-    public static final Color STAR_WHITE = new Color(213/255f,213/255f,218/255f,1f);
-    public static final Color STAR_PURPLE = new Color(110/255f,36/255f,185/255f,1f);
-    public static final Color STAR_PURPLE_BRIGHT = new Color(173/255f,0,239/255f,1f);
-    public static final Color PINK = new Color(240/255f, 87/255f, 109/255f, 1f);
-    public static final Color ORANGE = new Color(240/255f, 148/255f, 87/255f, 1f);
-    public static final Color PURPLE = new Color(102/255f, 95/255f, 110/255f, 1f);
+
+
 
 
     //Image Paths
@@ -39,9 +30,17 @@ public class Constants {
     public static final String SHIP_BORDER = "Objects/Large/spacescreen_large.png";
 
 
-    public static final String ALIEN = "Objects/Large/alien_mock.png";
+    public static final String ALIEN = "Objects/Large/alien9.png";
     public static final String ALIEN_LEFT = "Objects/Large/alien_mock_medium_left.png";
     public static final String ALIENT_RIGHT = "Objects/Large/alien_mock_medium_right.png";
+
+
+    public static final String ALIEN_HEAD = "Character/Heads/head_float_small.png";
+    public static final String ALIEN_EYE = "Character/Eyes/eye_float_small.png";
+    public static final String ALIEN_LEG = "Character/Legs/legs_float_small.png";
+    public static final String COIN = "Background/silver_coin_1.png";
+
+
 
     /* Medium */
     public static final String ABS_PLANET = "Objects/Medium/abs_planet_medium.png";
@@ -73,7 +72,7 @@ public class Constants {
 
     public static final String[] COMMON_IMAGES = new String[]{
             RECTANGLE, BLUE, CURVERECT, WHITE, CIRCLE, CIRCLE_SHADOW, CIRCLE_HOLE, CYLINDER, TWINKLE, CIRCLE_SMALL, TRIANGLE, BULDGE, SHIP_BORDER, ABS_PLANET, SUN, RING, LINE, PIXEL, SMALL_SHIP,
-            ALIEN,ALIEN_LEFT,ALIENT_RIGHT, PISTOL
+            ALIEN,ALIEN_LEFT,ALIENT_RIGHT, PISTOL, ALIEN_HEAD, ALIEN_EYE, ALIEN_LEG, COIN
     };
 
     public static final String[] SPLASH_IMAGES = new String[]{

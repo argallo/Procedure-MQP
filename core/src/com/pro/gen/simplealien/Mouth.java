@@ -1,16 +1,11 @@
 package com.pro.gen.simplealien;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.pro.gen.aliens.AlienParts;
-import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.utils.Constants;
-
 /**
  * Created by Gallo on 10/20/2015.
  */
 public class Mouth {
 
+    /*
     public static AlienParts getRandomMouth(float width, float height){
         switch (MathUtils.random(1,3)){
             case 1:
@@ -83,4 +78,5 @@ public class Mouth {
         return mouth;
     }
 
+*/
 }

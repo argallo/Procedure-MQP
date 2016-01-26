@@ -7,23 +7,26 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
+import com.pro.gen.utils.ColorHelper;
 
 /**
  * Created by Gallo on 9/2/2015.
  */
 public class Button extends TintedImage {
 
-    Label buttonLabel;
+    protected Label buttonLabel;
     Label.LabelStyle labelStyle;
     Color backgroundColor;
+    Color pressedColor;
     ButtonAction buttonAction;
 
     public Button(String mainImage, Color backgroundColor){
         this(mainImage, backgroundColor, "", null);
     }
 
-    public Button(String mainImage, Color backgroundColor, String buttonText, BitmapFont fontType){
+    public Button(String mainImage, final Color backgroundColor, String buttonText, BitmapFont fontType){
         super(mainImage, backgroundColor);
+        pressedColor = (ColorHelper.darken(new Color(backgroundColor), 0.4f));
         if(fontType != null) {
             labelStyle = new Label.LabelStyle(fontType, Color.WHITE);
             buttonLabel = new Label(buttonText, labelStyle);
@@ -33,7 +36,7 @@ public class Button extends TintedImage {
         this.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                setTint(Color.RED);
+                setTint(pressedColor);
                 return true;
             }
 
@@ -70,7 +73,7 @@ public class Button extends TintedImage {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(buttonLabel!= null)
+        if(buttonLabel!= null && isVisible())
             buttonLabel.draw(batch, parentAlpha);
     }
 

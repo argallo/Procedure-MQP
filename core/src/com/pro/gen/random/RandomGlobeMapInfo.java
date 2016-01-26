@@ -1,19 +1,21 @@
 package com.pro.gen.random;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.worldcomponents.Clouds;
+import com.pro.gen.utils.Item;
 import com.pro.gen.worldcomponents.GlobeObjectType;
-import com.pro.gen.worldcomponents.Lands;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gallo on 8/13/2015.
  */
 public class RandomGlobeMapInfo {
 
-    private TintedImage[] globePieces;
+    private ArrayList<TintedImage> globePieces;
     private Color color;
     private RandomPlacement rp;
     private float speed;
@@ -27,39 +29,35 @@ public class RandomGlobeMapInfo {
     public void selectGlobeObject(GlobeObjectType globeObjectType){
         switch (globeObjectType){
             case Land:
-                rp = new RandomPlacement(Lands.getInstance().getRandomLands(), Constants.GLOBE_REC_WIDTH, Constants.GLOBE_REC_HEIGHT);
-                speed = Lands.getInstance().getSpeed();
+                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.LandCylinder : Item.LandCircle, 1500, 500, 10);
+                speed = Constants.VIRTUAL_WIDTH/300;
                 color = ColorHelper.generateGoodColor();
                 break;
             case Cloud:
-                rp = new RandomPlacement(Clouds.getInstance().getRandomClouds(), Constants.GLOBE_REC_WIDTH, Constants.GLOBE_REC_HEIGHT);
-                speed = Clouds.getInstance().getSpeed();
+                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.CloudCylinder : Item.CloudCircle, 1500, 500, 10);
+                speed = Constants.VIRTUAL_WIDTH/400;
                 color = ColorHelper.generateLightColor();
                 break;
         }
     }
 
+
     public void initGlobeGeneration(){
-        globePieces = new TintedImage[rp.getSize()];
-        for(int index = 0; index < globePieces.length; index++){
-            generateTintedImage(index);
+        globePieces = new ArrayList<TintedImage>();
+        for(int i = 0; i < rp.getSize(); i++) {
+            TintedImage piece = new TintedImage(rp.getName(), color);
+            piece.setSize(rp.getWidth(i), rp.getHeight(i));
+            piece.setPosition(rp.getX(i), rp.getY(i));
+            globePieces.add(piece);
         }
     }
 
-
-    public void generateTintedImage(int index){
-        TintedImage globePiece = new TintedImage(rp.getMapItem(index).getItem().getObjectName(), color);
-        globePiece.setSize(rp.getWidth(index), rp.getHeight(index));
-        globePiece.setPosition(rp.getX(index), rp.getY(index));
-        globePieces[index] = globePiece;
-    }
-
-    public TintedImage[] getMapActors(){
-        return globePieces;
-    }
 
     public float getSpeed(){
         return speed;
     }
 
+    public ArrayList<TintedImage> getGlobePieces() {
+        return globePieces;
+    }
 }

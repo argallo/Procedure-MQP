@@ -1,12 +1,10 @@
 package com.pro.gen.worldcomponents;
 
-import com.pro.gen.utils.Item;
-
 /**
  * Created by Gallo on 8/15/2015.
  */
 public class Stars {
-
+/*
     private MapItems starCircle = new MapItems(Item.CIRCLE_SMALL, 10, 3);
     private MapItems starTwinkle = new MapItems(Item.TWINKLE, 16, 9);
     private int amount;
@@ -43,5 +41,5 @@ public class Stars {
         }
         return stars;
     }
-
+*/
 }

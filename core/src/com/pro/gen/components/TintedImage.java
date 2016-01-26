@@ -1,9 +1,7 @@
 package com.pro.gen.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -25,10 +23,10 @@ public class TintedImage extends Image {
     }
 
     public TintedImage(String imageName, Color tint){
-        this(Assets.getInstance().getTexture(imageName), tint);
+        this(Assets.getInstance().getTextureRegion(imageName), tint);
     }
 
-    public TintedImage(Texture texture, Color tint){
+    public TintedImage(TextureRegion texture, Color tint) {
         this(texture);
         this.tint = tint;
     }
@@ -38,12 +36,8 @@ public class TintedImage extends Image {
         this.tint = tint;
     }
 
-    private TintedImage(Texture texture){
+    private TintedImage(TextureRegion texture){
         super(texture);
-    }
-
-    private TintedImage (NinePatch patch) {
-        super(patch);
     }
 
     private TintedImage (Drawable drawable) {
@@ -102,5 +96,17 @@ public class TintedImage extends Image {
     }
 
 
+    //Use for changing colors through animations
+
+    @Override
+    public Color getColor() {
+        return getTint();
+    }
+
+    @Override
+    public void setColor(Color color) {
+        super.setColor(color);
+        setTint(color);
+    }
 
 }

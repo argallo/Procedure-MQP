@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.AppStage;
-import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.views.BaseView;
@@ -21,8 +20,6 @@ public class TransitionManager {
         currentView.addAction(actions[0]);
         newView.addAction(Actions.sequence(actions[1], new Action() {
             public boolean act(float delta) {
-                Assets.getInstance().unloadAssets(Assets.getInstance().getCurrentID());
-                Assets.getInstance().setCurrentID(newViewID);
                 stage.removeView();
                 stage.setCurrentView(newView);
                 Gdx.input.setInputProcessor(stage);

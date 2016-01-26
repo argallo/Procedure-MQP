@@ -34,6 +34,18 @@ public class ColorHelper {
     }
 
     /**
+     * Generates a color at random that isnt too dark or too light
+     * @return a random color
+     */
+    public static Color generateLandColor(){
+        float h = MathUtils.random();
+        float s = 0.6f;
+        float b = 1f;
+        int color = HSBtoRGB(h, s, b);
+        return new Color(getRed(color)/255f,getGreen(color)/255f,getBlue(color)/255f,1f);
+    }
+
+    /**
      * Generates a color at random that is light
      * @return a random color
      */
@@ -207,6 +219,18 @@ public class ColorHelper {
 
     public static Color shadowOf(Color originalColor){
         return new Color(originalColor.r/4, originalColor.g/4, originalColor.b/4, 1f);
+    }
+
+    public static Color colorize(Color gray, Color newColor){
+        float[] hsb = new float[3];
+        float[] ghsb = new float[3];
+        RGBtoHSB((int)(newColor.r*255), (int)(newColor.g*255), (int)(newColor.b*255), hsb);
+        RGBtoHSB((int)(gray.r*255), (int)(gray.g*255), (int)(gray.b*255), ghsb);
+
+        hsb[2] = ghsb[2];
+        int c = HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+
+        return new Color(getRed(c)/255f, getGreen(c)/255f, getBlue(c)/255f, 1f);
     }
 
 }

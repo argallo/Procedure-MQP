@@ -1,9 +1,7 @@
 package com.pro.gen.simplealien;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.pro.gen.aliens.AlienParts;
-import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 
 /**
@@ -11,7 +9,7 @@ import com.pro.gen.utils.Constants;
  */
 public class Legs {
 
-
+    /*
     public static AlienParts simpleLegs(float width, float height){
         float legWidth = MathUtils.random(width * 0.16f, width * 0.2f);
         float legHeight = MathUtils.random(height*0.3f, height*0.4f);
@@ -33,7 +31,14 @@ public class Legs {
 
         return rightLeg;
     }
+*/
 
+    public static AlienParts Legs(int width, int height, Color color){
+        AlienParts leg = new AlienParts(Constants.ALIEN_LEG, color);
+        leg.setSize(Math.round(width*0.8f), Math.round(width*1.2f));
+        leg.setPosition(width/2-leg.getWidth()/2,height-leg.getHeight());
+        return leg;
+    }
 
 
 }

@@ -32,7 +32,9 @@ public class ViewManager {
      * @param transitionType the type of transition to make when moving to new view
      */
     public void transitionViewTo(ViewID newViewID, TransitionType transitionType) {
-        Assets.getInstance().loadAssets(newViewID, true);
+        if(stage.getCurrentView().equals(ViewID.SPLASH)){
+            Assets.getInstance().disposeSplash();
+        }
         transitionManager.createTransition(stage.getCurrentView(), viewBuilder.build(newViewID), newViewID, stage, transitionType);
     }
 
@@ -41,8 +43,6 @@ public class ViewManager {
      * @param viewID
      */
     public void setInitialView(ViewID viewID) {
-        Assets.getInstance().loadAssets(viewID, true);
-        Assets.getInstance().setCurrentID(viewID);
         stage.addInitialView(viewBuilder.build(viewID));
     }
 
