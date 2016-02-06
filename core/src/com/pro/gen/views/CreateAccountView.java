@@ -31,6 +31,9 @@ import java.util.Map;
  */
 public class CreateAccountView extends BaseView {
 
+    private static final int LOGIN_ACTION = 2;
+    private static final int OPTIONS_ACTION = 3;
+
     private static final String TITLE = "WELCOME";
     private static final String USERNAME = "Username";
     private static final String PASSWORD = "Password";
@@ -69,86 +72,20 @@ public class CreateAccountView extends BaseView {
         //Use error label to also address other issues that might come up like not enough chars for username or pw
         errorLabel = new TextLabel("", Color.RED);
 
-        /**
-         * LoginCreate Listener:
-         * if state is login, check database for correct password and save response information into preferences
-         * if state is create, check database for similar email or username, saves info to database and to preferences
-         *      if username similar call usernameTaken()
-         *      if email similar call emailUsed()
-         * Result: move to create Character view, move to home view, throw correct error method.
-         */
+
         loginCreate.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                errorLabel.setText("");
-                if (validateFields()) {
-                    //TODO:LOGINING IN WORK AND SAVE PREFERENCES
-                    if (isLogin) {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("username", usernameTBox.getText());
-                        params.put("password", passwordTBox.getSecureString());
-                        Net.HttpResponseListener listener = new Net.HttpResponseListener() {
-                            @Override
-                            public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                                //if(response is correct){ save infor to preferences, transition to home view }
-                                //else { incorrectLogin() }
-                            }
-
-                            @Override
-                            public void failed(Throwable t) {
-
-                            }
-
-                            @Override
-                            public void cancelled() {
-
-                            }
-                        };
-                        DatabaseManager.getInstance().makeDBCall(DatabaseManager.LOGIN, params, listener);
-                    } else {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("email", emailTBox.getText());
-                        params.put("username", usernameTBox.getText());
-                        params.put("password", passwordTBox.getSecureString());
-                        Net.HttpResponseListener listener = new Net.HttpResponseListener() {
-                            @Override
-                            public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                                String response = httpResponse.getResultAsString();
-                                LogUtils.Log(response);
-                                if (response.equals("email")) {
-                                    emailTaken();
-                                } else if (response.equals("username")) {
-                                    usernameTaken();
-                                } else if (response.startsWith("error")) {
-                                    error();
-                                } else if (response.equals("success")) {
-                                    Gdx.app.postRunnable(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            // PreferenceManager.getInstance().getPreferences().putBoolean(PreferenceManager.HAS_ACCOUNT, true);
-                                            // PreferenceManager.getInstance().getPreferences().putString(PreferenceManager.ACCOUNT_NAME, usernameTBox.getText());
-                                            // PreferenceManager.getInstance().getPreferences().flush();
-                                            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.SLIDE_R_TRANSITION);
-                                        }
-                                    });
-                                }
-                            }
-
-                            @Override
-                            public void failed(Throwable t) {
-
-                            }
-
-                            @Override
-                            public void cancelled() {
-
-                            }
-                        };
-                        DatabaseManager.getInstance().makeDBCall(DatabaseManager.CREATE, params, listener);
-                    }
-                }
+                handle(LOGIN_ACTION);
             }
         });
+        optionButton.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                handle(OPTIONS_ACTION);
+            }
+        });
+
 
         /**
          * background listener:
@@ -162,30 +99,7 @@ public class CreateAccountView extends BaseView {
             }
         });
 
-        /**
-         * Option Listener:
-         * Switches the state between loging into and account
-         * and creating a new account.
-         */
-        optionButton.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                errorLabel.setText("");
-                if (optionButton.getText().equals(LOGIN)) {
-                    optionButton.setText(CREATE);
-                    informationalHeaderLabel.setText(LOGIN_ACCOUNT);
-                    emailTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    confirmTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    isLogin = true;
-                } else {
-                    optionButton.setText(LOGIN);
-                    informationalHeaderLabel.setText(CREATE_ACCOUNT);
-                    emailTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    confirmTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
-                    isLogin = false;
-                }
-            }
-        });
+
     }
 
     @Override
@@ -227,7 +141,114 @@ public class CreateAccountView extends BaseView {
 
     @Override
     public void handle(int outcome) {
+        switch (outcome){
+            case LOGIN_ACTION:
+                login();
+                break;
+            case OPTIONS_ACTION:
+                option();
+                break;
+        }
+    }
 
+    /**
+     * LoginCreate Listener:
+     * if state is login, check database for correct password and save response information into preferences
+     * if state is create, check database for similar email or username, saves info to database and to preferences
+     *      if username similar call usernameTaken()
+     *      if email similar call emailUsed()
+     * Result: move to create Character view, move to home view, throw correct error method.
+     */
+    public void login(){
+        errorLabel.setText("");
+        if (validateFields()) {
+            //TODO:LOGINING IN WORK AND SAVE PREFERENCES
+            if (isLogin) {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", usernameTBox.getText());
+                params.put("password", passwordTBox.getSecureString());
+                Net.HttpResponseListener listener = new Net.HttpResponseListener() {
+                    @Override
+                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                        //if(response is correct){ save infor to preferences, transition to home view }
+                        //else { incorrectLogin() }
+                    }
+
+                    @Override
+                    public void failed(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+                DatabaseManager.getInstance().makeDBCall(DatabaseManager.LOGIN, params, listener);
+            } else {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", emailTBox.getText());
+                params.put("username", usernameTBox.getText());
+                params.put("password", passwordTBox.getSecureString());
+                Net.HttpResponseListener listener = new Net.HttpResponseListener() {
+                    @Override
+                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                        String response = httpResponse.getResultAsString();
+                        LogUtils.Log(response);
+                        if (response.equals("email")) {
+                            emailTaken();
+                        } else if (response.equals("username")) {
+                            usernameTaken();
+                        } else if (response.startsWith("error")) {
+                            error();
+                        } else if (response.equals("success")) {
+                            Gdx.app.postRunnable(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // PreferenceManager.getInstance().getPreferences().putBoolean(PreferenceManager.HAS_ACCOUNT, true);
+                                    // PreferenceManager.getInstance().getPreferences().putString(PreferenceManager.ACCOUNT_NAME, usernameTBox.getText());
+                                    // PreferenceManager.getInstance().getPreferences().flush();
+                                    ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.SLIDE_R_TRANSITION);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void failed(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void cancelled() {
+
+                    }
+                };
+                DatabaseManager.getInstance().makeDBCall(DatabaseManager.CREATE, params, listener);
+            }
+        }
+    }
+
+    /**
+     * Option Listener:
+     * Switches the state between loging into and account
+     * and creating a new account.
+     */
+    public void option(){
+        errorLabel.setText("");
+        if (optionButton.getText().equals(LOGIN)) {
+            optionButton.setText(CREATE);
+            informationalHeaderLabel.setText(LOGIN_ACCOUNT);
+            emailTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
+            confirmTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
+            isLogin = true;
+        } else {
+            optionButton.setText(LOGIN);
+            informationalHeaderLabel.setText(CREATE_ACCOUNT);
+            emailTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
+            confirmTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
+            isLogin = false;
+        }
     }
 
     /**

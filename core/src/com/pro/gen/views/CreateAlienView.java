@@ -21,6 +21,9 @@ import com.pro.gen.worldcomponents.Planet;
  */
 public class CreateAlienView extends BaseView{
 
+    private static final int RANDOMIZE_ACTION = 2;
+    private static final int SELECT_ACTION = 3;
+
     private static final String CHOOSE_ALIEN = "CHOOSE ALIEN";
     private static final String SELECT_BTN = "Select";
     private static final String RANDOMIZE_BTN = "Randomize";
@@ -49,18 +52,13 @@ public class CreateAlienView extends BaseView{
         selectButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
+                handle(SELECT_ACTION);
             }
         });
         randomizeButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                removeActor(planet);
-                planet = new Planet(new RandomPlanet());
-                planet.setSize(200, 200);
-                planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
-                addActorAt(2, planet);
-
+             handle(RANDOMIZE_ACTION);
             }
         });
 
@@ -106,7 +104,18 @@ public class CreateAlienView extends BaseView{
 
     @Override
     public void handle(int outcome) {
-
+        switch(outcome){
+            case RANDOMIZE_ACTION:
+                removeActor(planet);
+                planet = new Planet(new RandomPlanet());
+                planet.setSize(200, 200);
+                planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
+                addActorAt(2, planet);
+                break;
+            case SELECT_ACTION:
+                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
+                break;
+        }
     }
 
 }

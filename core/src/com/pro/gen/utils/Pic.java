@@ -57,7 +57,11 @@ public class Pic {
     public static final String UI_Full = "ShipUI/ui_full.png";
     public static final String UI_Open = "ShipUI/ui_open.png";
     public static final String Blank_Popup = "ShipUI/blankpopup.png";
-    public static final String Planet_BG = "ShipUI/planet_bg.png";
+    public static final String Bg1 = "ShipUI/bg1.png";
+    public static final String Bg2 = "ShipUI/bg2.png";
+    public static final String Bg3 = "ShipUI/bg3.png";
+    public static final String Bg4 = "ShipUI/bg4.png";
+    public static final String Bg5 = "ShipUI/bg5.png";
 
 
 

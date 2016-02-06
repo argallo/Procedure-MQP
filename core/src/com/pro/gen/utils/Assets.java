@@ -87,8 +87,13 @@ public class Assets extends AssetManager {
         load(Pic.UI_Open, Texture.class, textureParam);
         load(Pic.Ship, Texture.class, textureParam);
         load(Pic.Ship_V, Texture.class, textureParam);
-        load(Pic.Planet_BG, Texture.class, textureParam);
         load(Pic.Blank_Popup, Texture.class, textureParam);
+        load(Pic.Bg1, Texture.class, textureParam);
+        load(Pic.Bg2, Texture.class, textureParam);
+        load(Pic.Bg3, Texture.class, textureParam);
+        load(Pic.Bg4, Texture.class, textureParam);
+        load(Pic.Bg5, Texture.class, textureParam);
+
         finishLoading();
     }
 

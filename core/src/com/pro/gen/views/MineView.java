@@ -1,55 +1,46 @@
 package com.pro.gen.views;
 
-import com.pro.gen.components.TintedImage;
-import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.utils.Constants;
-import com.pro.gen.worldcomponents.LandSky;
 import com.pro.gen.worldcomponents.OilRig;
-import com.pro.gen.utils.Pic;
 
 /**
  * Created by Gallo on 1/21/2016.
  */
-public class MineView extends BaseView {
+public class MineView extends LandView {
 
 
-    TintedImage planetBG;
-    LandSky landSky;
-    OilRig oilRig;
-
-
+    private OilRig oilRig;
 
     @Override
     public void init() {
-        landSky = new LandSky();
-        planetBG = new TintedImage(Pic.Planet_BG, ColorHelper.generateLandColor());
+        super.init();
         oilRig = new OilRig();
-
     }
 
     @Override
     public void setSizes() {
-        planetBG.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT-200);
-
-
+        super.setSizes();
     }
 
     @Override
     public void setPositions() {
-        
+        super.setPositions();
     }
 
     @Override
     public void addActors() {
         addActor(landSky);
-        addActor(planetBG);
+        addActor(bg1);
+        addActor(bg2);
+        addActor(bg3);
         addActor(oilRig);
-
-
+        addActor(bgGround);
+        addActor(bg4);
+        addActor(bg5);
     }
 
     @Override
     public void handle(int outcome) {
 
     }
+
 }

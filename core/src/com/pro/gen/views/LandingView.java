@@ -28,14 +28,13 @@ public class LandingView extends BaseView {
         super();
         ship.addAction(Actions.sequence(Actions.moveTo(ship.getX(), Constants.VIRTUAL_HEIGHT / 2 - ship.getHeight() / 2, 2f, Interpolation.exp5),
                 Actions.forever(Actions.sequence(Actions.moveBy(0, 50, 0.6f, Interpolation.fade), Actions.moveBy(0, -60, 0.6f, Interpolation.fade)))));
-
     }
 
 
     @Override
     public void init() {
         ship = new TintedImage(Pic.Ship_V, Color.WHITE);
-        // make this color from the planets land Color?
+        //TODO: make this color from the planets land Color?
         skyDown = new SkyDown(ColorHelper.generateGoodColor(), this);
     }
 
