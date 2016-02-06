@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.Cullable;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.znewmqp.Tint;
+import com.pro.gen.utils.Tint;
 
 
 /**
@@ -21,22 +21,14 @@ public abstract class BaseView extends Group implements Cullable{
         init();
         setSizes();
         setPositions();
-        addListeners();
         addActors();
     }
 
     public abstract void init();
-
-    public void setSizes(){
-
-    }
-    public void setPositions(){
-
-    }
-    public void addListeners(){
-
-    }
+    public abstract void setSizes();
+    public abstract void setPositions();
     public abstract void addActors();
+    public abstract void handle(int outcome);
 
     @Override
     public void act(float delta) {

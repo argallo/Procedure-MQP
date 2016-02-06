@@ -10,11 +10,11 @@ import com.pro.gen.managers.ViewManager;
 import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.Pic;
+import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.Planet;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.Tint;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -46,6 +46,24 @@ public class CreateAlienView extends BaseView{
         homePlanet = new TextLabel("Home Planet", xsmallFont);
         planet = new Planet(new RandomPlanet());
 
+        selectButton.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
+            }
+        });
+        randomizeButton.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                removeActor(planet);
+                planet = new Planet(new RandomPlanet());
+                planet.setSize(200, 200);
+                planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
+                addActorAt(2, planet);
+
+            }
+        });
+
     }
 
     @Override
@@ -72,27 +90,6 @@ public class CreateAlienView extends BaseView{
     }
 
     @Override
-    public void addListeners() {
-        selectButton.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
-            }
-        });
-        randomizeButton.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                removeActor(planet);
-                planet = new Planet(new RandomPlanet());
-                planet.setSize(200, 200);
-                planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
-                addActorAt(2, planet);
-
-            }
-        });
-    }
-
-    @Override
     public void addActors() {
         addActor(background);
         addActor(chooseAlien);
@@ -105,6 +102,11 @@ public class CreateAlienView extends BaseView{
         addActor(homePlanet);
         addActor(selectButton);
         addActor(randomizeButton);
+    }
+
+    @Override
+    public void handle(int outcome) {
+
     }
 
 }

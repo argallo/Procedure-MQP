@@ -1,10 +1,9 @@
 package com.pro.gen.views;
 
 /**
- * Created by Gallo on 8/11/2015.
+ * Created by Gallo on 2/5/2016.
  */
-public class EmptyView extends BaseView {
-
+public class LeaderboardView extends BaseView {
     @Override
     public void init() {
 

@@ -38,11 +38,25 @@ solar_planet
   orig: 200, 200
   offset: 0, 0
   index: -1
+oil_rope
+  rotate: false
+  xy: 1005, 690
+  size: 18, 333
+  orig: 18, 333
+  offset: 0, 0
+  index: -1
 sun_large
   rotate: false
   xy: 803, 621
   size: 200, 200
   orig: 200, 200
+  offset: 0, 0
+  index: -1
+oil_rock
+  rotate: false
+  xy: 803, 422
+  size: 184, 197
+  orig: 184, 197
   offset: 0, 0
   index: -1
 title_bar
@@ -54,37 +68,23 @@ title_bar
   index: -1
 ship_gun
   rotate: false
-  xy: 803, 523
+  xy: 803, 324
   size: 197, 96
   orig: 197, 96
   offset: 0, 0
   index: -1
-planet_list_holo
-  rotate: false
-  xy: 803, 381
-  size: 113, 140
-  orig: 113, 140
-  offset: 0, 0
-  index: -1
 curvesquare
   rotate: false
-  xy: 397, 2
+  xy: 803, 222
   size: 150, 100
   orig: 150, 100
   offset: 0, 0
   index: -1
-fuel_unit_icon
+destroy_icon
   rotate: false
-  xy: 803, 271
-  size: 100, 108
-  orig: 100, 108
-  offset: 0, 0
-  index: -1
-planet_list_holo_left
-  rotate: false
-  xy: 918, 381
-  size: 53, 140
-  orig: 53, 140
+  xy: 397, 26
+  size: 150, 76
+  orig: 150, 76
   offset: 0, 0
   index: -1
 mine_action_button
@@ -94,116 +94,67 @@ mine_action_button
   orig: 94, 94
   offset: 0, 0
   index: -1
-planet_list_holo_right
+planet_list_holo
   rotate: false
-  xy: 905, 239
-  size: 53, 140
-  orig: 53, 140
-  offset: 0, 0
-  index: -1
-destroy_icon
-  rotate: false
-  xy: 645, 68
-  size: 150, 76
-  orig: 150, 76
+  xy: 645, 4
+  size: 113, 140
+  orig: 113, 140
   offset: 0, 0
   index: -1
 cylinder
   rotate: false
-  xy: 645, 19
+  xy: 768, 173
   size: 150, 47
   orig: 150, 47
   offset: 0, 0
   index: -1
-b_crystal
+planet_list_holo_left
   rotate: false
-  xy: 768, 146
-  size: 80, 75
-  orig: 80, 75
+  xy: 760, 4
+  size: 53, 140
+  orig: 53, 140
   offset: 0, 0
   index: -1
-army_icon
+fuel_unit_icon
   rotate: false
-  xy: 797, 54
-  size: 90, 90
-  orig: 90, 90
+  xy: 815, 63
+  size: 100, 108
+  orig: 100, 108
   offset: 0, 0
   index: -1
-luck_icon
+planet_list_holo_right
   rotate: false
-  xy: 797, 1
-  size: 51, 51
-  orig: 51, 51
-  offset: 0, 0
-  index: -1
-speed_icon
-  rotate: false
-  xy: 850, 1
-  size: 51, 51
-  orig: 51, 51
-  offset: 0, 0
-  index: -1
-automine_icon
-  rotate: false
-  xy: 973, 471
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-health_icon
-  rotate: false
-  xy: 973, 419
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-capsule
-  rotate: false
-  xy: 850, 147
-  size: 90, 90
-  orig: 90, 90
-  offset: 0, 0
-  index: -1
-mine_icon
-  rotate: false
-  xy: 889, 56
-  size: 88, 89
-  orig: 88, 89
-  offset: 0, 0
-  index: -1
-triangle
-  rotate: false
-  xy: 903, 9
-  size: 52, 45
-  orig: 52, 45
-  offset: 0, 0
-  index: -1
-g_crystal
-  rotate: false
-  xy: 942, 162
-  size: 80, 75
-  orig: 80, 75
-  offset: 0, 0
-  index: -1
-power_crystal
-  rotate: false
-  xy: 979, 85
-  size: 35, 75
-  orig: 35, 75
+  xy: 955, 182
+  size: 53, 140
+  orig: 53, 140
   offset: 0, 0
   index: -1
 back_button
   rotate: false
-  xy: 960, 321
+  xy: 815, 3
   size: 58, 58
   orig: 58, 58
   offset: 0, 0
   index: -1
 switch_mode_button
   rotate: false
-  xy: 960, 261
+  xy: 875, 3
   size: 58, 58
   orig: 58, 58
+  offset: 0, 0
+  index: -1
+mine_icon
+  rotate: false
+  xy: 935, 91
+  size: 88, 89
+  orig: 88, 89
+  offset: 0, 0
+  index: -1
+b_crystal
+  rotate: false
+  xy: 935, 14
+  size: 80, 75
+  orig: 80, 75
   offset: 0, 0
   index: -1
 blue
@@ -227,50 +178,132 @@ filter: Linear,Linear
 repeat: none
 circle_hole
   rotate: false
-  xy: 1, 556
+  xy: 1, 587
   size: 597, 400
   orig: 597, 400
   offset: 0, 0
   index: -1
 circle_hole_right
   rotate: false
-  xy: 1, 154
+  xy: 1, 185
   size: 597, 400
   orig: 597, 400
   offset: 0, 0
   index: -1
 circle_large
   rotate: false
-  xy: 600, 556
+  xy: 600, 587
   size: 400, 400
   orig: 400, 400
   offset: 0, 0
   index: -1
 planet_shadow
   rotate: false
-  xy: 600, 154
+  xy: 600, 185
   size: 400, 400
   orig: 400, 400
   offset: 0, 0
   index: -1
+army_icon
+  rotate: false
+  xy: 1, 93
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+capsule
+  rotate: false
+  xy: 1, 1
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
 mega_crystal
   rotate: false
-  xy: 1, 78
+  xy: 93, 109
   size: 90, 74
   orig: 90, 74
   offset: 0, 0
   index: -1
+g_crystal
+  rotate: false
+  xy: 93, 32
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
 r_crystal
   rotate: false
-  xy: 1, 1
+  xy: 185, 108
   size: 80, 75
   orig: 80, 75
   offset: 0, 0
   index: -1
 circle_small
   rotate: false
-  xy: 93, 88
+  xy: 267, 119
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+luck_icon
+  rotate: false
+  xy: 333, 132
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+speed_icon
+  rotate: false
+  xy: 386, 132
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+automine_icon
+  rotate: false
+  xy: 439, 133
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+health_icon
+  rotate: false
+  xy: 491, 133
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+power_crystal
+  rotate: false
+  xy: 175, 31
+  size: 35, 75
+  orig: 35, 75
+  offset: 0, 0
+  index: -1
+triangle
+  rotate: false
+  xy: 543, 138
+  size: 52, 45
+  orig: 52, 45
+  offset: 0, 0
+  index: -1
+
+textureatlas3.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+oil_top
+  rotate: false
+  xy: 1, 9
+  size: 517, 312
+  orig: 517, 312
+  offset: 0, 0
+  index: -1
+oil_stand
+  rotate: false
+  xy: 520, 1
+  size: 234, 320
+  orig: 234, 320
   offset: 0, 0
   index: -1

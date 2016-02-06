@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.Tint;
+import com.pro.gen.utils.Pic;
+import com.pro.gen.utils.Tint;
 
 /**
  * Created by Gallo on 8/12/2015.

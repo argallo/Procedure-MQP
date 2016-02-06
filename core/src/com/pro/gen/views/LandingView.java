@@ -12,7 +12,7 @@ import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.SkyDown;
-import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.utils.Pic;
 
 /**
  * Created by Gallo on 10/27/2015.
@@ -53,6 +53,11 @@ public class LandingView extends BaseView {
     public void addActors() {
         addActor(skyDown);
         addActor(ship);
+    }
+
+    @Override
+    public void handle(int outcome) {
+
     }
 
     public void finishLanding(){

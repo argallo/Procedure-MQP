@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.LogUtils;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.Tint;
+import com.pro.gen.utils.Pic;
+import com.pro.gen.utils.Tint;
 
 import java.security.MessageDigest;
 

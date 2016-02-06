@@ -1,9 +1,10 @@
 package com.pro.gen.views;
 
 /**
- * Created by Gallo on 8/11/2015.
+ * Created by Gallo on 1/21/2016.
  */
-public class EmptyView extends BaseView {
+public class ArmyView extends BaseView {
+
 
     @Override
     public void init() {
@@ -29,4 +30,6 @@ public class EmptyView extends BaseView {
     public void handle(int outcome) {
 
     }
+
+
 }

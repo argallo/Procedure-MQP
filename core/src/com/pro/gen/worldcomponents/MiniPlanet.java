@@ -6,8 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.SolarSystem;
+import com.pro.gen.utils.Pic;
 
 /**
  * Created by Gallo on 10/24/2015.

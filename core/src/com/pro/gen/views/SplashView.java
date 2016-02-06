@@ -32,6 +32,19 @@ public class SplashView extends BaseView{
         Assets.getInstance().loadCommonAssets();
     }
 
+    @Override
+    public void setSizes() {
+
+    }
+    @Override
+    public void setPositions() {
+
+    }
+    @Override
+    public void handle(int outcome) {
+
+    }
+
     public void addActors(){
         addActor(splashLogo);
     }
@@ -66,7 +79,7 @@ public class SplashView extends BaseView{
             ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
         } else {
             //User either does not have an account or is not logged in. Go to login screen
-            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.DEFAULT_TRANSITION);
+            ViewManager.getInstance().transitionViewTo(ViewID.MINE, TransitionType.DEFAULT_TRANSITION);
         }
     }
 

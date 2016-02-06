@@ -8,12 +8,12 @@ import com.pro.gen.utils.Item;
 import com.pro.gen.utils.Range;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.StarMap;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.Ship;
-import com.pro.gen.znewmqp.ShipDoor;
-import com.pro.gen.znewmqp.Tint;
-import com.pro.gen.znewmqp.TitleBar;
-import com.pro.gen.znewmqp.TravelButton;
+import com.pro.gen.utils.Pic;
+import com.pro.gen.worldcomponents.Ship;
+import com.pro.gen.worldcomponents.ShipDoor;
+import com.pro.gen.utils.Tint;
+import com.pro.gen.components.TitleBar;
+import com.pro.gen.components.TravelButton;
 
 /**
  * Created by Gallo on 10/21/2015.
@@ -38,7 +38,7 @@ public class MainMenuView extends BaseView {
         titleBar = new TitleBar("Main Menu");
         shipDoor = new ShipDoor(false);
 
-
+        //Menu Buttons
         exploreBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Explore", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
         manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor);
         leaderBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Leaderboard", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
@@ -86,6 +86,11 @@ public class MainMenuView extends BaseView {
         addActor(dwarfBtn);
         addActor(InventoryBtn);
         addActor(shipDoor);
+
+    }
+
+    @Override
+    public void handle(int outcome) {
 
     }
 

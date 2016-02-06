@@ -7,7 +7,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.views.LandingView;
-import com.pro.gen.znewmqp.Pic;
+import com.pro.gen.utils.Pic;
 
 /**
  * Created by Gallo on 10/27/2015.

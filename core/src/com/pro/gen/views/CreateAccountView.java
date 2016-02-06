@@ -18,10 +18,10 @@ import com.pro.gen.managers.ViewManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
+import com.pro.gen.utils.Pic;
+import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.Tint;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,33 +68,7 @@ public class CreateAccountView extends BaseView {
         informationalHeaderLabel = new TextLabel(CREATE_ACCOUNT);
         //Use error label to also address other issues that might come up like not enough chars for username or pw
         errorLabel = new TextLabel("", Color.RED);
-    }
 
-    @Override
-    public void setSizes() {
-        loginCreate.setSize(300, 150);
-        optionButton.setSize(300, 150);
-        usernameTBox.setSize(500, 60);
-        emailTBox.setSize(500, 60);
-        passwordTBox.setSize(500, 60);
-        confirmTBox.setSize(500, 60);
-    }
-
-    @Override
-    public void setPositions() {
-        loginCreate.setPosition(Constants.VIRTUAL_WIDTH/2 + loginCreate.getWidth()/4, 50);
-        optionButton.setPosition(Constants.VIRTUAL_WIDTH/2 - (optionButton.getWidth()*1.25f), 50);
-        usernameTBox.setPosition(120, 400);
-        emailTBox.setPosition(120, 335);
-        passwordTBox.setPosition(650, 400);
-        confirmTBox.setPosition(650, 335);
-        titleLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - titleLabel.getWidth() / 2, Constants.VIRTUAL_HEIGHT - titleLabel.getHeight());
-        informationalHeaderLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - informationalHeaderLabel.getWidth() / 2, 400 + informationalHeaderLabel.getHeight() + 10);
-        errorLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - errorLabel.getWidth()/2, 250);
-    }
-
-    @Override
-    public void addListeners() {
         /**
          * LoginCreate Listener:
          * if state is login, check database for correct password and save response information into preferences
@@ -215,6 +189,29 @@ public class CreateAccountView extends BaseView {
     }
 
     @Override
+    public void setSizes() {
+        loginCreate.setSize(300, 150);
+        optionButton.setSize(300, 150);
+        usernameTBox.setSize(500, 60);
+        emailTBox.setSize(500, 60);
+        passwordTBox.setSize(500, 60);
+        confirmTBox.setSize(500, 60);
+    }
+
+    @Override
+    public void setPositions() {
+        loginCreate.setPosition(Constants.VIRTUAL_WIDTH/2 + loginCreate.getWidth()/4, 50);
+        optionButton.setPosition(Constants.VIRTUAL_WIDTH/2 - (optionButton.getWidth()*1.25f), 50);
+        usernameTBox.setPosition(120, 400);
+        emailTBox.setPosition(120, 335);
+        passwordTBox.setPosition(650, 400);
+        confirmTBox.setPosition(650, 335);
+        titleLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - titleLabel.getWidth() / 2, Constants.VIRTUAL_HEIGHT - titleLabel.getHeight());
+        informationalHeaderLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - informationalHeaderLabel.getWidth() / 2, 400 + informationalHeaderLabel.getHeight() + 10);
+        errorLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - errorLabel.getWidth()/2, 250);
+    }
+
+    @Override
     public void addActors() {
         addActor(background);
         addActor(usernameTBox);
@@ -226,6 +223,11 @@ public class CreateAccountView extends BaseView {
         addActor(errorLabel);
         addActor(loginCreate);
         addActor(optionButton);
+    }
+
+    @Override
+    public void handle(int outcome) {
+
     }
 
     /**

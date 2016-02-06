@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
-import com.pro.gen.znewmqp.Pic;
-import com.pro.gen.znewmqp.SolarSystem;
+import com.pro.gen.utils.Pic;
 
 /**
  * Created by Gallo on 10/26/2015.

@@ -1,21 +1,22 @@
 package com.pro.gen.managers;
 
 import com.pro.gen.utils.ViewID;
-import com.pro.gen.views.AppView;
 import com.pro.gen.views.BaseView;
+import com.pro.gen.views.CapsuleView;
 import com.pro.gen.views.CreateAccountView;
 import com.pro.gen.views.CreateAlienView;
 import com.pro.gen.views.EmptyView;
-import com.pro.gen.views.GroundView;
 import com.pro.gen.views.LandingView;
+import com.pro.gen.views.LeaderboardView;
 import com.pro.gen.views.MainMenuView;
+import com.pro.gen.views.PlanetlistView;
 import com.pro.gen.views.SplashView;
-import com.pro.gen.znewmqp.ArmyView;
-import com.pro.gen.znewmqp.DestroyView;
-import com.pro.gen.znewmqp.ExploreView;
-import com.pro.gen.znewmqp.MineView;
-import com.pro.gen.znewmqp.PlanetView;
-import com.pro.gen.znewmqp.SolarSystemView;
+import com.pro.gen.views.ArmyView;
+import com.pro.gen.views.DestroyView;
+import com.pro.gen.views.ExploreView;
+import com.pro.gen.views.MineView;
+import com.pro.gen.views.PlanetView;
+import com.pro.gen.views.SolarSystemView;
 
 /**
  * Created by Gallo on 8/11/2015.
@@ -36,10 +37,6 @@ public class ViewBuilderFactory {
                 return new CreateAlienView();
             case MAIN_MENU:
                 return new MainMenuView();
-            case APP:
-                return new AppView();
-            case LAND:
-                return new GroundView();
             case EXPLORE:
                 return new ExploreView();
             case SOLAR_SYSTEM:
@@ -54,6 +51,12 @@ public class ViewBuilderFactory {
                 return new ArmyView();
             case LANDING:
                 return new LandingView();
+            case CAPSULE:
+                return new CapsuleView();
+            case LEADERBOARD:
+                return new LeaderboardView();
+            case PLANETLIST:
+                return new PlanetlistView();
             default:
                 return new EmptyView();
         }
