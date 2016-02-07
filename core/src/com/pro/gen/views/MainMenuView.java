@@ -36,13 +36,13 @@ public class MainMenuView extends BaseView {
         shipUI = new TintedImage(Pic.UI_Full);
         ship = new Ship(Pic.Ship);
         titleBar = new TitleBar("Main Menu");
-        shipDoor = new ShipDoor(false);
+        shipDoor = new ShipDoor(true);
 
         //Menu Buttons
         exploreBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Explore", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
         manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor);
         leaderBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Leaderboard", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
-        dwarfBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Drawf Capsules", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor);
+        dwarfBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Drawf Capsules", Assets.getInstance().getXSmallFont(), ViewID.CAPSULE, shipDoor);
         InventoryBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Inventory", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
 
     }

@@ -14,8 +14,6 @@ public class CurrencyPanel extends Group {
 
     public CurrencyPanel(){
 
-
-
     }
 
     public void init(){

@@ -17,6 +17,15 @@ public class TravelButton extends Button {
     private ViewID travelTo;
     private ShipDoor shipDoor;
 
+
+    public TravelButton(String mainImage, ViewID travelTo, ShipDoor shipDoor) {
+        super(mainImage, Color.WHITE);
+        this.travelTo = travelTo;
+        this.shipDoor = shipDoor;
+        createButtonAction();
+    }
+
+
     public TravelButton(String mainImage, Color backgroundColor, String buttonText, BitmapFont fontType, ViewID travelTo, ShipDoor shipDoor) {
         super(mainImage, backgroundColor, buttonText, fontType);
         this.travelTo = travelTo;

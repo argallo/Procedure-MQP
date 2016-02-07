@@ -79,7 +79,7 @@ public class SplashView extends BaseView{
             ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
         } else {
             //User either does not have an account or is not logged in. Go to login screen
-            ViewManager.getInstance().transitionViewTo(ViewID.MINE, TransitionType.DEFAULT_TRANSITION);
+            ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
         }
     }
 
