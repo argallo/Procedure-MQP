@@ -19,6 +19,10 @@ public class TextLabel extends Group {
         this(title, Color.WHITE, font);
     }
 
+    public TextLabel(String title, BitmapFont font, int align){
+        this(title, Color.WHITE, font, align);
+    }
+
     public TextLabel(String title, Color color){
         this(title, color, Assets.getInstance().getMidFont());
     }
@@ -28,9 +32,13 @@ public class TextLabel extends Group {
     }
 
     public TextLabel(String title, Color color, BitmapFont font){
+        this(title, color, font, Align.center);
+    }
+
+    public TextLabel(String title, Color color, BitmapFont font, int align){
         style = new Label.LabelStyle(font, color);
         label = new Label(title, style);
-        label.setAlignment(Align.center);
+        label.setAlignment(align);
         addActor(label);
         this.setSize(label.getPrefWidth(), label.getPrefHeight());
     }
@@ -46,12 +54,17 @@ public class TextLabel extends Group {
 
     public void setText(String text){
         label.setText(text);
+        this.setSize(label.getPrefWidth(), label.getPrefHeight());
     }
 
     public void wrapText(boolean wrap, float width, float height){
         label.setWrap(wrap);
         label.setSize(width, height);
         this.setSize(width, height);
+    }
+
+    public void setAlign(int align){
+        label.setAlignment(align);
     }
 
 }

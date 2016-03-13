@@ -36,7 +36,7 @@ public class WinningsPopup extends com.pro.gen.popups.AbsPopup {
         prizes.setVisible(false);
         addActor(prizes);
 
-        currencyPanel = new CurrencyPanel();
+        currencyPanel = new CurrencyPanel(CurrencyPanel.HORIZONTAL);
         currencyPanel.setSize(Constants.VIRTUAL_WIDTH*0.6f, Constants.VIRTUAL_HEIGHT*0.6f);
         currencyPanel.setPosition(Constants.VIRTUAL_WIDTH / 5 - 20, Constants.VIRTUAL_HEIGHT / 2 - 100);
         currencyPanel.init();

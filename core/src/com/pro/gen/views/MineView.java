@@ -7,13 +7,13 @@ import com.pro.gen.worldcomponents.OilRig;
  */
 public class MineView extends LandView {
 
-
     private OilRig oilRig;
 
     @Override
     public void init() {
         super.init();
         oilRig = new OilRig();
+
     }
 
     @Override

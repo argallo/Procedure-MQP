@@ -25,6 +25,7 @@ public class Tint {
     public static Color DEAD_PLANET_SHADOW = new Color(86/255f, 1/255f, 1/255f, 1f);
     public static Color DEAD_PLANET_LAND = new Color(143/255f, 6/255f, 6/255f, 1f);
     public static Color DEAD_PLANET_CLOUD = new Color(1/255f, 1/255f, 1/255f, 1f);
+    public static Color LEADER_RED = new Color(172/255f, 59/255f, 59/255f, 1f);
 
 
 

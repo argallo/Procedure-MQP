@@ -43,7 +43,7 @@ public class CapsuleView extends BaseView {
         capsuleLabel = new TextLabel("3 Capsules", Assets.getInstance().getSmallFont());
         openBtn = new Button(Pic.Pixel, Tint.MED_PURPLE, "Open Capsule", Assets.getInstance().getSmallFont());
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
-        currencyPanel = new CurrencyPanel();
+        currencyPanel = new CurrencyPanel(CurrencyPanel.HORIZONTAL);
         capsuleSpinner = new CapsuleSpinner();
 
         openBtn.setButtonAction(new ButtonAction() {
