@@ -3,9 +3,12 @@ package com.pro.gen.views;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
+import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
+import com.pro.gen.worldcomponents.Planet;
 
 /**
  * Created by Gallo on 9/2/2015.
@@ -73,6 +76,10 @@ public class SplashView extends BaseView{
      * Make the transition to the next view
      */
     public void completeSplashView(){
+
+        XmlManager manager = new XmlManager();
+        manager.savePlanet(new Planet(new RandomPlanet(1,1)));
+
         counting = false;
         if(PreferenceManager.getInstance().hasAccount()){
             //Users account can be found in local storage, go straight to Home Screen

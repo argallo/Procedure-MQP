@@ -2,7 +2,6 @@ package com.pro.gen.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.utils.XmlWriter;
 
 /**
  * Created by Gallo on 9/2/2015.
@@ -18,6 +17,12 @@ public class PreferenceManager {
     public static final String SLOT_2 = "PlanetSlot2";
     public static final String SLOT_3 = "PlanetSlot3";
     public static final String SLOT_4 = "PlanetSlot4";
+    public static final String HAT_LIST = "HatList";
+    public static final String MAEGA_CRYSTALS = "MegaCrystals";
+    public static final String POWER_CRYSTALS = "PowerCrystals";
+    public static final String FUEL_UNITS = "FuelUnits";
+    public static final String BOSS_LEVEL = "BossLevel";
+    public static final String SOLAR_SYSTEM = "SolarSystem";
 
 
 

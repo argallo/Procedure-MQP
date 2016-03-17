@@ -50,7 +50,7 @@ public class LeaderboardView extends BaseView {
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
         rank = new Button(Pic.Pixel, Tint.LIGHT_BLUE, "Rank 23", Assets.getInstance().getSmallFont());
         rank.setTouchable(Touchable.disabled);
-        homePlanet = new Planet(new RandomPlanet(), Tint.DARK_PURPLE);
+        homePlanet = new Planet(new RandomPlanet(1,1), Tint.DARK_PURPLE);
         mined = new TextLabel("Mined 18", Assets.getInstance().getXSmallFont());
         destroyed = new TextLabel("Destroyed 12", Assets.getInstance().getXSmallFont());
         armed = new TextLabel("Armed 24", Assets.getInstance().getXSmallFont());

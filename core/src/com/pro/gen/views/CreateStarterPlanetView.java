@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
-import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.random.RandomPlanet;
@@ -40,7 +39,7 @@ public class CreateStarterPlanetView extends BaseView{
         selectButton = new Button(Pic.Pixel, Tint.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
         randomizeButton = new Button(Pic.Pixel, Tint.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
         BitmapFont xsmallFont = Assets.getInstance().getXSmallFont();
-        planet = new Planet(new RandomPlanet());
+        planet = new Planet(new RandomPlanet(1,1));
 
         selectButton.setButtonAction(new ButtonAction() {
             @Override
@@ -88,7 +87,7 @@ public class CreateStarterPlanetView extends BaseView{
         switch(outcome){
             case RANDOMIZE_ACTION:
                 removeActor(planet);
-                planet = new Planet(new RandomPlanet());
+                planet = new Planet(new RandomPlanet(1,1));
                 planet.setSize(400, 400);
                 planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
                 addActorAt(2, planet);

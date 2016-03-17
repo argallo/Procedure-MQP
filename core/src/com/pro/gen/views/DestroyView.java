@@ -36,7 +36,7 @@ public class DestroyView extends BaseView {
     @Override
     public void init() {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
-        planet = new Planet(new RandomPlanet());
+        planet = new Planet(new RandomPlanet(1,1));
         stars = new StarMap(0, 120, new Item(Pic.Circle_Small, new Range(1f,1f),3f, 12f), 350);
         titleBar = new TitleBar("Destroying");
         winningsPopup = new WinningsPopup(this);

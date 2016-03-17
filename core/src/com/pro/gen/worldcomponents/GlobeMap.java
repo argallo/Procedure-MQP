@@ -40,7 +40,7 @@ public class GlobeMap extends Group {
         for(TintedImage piece: globePieces){
             piece.setX(piece.getX() - (speed * getWidth() / 1500));
             if(piece.getX()+piece.getWidth() < getWidth()/4){
-                piece.setX(getWidth()-piece.getWidth());
+                piece.setX(getWidth()-piece.getWidth() - ((getWidth()/4) - (piece.getX()+piece.getWidth())));
             }
         }
 
@@ -70,12 +70,5 @@ public class GlobeMap extends Group {
         });
     }
 
-    public String toString(){
-        StringBuilder map = new StringBuilder();
-        for(TintedImage piece :globePieces){
-            map.append("<Piece>"+piece.toString());
-        }
-        return map.toString()+"<Speed>"+speed;
-    }
 
 }

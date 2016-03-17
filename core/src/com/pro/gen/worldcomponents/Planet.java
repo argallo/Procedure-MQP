@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomPlanet;
-import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 
@@ -29,6 +28,9 @@ public class Planet extends Group {
     private int globeRank; // The Globe Rank of the planet
     private int currentXP; // The Current XP that will be used to increase globe rank
     private int rankXP; // The overall amount of XP needed to increase globe rank
+    private boolean inhabitable; //whether the planet is inhabitable
+    private long timeStart; // the time at which it became inhabitable
+    private long amtofTime; // the amount of time from timeStart to become habitable
 
     public Planet(RandomPlanet randomPlanet){
        this(randomPlanet, Tint.UNIVERSE_BACKGROUND_COLOR);
@@ -110,9 +112,60 @@ public class Planet extends Group {
         }));
     }
 
-    public String toString(){
-        //base planet color,
-        return "<Planet><Land>"+lands.toString()+"<Cloud>"+clouds.toString()+"<Eyes>"+planetEyes.toString();
+    /**
+     * Getters and setters for saving planet to xml
+     *
+     */
+
+    public int getPlanetSize() {
+        return planetSize;
     }
 
+    public int getPlanetEnergy() {
+        return planetEnergy;
+    }
+
+    public int getCurrentXP() {
+        return currentXP;
+    }
+
+    public int getGlobeRank() {
+        return globeRank;
+    }
+
+    public int getRankXP() {
+        return rankXP;
+    }
+
+    public Hat getHat() {
+        return hat;
+    }
+
+    public PlanetEyes getPlanetEyes() {
+        return planetEyes;
+    }
+
+    public GlobeMap getClouds() {
+        return clouds;
+    }
+
+    public GlobeMap getLands() {
+        return lands;
+    }
+
+    public Color getBasePlanetColor() {
+        return basePlanet.getTint();
+    }
+
+    public boolean isInhabitable() {
+        return inhabitable;
+    }
+
+    public long getTimeStart() {
+        return timeStart;
+    }
+
+    public long getAmtofTime() {
+        return amtofTime;
+    }
 }

@@ -31,12 +31,12 @@ public class RandomGlobeMapInfo {
     public void selectGlobeObject(GlobeObjectType globeObjectType){
         switch (globeObjectType){
             case Land:
-                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.LandCylinder : Item.LandCircle, 1500, 500, 10);
+                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.LandCylinder : Item.LandCircle, 1125, 500, 10);
                 speed = Constants.VIRTUAL_WIDTH/300;
                 color = ColorHelper.generateGoodColor();
                 break;
             case Cloud:
-                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.CloudCylinder : Item.CloudCircle, 1500, 500, 10);
+                rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.CloudCylinder : Item.CloudCircle, 1125, 500, 10);
                 speed = Constants.VIRTUAL_WIDTH/400;
                 color = ColorHelper.generateLightColor();
                 break;

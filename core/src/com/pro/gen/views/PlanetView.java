@@ -37,7 +37,7 @@ public class PlanetView extends BaseView {
     @Override
     public void init() {
         background = new Background(com.pro.gen.utils.Pic.Pixel, com.pro.gen.utils.Tint.UNIVERSE_BACKGROUND_COLOR);
-        planet = new Planet(new RandomPlanet());
+        planet = new Planet(new RandomPlanet(1,1));
         stars = new StarMap(0, 120, new Item(com.pro.gen.utils.Pic.Circle_Small, new Range(1f,1f),3f, 12f), 400);
         planetPopup = new PlanetPopup(this);
         planetFatePanel = new PlanetFatePanel(planetPopup);
