@@ -16,28 +16,33 @@ import com.pro.gen.utils.Tint;
  */
 public class Planet extends Group {
 
-    private TintedImage basePlanet;
-    private GlobeMap lands;
-    private GlobeMap clouds;
-    private TintedImage circleHole_left, circleHole_Right;
-    private PlanetEyes planetEyes;
-    private TintedImage eye1, eye2;
 
+    private TintedImage basePlanet; //base planet includes the base color for the planet
+    private GlobeMap lands; //land is the land images with their specific color sizes and positions
+    private GlobeMap clouds; //cloud is the land images with their specific color sizes and positions
+    private TintedImage circleHole_left, circleHole_Right; // Images that blend with background to give revolving effect
+    private PlanetEyes planetEyes; //the eyes that were selected for the planet
+    private Hat hat; // the hat that the planet is currently wearing
 
+    private int planetSize; // The size stat of the planet
+    private int planetEnergy; // The Energy Output of the planet
+    private int globeRank; // The Globe Rank of the planet
+    private int currentXP; // The Current XP that will be used to increase globe rank
+    private int rankXP; // The overall amount of XP needed to increase globe rank
 
     public Planet(RandomPlanet randomPlanet){
        this(randomPlanet, Tint.UNIVERSE_BACKGROUND_COLOR);
     }
 
     public Planet(RandomPlanet randomPlanet, Color background){
-        this(randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), background);
+        this(randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), background);
     }
 
     /**
      * Default with Universe background color
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds) {
-       this(planetColor, lands, clouds, Tint.UNIVERSE_BACKGROUND_COLOR);
+    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes) {
+       this(planetColor, lands, clouds, planetEyes, Tint.UNIVERSE_BACKGROUND_COLOR);
     }
 
     /**
@@ -46,21 +51,14 @@ public class Planet extends Group {
      * @param lands the land that will move around the planet
      * @param clouds the clouds that will float around the planet
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, Color background){
+    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, Color background){
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
-
         this.lands = lands;
         this.clouds = clouds;
+        this.planetEyes = planetEyes;
         circleHole_Right = new TintedImage(Pic.Circle_Hole_Right, background);
         circleHole_left = new TintedImage(Pic.Circle_Hole, background);
-        eye1 = new TintedImage(Pic.EYE);
-        eye2 = new TintedImage(Pic.EYE);
 
-        eye1.setSize(75,75);
-        eye2.setSize(75,75);
-
-        eye1.setPosition(630, 270);
-        eye2.setPosition(480, 270);
 
         attachActors();
     }
@@ -72,12 +70,10 @@ public class Planet extends Group {
         addActor(basePlanet);
         addActor(lands);
         addActor(clouds);
-       // addActor(planetShadow);
         addActor(circleHole_left);
         addActor(circleHole_Right);
 
-        addActor(eye1);
-        addActor(eye2);
+
     }
 
     @Override
