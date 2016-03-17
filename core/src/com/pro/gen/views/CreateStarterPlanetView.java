@@ -19,34 +19,27 @@ import com.pro.gen.worldcomponents.Planet;
 /**
  * Created by Gallo on 9/10/2015.
  */
-public class CreateAlienView extends BaseView{
+public class CreateStarterPlanetView extends BaseView{
 
     private static final int RANDOMIZE_ACTION = 2;
     private static final int SELECT_ACTION = 3;
 
-    private static final String CHOOSE_ALIEN = "CHOOSE ALIEN";
+    private static final String CHOOSE_PLANET = "CHOOSE HOME PLANET";
     private static final String SELECT_BTN = "Select";
     private static final String RANDOMIZE_BTN = "Randomize";
 
-    private TitleLabel chooseAlien;
+    private TitleLabel choosePlanet;
     private Button selectButton, randomizeButton;
-    private TextLabel name, nickname, height, earthWeight, species, homePlanet;
     private Background background;
     private Planet planet;
 
     @Override
     public void init() {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
-        chooseAlien = new TitleLabel(CHOOSE_ALIEN);
+        choosePlanet = new TitleLabel(CHOOSE_PLANET);
         selectButton = new Button(Pic.Pixel, Tint.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
         randomizeButton = new Button(Pic.Pixel, Tint.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
         BitmapFont xsmallFont = Assets.getInstance().getXSmallFont();
-        name = new TextLabel("Name: ", xsmallFont);
-        nickname = new TextLabel("Nickname: ", xsmallFont);
-        height = new TextLabel("Height: ", xsmallFont);
-        earthWeight = new TextLabel("Earth Weight: ", xsmallFont);
-        species = new TextLabel("Species: ", xsmallFont);
-        homePlanet = new TextLabel("Home Planet", xsmallFont);
         planet = new Planet(new RandomPlanet());
 
         selectButton.setButtonAction(new ButtonAction() {
@@ -68,21 +61,15 @@ public class CreateAlienView extends BaseView{
     public void setSizes() {
         selectButton.setSize(300, 150);
         randomizeButton.setSize(300, 150);
-        planet.setSize(200, 200);
+        planet.setSize(400, 400);
     }
 
     @Override
     public void setPositions() {
-        chooseAlien.setPosition(Constants.VIRTUAL_WIDTH/2 - chooseAlien.getWidth()/2, Constants.VIRTUAL_HEIGHT - chooseAlien.getHeight());
-        selectButton.setPosition(350, 25);
+        choosePlanet.setPosition(Constants.VIRTUAL_WIDTH / 2 - choosePlanet.getWidth() / 2, Constants.VIRTUAL_HEIGHT - choosePlanet.getHeight());
+        selectButton.setPosition(Constants.VIRTUAL_WIDTH-selectButton.getWidth()-25, 25);
         randomizeButton.setPosition(25, 25);
-        name.setPosition(Constants.VIRTUAL_WIDTH / 2, 500);
-        nickname.setPosition(Constants.VIRTUAL_WIDTH / 2, 470);
-        height.setPosition(Constants.VIRTUAL_WIDTH / 2, 440);
-        earthWeight.setPosition(Constants.VIRTUAL_WIDTH / 2, 410);
-        species.setPosition(Constants.VIRTUAL_WIDTH / 2, 350);
-        homePlanet.setPosition(Constants.VIRTUAL_WIDTH*0.68f, 290);
-        planet.setPosition(Constants.VIRTUAL_WIDTH*0.65f, 80);
+        planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
 
 
     }
@@ -90,14 +77,8 @@ public class CreateAlienView extends BaseView{
     @Override
     public void addActors() {
         addActor(background);
-        addActor(chooseAlien);
+        addActor(choosePlanet);
         addActor(planet);
-        addActor(name);
-        addActor(nickname);
-        addActor(height);
-        addActor(earthWeight);
-        addActor(species);
-        addActor(homePlanet);
         addActor(selectButton);
         addActor(randomizeButton);
     }
@@ -108,8 +89,8 @@ public class CreateAlienView extends BaseView{
             case RANDOMIZE_ACTION:
                 removeActor(planet);
                 planet = new Planet(new RandomPlanet());
-                planet.setSize(200, 200);
-                planet.setPosition(Constants.VIRTUAL_WIDTH * 0.65f, 80);
+                planet.setSize(400, 400);
+                planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
                 addActorAt(2, planet);
                 break;
             case SELECT_ACTION:

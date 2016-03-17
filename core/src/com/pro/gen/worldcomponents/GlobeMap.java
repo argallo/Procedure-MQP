@@ -31,6 +31,7 @@ public class GlobeMap extends Group {
         for(TintedImage piece: globePieces){
             addActor(piece);
         }
+
     }
 
     @Override
@@ -67,6 +68,14 @@ public class GlobeMap extends Group {
                 return true;
             }
         });
+    }
+
+    public String toString(){
+        StringBuilder map = new StringBuilder();
+        for(TintedImage piece :globePieces){
+            map.append("<Piece>"+piece.toString());
+        }
+        return map.toString()+"<Speed>"+speed;
     }
 
 }

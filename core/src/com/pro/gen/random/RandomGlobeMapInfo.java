@@ -19,9 +19,11 @@ public class RandomGlobeMapInfo {
     private Color color;
     private RandomPlacement rp;
     private float speed;
+    private GlobeObjectType globeObjectType;
 
 
     public RandomGlobeMapInfo(GlobeObjectType globeObjectType){
+        this.globeObjectType = globeObjectType;
         selectGlobeObject(globeObjectType);
         initGlobeGeneration();
     }
@@ -59,5 +61,9 @@ public class RandomGlobeMapInfo {
 
     public ArrayList<TintedImage> getGlobePieces() {
         return globePieces;
+    }
+
+    public GlobeObjectType getGlobeObjectType() {
+        return globeObjectType;
     }
 }

@@ -63,6 +63,8 @@ public class Pic {
     public static final String Bg4 = "ShipUI/bg4.png";
     public static final String Bg5 = "ShipUI/bg5.png";
 
+    public static final String EYE = "Character/Eyes/eye2.png";
+
 
 
 

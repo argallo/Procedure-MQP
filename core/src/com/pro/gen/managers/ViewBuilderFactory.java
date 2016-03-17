@@ -4,7 +4,7 @@ import com.pro.gen.utils.ViewID;
 import com.pro.gen.views.BaseView;
 import com.pro.gen.views.CapsuleView;
 import com.pro.gen.views.CreateAccountView;
-import com.pro.gen.views.CreateAlienView;
+import com.pro.gen.views.CreateStarterPlanetView;
 import com.pro.gen.views.EmptyView;
 import com.pro.gen.views.LandingView;
 import com.pro.gen.views.LeaderboardView;
@@ -34,7 +34,7 @@ public class ViewBuilderFactory {
             case CREATE_ACCOUNT:
                 return new CreateAccountView();
             case CREATE_ALIEN:
-                return new CreateAlienView();
+                return new CreateStarterPlanetView();
             case MAIN_MENU:
                 return new MainMenuView();
             case EXPLORE:

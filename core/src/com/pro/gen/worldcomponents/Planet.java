@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
+import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Pic;
@@ -20,6 +21,10 @@ public class Planet extends Group {
     private GlobeMap lands;
     private GlobeMap clouds;
     private TintedImage circleHole_left, circleHole_Right;
+
+
+    private PlanetEyes planetEyes;
+    private TintedImage eye1, eye2;
 
 
 
@@ -51,6 +56,15 @@ public class Planet extends Group {
         this.clouds = clouds;
         circleHole_Right = new TintedImage(Pic.Circle_Hole_Right, background);
         circleHole_left = new TintedImage(Pic.Circle_Hole, background);
+        eye1 = new TintedImage(Pic.EYE);
+        eye2 = new TintedImage(Pic.EYE);
+
+        eye1.setSize(75,75);
+        eye2.setSize(75,75);
+
+        eye1.setPosition(630, 270);
+        eye2.setPosition(480, 270);
+
         attachActors();
     }
 
@@ -61,9 +75,12 @@ public class Planet extends Group {
         addActor(basePlanet);
         addActor(lands);
         addActor(clouds);
-        addActor(planetShadow);
+       // addActor(planetShadow);
         addActor(circleHole_left);
         addActor(circleHole_Right);
+
+        addActor(eye1);
+        addActor(eye2);
     }
 
     @Override
@@ -80,7 +97,6 @@ public class Planet extends Group {
         circleHole_Right.setX(width * 1.5f);
         basePlanet.setX(width * 0.5f + basePlanet.getWidth() / 2);
         planetShadow.setX(width * 0.5f + basePlanet.getWidth() / 2);
-
 
     }
 
@@ -100,6 +116,10 @@ public class Planet extends Group {
                 return true;
             }
         }));
+    }
+
+    public String toString(){
+        return "<Planet><Land>"+lands.toString()+"<Cloud>"+clouds.toString()+"<Eyes>"+planetEyes.toString();
     }
 
 }
