@@ -17,12 +17,9 @@ import com.pro.gen.utils.Tint;
 public class Planet extends Group {
 
     private TintedImage basePlanet;
-    private TintedImage planetShadow;
     private GlobeMap lands;
     private GlobeMap clouds;
     private TintedImage circleHole_left, circleHole_Right;
-
-
     private PlanetEyes planetEyes;
     private TintedImage eye1, eye2;
 
@@ -51,7 +48,7 @@ public class Planet extends Group {
      */
     public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, Color background){
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
-        planetShadow = new TintedImage(Pic.Planet_Shadow, ColorHelper.shadowOf(planetColor));
+
         this.lands = lands;
         this.clouds = clouds;
         circleHole_Right = new TintedImage(Pic.Circle_Hole_Right, background);
@@ -89,14 +86,14 @@ public class Planet extends Group {
         circleHole_left.setSize(width * 1.5f, height);
         circleHole_Right.setSize(width * 1.5f, height);
         basePlanet.setSize(width, height);
-        planetShadow.setSize(width, height);
+
         lands.resizeGlobe(width * 3, height);
         clouds.resizeGlobe(width * 3, height);
 
 
         circleHole_Right.setX(width * 1.5f);
         basePlanet.setX(width * 0.5f + basePlanet.getWidth() / 2);
-        planetShadow.setX(width * 0.5f + basePlanet.getWidth() / 2);
+
 
     }
 
@@ -110,7 +107,6 @@ public class Planet extends Group {
             @Override
             public boolean act(float delta) {
                 basePlanet.addAction(Actions.color(Tint.DEAD_PLANET_RED, 8f));
-                planetShadow.addAction(Actions.color(Tint.DEAD_PLANET_SHADOW));
                 lands.burn(Tint.DEAD_PLANET_LAND);
                 clouds.burn(Tint.DEAD_PLANET_CLOUD);
                 return true;
@@ -119,6 +115,7 @@ public class Planet extends Group {
     }
 
     public String toString(){
+        //base planet color,
         return "<Planet><Land>"+lands.toString()+"<Cloud>"+clouds.toString()+"<Eyes>"+planetEyes.toString();
     }
 
