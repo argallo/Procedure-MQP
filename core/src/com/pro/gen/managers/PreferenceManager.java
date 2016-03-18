@@ -51,5 +51,15 @@ public class PreferenceManager {
     }
 
 
+    public void saveString(String key, String value){
+        preferences.putString(key, value);
+        preferences.flush();
+    }
+
+    public String getString(String key){
+        return preferences.getString(key);
+    }
+
+
 
 }

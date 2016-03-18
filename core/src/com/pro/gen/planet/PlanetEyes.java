@@ -16,6 +16,10 @@ public class PlanetEyes extends Group {
     private Group leftEye, rightEye;
 
 
+    public PlanetEyes(){
+
+    }
+
     public PlanetEyes(RandomEye randomEye){
         this(randomEye.getEyePreset(), randomEye.getSize(), randomEye.getColor(), randomEye.getDistance(), randomEye.getPupilSize());
     }

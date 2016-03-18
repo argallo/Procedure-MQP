@@ -1,11 +1,14 @@
 package com.pro.gen.random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
+import com.pro.gen.planet.EyePreset;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.worldcomponents.GlobeMap;
 import com.pro.gen.worldcomponents.GlobeObjectType;
+import com.pro.gen.worldcomponents.Hat;
 
 /**
  * Created by Gallo on 8/13/2015.
@@ -17,11 +20,15 @@ public class RandomPlanet {
     private int globeRank; // The Globe Rank of the planet
     private int currentXP; // The Current XP that will be used to increase globe rank
     private int rankXP; // The overall amount of XP needed to increase globe rank
+    private boolean inhabitable; //whether the planet is inhabitable
+    private long timeStart; // the time at which it became inhabitable
+    private long amtofTime; // the amount of time from timeStart to become habitable
 
     private Color baseColor;
     private GlobeMap lands;
     private GlobeMap clouds;
     private PlanetEyes planetEyes;
+    private Hat hat;
 
     public RandomPlanet(int lowRank, int highRank){
         globeRank = MathUtils.random(lowRank, highRank);
@@ -29,10 +36,15 @@ public class RandomPlanet {
         planetEnergy = MathUtils.random((int)Math.pow(globeRank, 1.3)*100+600, (int)Math.pow(globeRank, 1.3)*105+800);
         currentXP = 0;
         rankXP = (int)Math.pow(globeRank, 1.2)*100;
+        baseColor = ColorHelper.generateGoodColor();
+        inhabitable = true;
+        timeStart = 0;
+        amtofTime = 0;
+        hat = new Hat();//TODO: make empty hat and something that uses star rarity to randomly generate hats
     }
 
     public Color getPlanetColor(){
-        return ColorHelper.generateGoodColor();
+        return baseColor;
     }
 
     public GlobeMap getLands(){
@@ -44,7 +56,42 @@ public class RandomPlanet {
     }
 
     public PlanetEyes getPlanetEyes(){
-        return null;
+        return new PlanetEyes();
     }
 
+    public int getCurrentXP() {
+        return currentXP;
+    }
+
+    public int getGlobeRank() {
+        return globeRank;
+    }
+
+    public int getPlanetEnergy() {
+        return planetEnergy;
+    }
+
+    public int getPlanetSize() {
+        return planetSize;
+    }
+
+    public int getRankXP() {
+        return rankXP;
+    }
+
+    public long getAmtofTime() {
+        return amtofTime;
+    }
+
+    public long getTimeStart() {
+        return timeStart;
+    }
+
+    public boolean isInhabitable() {
+        return inhabitable;
+    }
+
+    public Hat getHat() {
+        return hat;
+    }
 }

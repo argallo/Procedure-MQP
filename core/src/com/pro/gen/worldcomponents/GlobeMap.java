@@ -16,16 +16,23 @@ public class GlobeMap extends Group {
 
     private ArrayList<TintedImage> globePieces;
     private float speed;
+    private RandomGlobeMapInfo randomGlobeMapInfo;
+
 
     public GlobeMap(RandomGlobeMapInfo randomGlobeMapInfo){
-        this(randomGlobeMapInfo.getGlobePieces(), randomGlobeMapInfo.getSpeed());
+        this.randomGlobeMapInfo = randomGlobeMapInfo;
+        this.globePieces = randomGlobeMapInfo.getGlobePieces();
+        this.speed = randomGlobeMapInfo.getSpeed();
+        attachActors();
     }
 
-    public GlobeMap(ArrayList<TintedImage> globePieces, float speed){
+    /*
+    protected GlobeMap(ArrayList<TintedImage> globePieces, float speed){
         this.globePieces = globePieces;
         this.speed = speed;
         attachActors();
     }
+*/
 
     private void attachActors(){
         for(TintedImage piece: globePieces){
@@ -70,5 +77,7 @@ public class GlobeMap extends Group {
         });
     }
 
-
+    public RandomGlobeMapInfo getRandomGlobeMapInfo() {
+        return randomGlobeMapInfo;
+    }
 }

@@ -37,14 +37,16 @@ public class Planet extends Group {
     }
 
     public Planet(RandomPlanet randomPlanet, Color background){
-        this(randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), background);
+        this(randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), randomPlanet.getPlanetSize(),
+                randomPlanet.getPlanetEnergy(), randomPlanet.getGlobeRank(), randomPlanet.getCurrentXP(), randomPlanet.getRankXP(), randomPlanet.isInhabitable(),
+                randomPlanet.getTimeStart(), randomPlanet.getAmtofTime(), randomPlanet.getHat(), background);
     }
 
     /**
      * Default with Universe background color
      */
     public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes) {
-       this(planetColor, lands, clouds, planetEyes, Tint.UNIVERSE_BACKGROUND_COLOR);
+       //this(planetColor, lands, clouds, planetEyes, Tint.UNIVERSE_BACKGROUND_COLOR);
     }
 
     /**
@@ -53,11 +55,24 @@ public class Planet extends Group {
      * @param lands the land that will move around the planet
      * @param clouds the clouds that will float around the planet
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, Color background){
+    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, int planetSize, int planetEnergy, int globeRank, int currentXP, int rankXP,
+                   boolean inhabitable, long timeStart, long amtofTime, Hat hat, Color background){
+
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
         this.lands = lands;
         this.clouds = clouds;
         this.planetEyes = planetEyes;
+        this.planetSize = planetSize;
+        this.planetEnergy = planetEnergy;
+        this.globeRank = globeRank;
+        this.currentXP = currentXP;
+        this.rankXP = rankXP;
+        this.inhabitable = inhabitable;
+        this.timeStart = timeStart;
+        this.amtofTime = amtofTime;
+        this.hat = hat;
+
+
         circleHole_Right = new TintedImage(Pic.Circle_Hole_Right, background);
         circleHole_left = new TintedImage(Pic.Circle_Hole, background);
 

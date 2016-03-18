@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Item;
 
+import java.util.Arrays;
+
 /**
  * Created by Gallo on 8/15/2015.
  */
@@ -21,6 +23,16 @@ public class RandomPlacement {
     private float[] ys;
 
     private Item item;
+    private String imageName;
+
+    public RandomPlacement(String imageName, float[] xs, float[] ys, float[] widths, float[] heights){
+        this.imageName = imageName;
+        this.size = xs.length;
+        this.xs = xs;
+        this.ys = ys;
+        this.widths = widths;
+        this.heights = heights;
+    }
 
     public RandomPlacement(Item item, int width, int height, int size){
         this(item, width, height, size, 0);
@@ -29,6 +41,7 @@ public class RandomPlacement {
 
     public RandomPlacement(Item item, int width, int height, int size, float avoidDiameter){
         this.item = item;
+        this.imageName = item.getObjectName();
         this.WIDTH = width;
         this.HEIGHT = height;
         this.size = size;
@@ -109,8 +122,24 @@ public class RandomPlacement {
         return ys[index];
     }
 
+    public String getWidths() {
+        return Arrays.toString(widths);
+    }
+
+    public String getHeights() {
+        return Arrays.toString(heights);
+    }
+
+    public String getXs() {
+        return Arrays.toString(xs);
+    }
+
+    public String getYs() {
+        return Arrays.toString(ys);
+    }
+
     public String getName(){
-        return item.getObjectName();
+        return imageName;
     }
 
     public int getSize(){

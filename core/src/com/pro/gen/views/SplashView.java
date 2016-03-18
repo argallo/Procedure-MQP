@@ -76,10 +76,6 @@ public class SplashView extends BaseView{
      * Make the transition to the next view
      */
     public void completeSplashView(){
-
-        XmlManager manager = new XmlManager();
-        manager.savePlanet(new Planet(new RandomPlanet(1,1)));
-
         counting = false;
         if(PreferenceManager.getInstance().hasAccount()){
             //Users account can be found in local storage, go straight to Home Screen

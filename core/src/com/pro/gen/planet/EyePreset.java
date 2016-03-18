@@ -8,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  */
 public class EyePreset {
 
+
     public EyePreset(int presetType){
         switch (presetType){
+            case 0:
 
         }
 

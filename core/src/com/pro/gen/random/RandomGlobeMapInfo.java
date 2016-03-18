@@ -21,6 +21,12 @@ public class RandomGlobeMapInfo {
     private float speed;
     private GlobeObjectType globeObjectType;
 
+    public RandomGlobeMapInfo(Color color, RandomPlacement rp, float speed){
+        this.color = color;
+        this.rp = rp;
+        this.speed = speed;
+        initGlobeGeneration();
+    }
 
     public RandomGlobeMapInfo(GlobeObjectType globeObjectType){
         this.globeObjectType = globeObjectType;
@@ -65,5 +71,13 @@ public class RandomGlobeMapInfo {
 
     public GlobeObjectType getGlobeObjectType() {
         return globeObjectType;
+    }
+
+    public RandomPlacement getRp() {
+        return rp;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

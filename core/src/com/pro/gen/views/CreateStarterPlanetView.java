@@ -5,7 +5,9 @@ import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TitleLabel;
+import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
@@ -69,8 +71,6 @@ public class CreateStarterPlanetView extends BaseView{
         selectButton.setPosition(Constants.VIRTUAL_WIDTH-selectButton.getWidth()-25, 25);
         randomizeButton.setPosition(25, 25);
         planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
-
-
     }
 
     @Override
@@ -93,6 +93,8 @@ public class CreateStarterPlanetView extends BaseView{
                 addActorAt(2, planet);
                 break;
             case SELECT_ACTION:
+                XmlManager manager = new XmlManager();
+                manager.savePlanet(planet);
                 ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
                 break;
         }
