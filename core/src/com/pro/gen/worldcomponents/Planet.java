@@ -183,4 +183,40 @@ public class Planet extends Group {
     public long getAmtofTime() {
         return amtofTime;
     }
+
+    public void setAmtofTime(long amtofTime) {
+        this.amtofTime = amtofTime;
+    }
+
+    public void setCurrentXP(int currentXP) {
+        this.currentXP = currentXP;
+    }
+
+    public void setRankXP(int rankXP) {
+        this.rankXP = rankXP;
+    }
+
+    public void setGlobeRank(int globeRank) {
+        this.globeRank = globeRank;
+    }
+
+    public void setHat(Hat hat) {
+        this.hat = hat;
+    }
+
+    public void setInhabitable(boolean inhabitable) {
+        this.inhabitable = inhabitable;
+    }
+
+    public void setPlanetEnergy(int planetEnergy) {
+        this.planetEnergy = planetEnergy;
+    }
+
+    public void setPlanetSize(int planetSize) {
+        this.planetSize = planetSize;
+    }
+
+    public void setTimeStart(long timeStart) {
+        this.timeStart = timeStart;
+    }
 }

@@ -13,6 +13,10 @@ import com.pro.gen.utils.Pic;
  */
 public class FuelUnits extends Group {
 
+    public final static long FUEL_REPLENISH_TIME = 1200000; // 20 minutes
+    public final static int MAX_FUEL_REPLENISH = 3; // replenish 3 on timer than stop
+
+
     private TintedImage background, fuelIcon;
     private TextLabel unitText;
 

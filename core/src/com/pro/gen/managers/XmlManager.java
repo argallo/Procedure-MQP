@@ -1,16 +1,17 @@
 package com.pro.gen.managers;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlWriter;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomGlobeMapInfo;
 import com.pro.gen.random.RandomPlacement;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
+import com.pro.gen.worldcomponents.EmptyHat;
+import com.pro.gen.worldcomponents.FuelUnits;
 import com.pro.gen.worldcomponents.GlobeMap;
 import com.pro.gen.worldcomponents.Hat;
 import com.pro.gen.worldcomponents.Planet;
@@ -36,8 +37,13 @@ public class XmlManager {
         reader = new XmlReader();
     }
 
-    //finds the next open slot and saves the planet xml here
     public void savePlanet(Planet planet){
+        //TODO: potentially make this check for next open slot depending on what will call this.
+        savePlanet(planet, PreferenceManager.SLOT_1);
+    }
+
+    //finds the next open slot and saves the planet xml here
+    public void savePlanet(Planet planet, String slot){
         try {
         xmlWriter.element("planet")
                 .attribute("basecolor", planet.getBasePlanetColor())
@@ -74,33 +80,44 @@ public class XmlManager {
                     .attribute("image", "hat1")
                     .pop()
                 .pop();
-        LogUtils.Log(writer.toString());
+        //LogUtils.Log(writer.toString());
     } catch (IOException e){
 
     }
 
-    PreferenceManager.getInstance().saveString(PreferenceManager.SLOT_1, writer.toString());
+    PreferenceManager.getInstance().saveString(slot, writer.toString());
 
     }
 
     //updates planet when it gains experience
-    public void updatePlanet(int slot, int size, int energy, int rank, int xp){
-
+    public void updatePlanet(String slot, int size, int energy, int rank, int xp){
+        Planet planet = getPlanet(slot);
+        planet.setPlanetSize(size);
+        planet.setPlanetEnergy(energy);
+        planet.setGlobeRank(rank);
+        planet.setCurrentXP(xp);
+        planet.setRankXP((int)Math.pow(rank, 1.2)*100);
+        savePlanet(planet, slot);
     }
 
     //updates planet with hat given
-    public void addHatToPlanet(Hat hat, int slot){
+    public void addHatToPlanet(Hat hat, String slot){
         removeHatFromList(hat);
+        Planet planet = getPlanet(slot);
+        planet.setHat(hat);
+        savePlanet(planet, slot);
     }
 
     //removes hat from planet at given slot
-    public void removeHatFromPlanet(int slot){
-        //addToHatsList();
+    public void removeHatFromPlanet(String slot){
+        Planet planet = getPlanet(slot);
+        //addToHatsList(planet.getHat());
+        planet.setHat(new EmptyHat());
     }
 
     //removes planet at given slot and shifts other slots down
-    public void deletePlanet(int slot){
-
+    public void deletePlanet(String slot){
+        PreferenceManager.getInstance().saveString(slot, "");
     }
 
     //Saves solar system and specific planets that can be traveled to
@@ -109,27 +126,52 @@ public class XmlManager {
     }
 
     //save/updates the fuel units amount
-    //if param == 0 saves current datetime and amount of time until restock
+    // the new units amount if less than replenish max then set the fuel timer to current time
     public void saveFuelUnits(int units){
-
+        PreferenceManager.getInstance().saveInt(PreferenceManager.FUEL_UNITS, units);
+        if(units < FuelUnits.MAX_FUEL_REPLENISH){
+            setFuelTimer();
+        }
     }
 
-    //checks how much time is left before a fuel restock.
-    //precondition: only call when fuelUnits is at 0
-    //if time is <= 0 then add one fuel unit to saveFuelUnits(1).
-    public long checkFuelTimer(){
+    //gets the current amount of fuel units
+    public int getFuelUnits(){
+        return PreferenceManager.getInstance().getInt(PreferenceManager.FUEL_UNITS);
+    }
 
-        return 0;
+    //sets the timer to the current time
+    public void setFuelTimer(){
+        PreferenceManager.getInstance().saveString(PreferenceManager.FUEL_TIMER, String.valueOf(TimeUtils.millis()));
+    }
+
+    //if fuel units is less than max replenish than check timer to see if time past since set is greater than replenish time then add unit
+    public long checkFuelTimer(){
+        long timeStart = 0;
+        if(getFuelUnits() < FuelUnits.MAX_FUEL_REPLENISH) {
+            timeStart = Long.parseLong(PreferenceManager.getInstance().getString(PreferenceManager.FUEL_TIMER));
+            if(TimeUtils.timeSinceMillis(timeStart) > FuelUnits.FUEL_REPLENISH_TIME) {
+                saveFuelUnits(getFuelUnits()+1);
+            }
+        }
+        return timeStart;
     }
 
     //saves/updates power crystals
     public void savePowerCrystals(int crystals){
+        PreferenceManager.getInstance().saveInt(PreferenceManager.POWER_CRYSTALS, crystals);
+    }
 
+    public int getPowerCrystals(){
+        return PreferenceManager.getInstance().getInt(PreferenceManager.POWER_CRYSTALS);
     }
 
     //saves mega crystals (probably only ++ each time)
     public void saveMegaCrystals(int crystals){
+        PreferenceManager.getInstance().saveInt(PreferenceManager.MEGA_CRYSTALS, crystals);
+    }
 
+    public int getMegaCrystals(){
+        return PreferenceManager.getInstance().getInt(PreferenceManager.MEGA_CRYSTALS);
     }
 
     //gets list of hats and adds new hat to list

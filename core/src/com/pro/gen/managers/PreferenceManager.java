@@ -18,9 +18,10 @@ public class PreferenceManager {
     public static final String SLOT_3 = "PlanetSlot3";
     public static final String SLOT_4 = "PlanetSlot4";
     public static final String HAT_LIST = "HatList";
-    public static final String MAEGA_CRYSTALS = "MegaCrystals";
+    public static final String MEGA_CRYSTALS = "MegaCrystals";
     public static final String POWER_CRYSTALS = "PowerCrystals";
     public static final String FUEL_UNITS = "FuelUnits";
+    public static final String FUEL_TIMER = "FuelTimer";
     public static final String BOSS_LEVEL = "BossLevel";
     public static final String SOLAR_SYSTEM = "SolarSystem";
 
@@ -56,10 +57,17 @@ public class PreferenceManager {
         preferences.flush();
     }
 
-    public String getString(String key){
-        return preferences.getString(key);
+    public void saveInt(String key, int value){
+        preferences.putInteger(key,value);
+        preferences.flush();
     }
 
+    public String getString(String key){
+        return preferences.getString(key,"");
+    }
 
+    public int getInt(String key){
+        return preferences.getInteger(key, 0);
+    }
 
 }
