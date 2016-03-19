@@ -88,6 +88,7 @@ public class XmlManager {
     PreferenceManager.getInstance().saveString(slot, writer.toString());
 
     }
+    //comment
 
     //updates planet when it gains experience
     public void updatePlanet(String slot, int size, int energy, int rank, int xp){
