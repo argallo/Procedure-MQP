@@ -8,7 +8,6 @@ import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomGlobeMapInfo;
 import com.pro.gen.random.RandomPlacement;
 import com.pro.gen.utils.Constants;
-import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.worldcomponents.EmptyHat;
 import com.pro.gen.worldcomponents.FuelUnits;
@@ -74,7 +73,22 @@ public class XmlManager {
                     .attribute("ys", planet.getClouds().getRandomGlobeMapInfo().getRp().getYs())
                     .pop()
                 .element("eyes")
-                    .attribute("image", Pic.Circle_Small)
+                    .attribute("whiteSize", planet.getPlanetEyes().getWhiteSize())
+                    .attribute("whiteX", planet.getPlanetEyes().getWhiteX())
+                    .attribute("whiteY", planet.getPlanetEyes().getWhiteY())
+                    .attribute("eyeSize", planet.getPlanetEyes().getEyeSize())
+                    .attribute("eyeX", planet.getPlanetEyes().getEyeX())
+                    .attribute("eyeY", planet.getPlanetEyes().getEyeY())
+                    .attribute("blackSize", planet.getPlanetEyes().getBlackSize())
+                    .attribute("blackX", planet.getPlanetEyes().getBlackX())
+                    .attribute("blackY", planet.getPlanetEyes().getBlackY())
+                    .attribute("glareWidth", planet.getPlanetEyes().getGlareWidth())
+                    .attribute("glareHeight", planet.getPlanetEyes().getGlareHeight())
+                    .attribute("glareX", planet.getPlanetEyes().getGlareX())
+                    .attribute("glareY", planet.getPlanetEyes().getGlareY())
+                    .attribute("rwePosition", planet.getPlanetEyes().getRwePosition())
+                    .attribute("image", planet.getPlanetEyes().getImage())
+                    .attribute("eyeColor", planet.getPlanetEyes().getEyeColor())
                     .pop()
                 .element("hat")
                     .attribute("image", "hat1")
@@ -224,7 +238,13 @@ public class XmlManager {
         RandomGlobeMapInfo cloudInfo = new RandomGlobeMapInfo(Color.valueOf(clouds.getAttribute("color")), rpClouds, Constants.VIRTUAL_WIDTH/300);
         GlobeMap cloudMap = new GlobeMap(cloudInfo);
 
-        PlanetEyes eyes = new PlanetEyes();
+        //Create Eyes
+        XmlReader.Element eye = root.getChildByName("eyes");
+        PlanetEyes eyes = new PlanetEyes(Float.parseFloat(eye.getAttribute("whiteSize")),Float.parseFloat(eye.getAttribute("whiteX")),Float.parseFloat(eye.getAttribute("whiteY")),Float.parseFloat(eye.getAttribute("eyeSize")),Float.parseFloat(eye.getAttribute("eyeX")),Float.parseFloat(eye.getAttribute("eyeY")),Float.parseFloat(eye.getAttribute("blackSize")),
+                Float.parseFloat(eye.getAttribute("blackX")),Float.parseFloat(eye.getAttribute("blackY")),Float.parseFloat(eye.getAttribute("glareWidth")),Float.parseFloat(eye.getAttribute("glareHeight")),Float.parseFloat(eye.getAttribute("glareX")),Float.parseFloat(eye.getAttribute("glareY")),Float.parseFloat(eye.getAttribute("rwePosition")),
+               eye.getAttribute("image"),Color.valueOf(eye.getAttribute("eyeColor")));
+
+
         Hat hat = new Hat();
 
         return new Planet(baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR);
@@ -240,51 +260,4 @@ public class XmlManager {
         return floats;
     }
 
-
-
-
-
 }
-
-
-
-
-/* xmlWriter.element("planet")
-                    .attribute("basecolor", Tint.BLAST_ORANGE_A)
-                    .attribute("size", 600)
-                    .attribute("energy", 300)
-                    .attribute("globerank",1)
-                    .attribute("currentxp", 30)
-                    .attribute("rankxp", 100)
-                    .element("habitability")
-                        .attribute("inhabitable",true)
-                        .attribute("timestart", 150)
-                        .attribute("amtoftime",5000)
-                        .pop()
-                    .element("land")
-                        .attribute("image", Pic.Circle_Small)
-                        .attribute("color", Color.GREEN)
-                        .attribute("widths", "10, 15, 20, 34")
-                        .attribute("heights", "33, 4, 23, 63")
-                        .attribute("xs", "180, 800, 400, 200")
-                        .attribute("ys", "200, 250, 600, 450")
-                        .pop()
-                    .element("clouds")
-                        .attribute("image", Pic.Circle_Small)
-                        .attribute("color", Color.RED)
-                        .attribute("widths", "10, 15, 20, 34")
-                        .attribute("heights", "33, 4, 23, 63")
-                        .attribute("xs", "180, 800, 400, 200")
-                        .attribute("ys", "200, 250, 600, 450")
-                        .pop()
-                    .element("eyes")
-                        .attribute("image", Pic.Circle_Small)
-                        .pop()
-                    .element("hat")
-                        .attribute("image", "hat1")
-                        .pop()
-                    .pop();
-            LogUtils.Log(writer.toString());
-        } catch (IOException e){
-
-        }*/

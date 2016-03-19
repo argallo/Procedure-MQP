@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomPlanet;
-import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 
@@ -86,13 +85,6 @@ public class Planet extends Group {
         addActor(basePlanet);
         addActor(lands);
         addActor(planetEyes);
-        /**
-         *      TintedImage mouth = new TintedImage(Pic.Circle_Large, ColorHelper.generateGoodColor());
-         mouth.setSize(150,75);
-         mouth.setPosition(525,125);
-         addActor(mouth);
-         */
-
         addActor(clouds);
         addActor(circleHole_left);
         addActor(circleHole_Right);

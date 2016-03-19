@@ -1,8 +1,11 @@
 package com.pro.gen.planet;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.ColorHelper;
 import com.pro.gen.utils.Pic;
@@ -40,6 +43,8 @@ public class PlanetEyes extends Group {
     private float rwePosition;
     private String image;
     private Color eyeColor;
+
+    private float blinkDelay;
 
     //When loaded from preferences
     public PlanetEyes(float whiteSize, float whiteX, float whiteY, float eyeSize, float eyeX, float eyeY, float blackSize, float blackX, float blackY, float glareWidth, float glareHeight,
@@ -136,7 +141,40 @@ public class PlanetEyes extends Group {
         addActor(rightGlare);
 
         setEyePosition();
+
+        leftWhiteEye.setOrigin(leftWhiteEye.getWidth()/2, leftWhiteEye.getHeight()/2);
+        leftEye.setOrigin(leftEye.getWidth()/2, leftEye.getHeight()/2);
+        leftBlackImage.setOrigin(leftBlackImage.getWidth()/2, leftBlackImage.getHeight()/2);
+        leftGlare.setOrigin(leftGlare.getWidth()/2, leftGlare.getHeight()/2);
+        rightWhiteEye.setOrigin(rightWhiteEye.getWidth()/2, rightWhiteEye.getHeight()/2);
+        rightEye.setOrigin(rightEye.getWidth()/2, rightEye.getHeight()/2);
+        rightBlackImage.setOrigin(rightBlackImage.getWidth()/2, rightBlackImage.getHeight()/2);
+        rightGlare.setOrigin(rightGlare.getWidth()/2, rightGlare.getHeight()/2);
+
+        animate();
+
     }
+    
+    public void animate(){
+        blinkDelay = MathUtils.random(0.5f,4f);
+        leftWhiteEye.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        leftEye.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        leftBlackImage.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        leftGlare.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        rightWhiteEye.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        rightEye.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        rightBlackImage.addAction(Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out)));
+        rightGlare.addAction( Actions.sequence(Actions.delay(blinkDelay),Actions.scaleBy(0, -1, 0.2f, Interpolation.exp5In), Actions.scaleBy(0, 1, 0.3f, Interpolation.exp5Out), new Action() {
+            @Override
+            public boolean act(float delta) {
+                animate();
+                return true;
+            }
+        }));
+
+    }
+    
+    
 
 
     public void resizeEyes(float width, float height){
@@ -167,6 +205,7 @@ public class PlanetEyes extends Group {
     public void setEyePosition(){
         setPosition(planetWidth*3/2-leftWhiteEye.getWidth()-(rightWhiteEye.getX()-leftWhiteEye.getWidth())/2, planetHeight/2);
     }
+
 
     public float getWhiteSize() {
         return whiteSize;
