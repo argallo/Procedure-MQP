@@ -187,9 +187,12 @@ public class XmlManager {
 
     //saves/updates boss level
     public void saveBossLevel(int level){
-
+        PreferenceManager.getInstance().saveInt(PreferenceManager.BOSS_LEVEL, level);
     }
 
+    public int getBossLevel(){
+        return PreferenceManager.getInstance().getInt(PreferenceManager.BOSS_LEVEL);
+    }
 
 
     public Planet getPlanet(String slot){
