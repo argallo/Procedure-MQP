@@ -91,7 +91,7 @@ public class PlanetEyes extends Group {
         eyeColor = ColorHelper.generateGoodColor();
         rwePosition = MathUtils.random(130, 180);
 
-        image = Pic.Circle_Large;
+        image = Pic.Solar_Planet;
         //Circle, cylinder, solar_planet, triangle, sun, title bar, healthbar,
 
         init();

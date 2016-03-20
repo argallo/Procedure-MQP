@@ -15,7 +15,9 @@ import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
+import com.pro.gen.worldcomponents.GlobeRank;
 import com.pro.gen.worldcomponents.Planet;
+import com.pro.gen.worldcomponents.TechPlanetStats;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -33,6 +35,8 @@ public class CreateStarterPlanetView extends BaseView{
     private Button selectButton, randomizeButton;
     private Background background;
     private Planet planet;
+    private GlobeRank globeRank;
+    private TechPlanetStats techPlanetStats;
 
     @Override
     public void init() {
@@ -42,7 +46,9 @@ public class CreateStarterPlanetView extends BaseView{
         randomizeButton = new Button(Pic.Pixel, Tint.ORANGE, RANDOMIZE_BTN, Assets.getInstance().getMidFont());
         BitmapFont xsmallFont = Assets.getInstance().getXSmallFont();
         planet = new Planet(new RandomPlanet(1,1));
-
+        globeRank = new GlobeRank(planet.getGlobeRank(), planet.getCurrentXP(), planet.getRankXP());
+        //globeRank = new GlobeRank();
+        techPlanetStats = new TechPlanetStats(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getBasePlanetColor().toString());
         selectButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
@@ -62,7 +68,8 @@ public class CreateStarterPlanetView extends BaseView{
     public void setSizes() {
         selectButton.setSize(300, 150);
         randomizeButton.setSize(300, 150);
-        planet.setSize(400, 400);
+        planet.setSize(350, 350);
+
     }
 
     @Override
@@ -70,7 +77,9 @@ public class CreateStarterPlanetView extends BaseView{
         choosePlanet.setPosition(Constants.VIRTUAL_WIDTH / 2 - choosePlanet.getWidth() / 2, Constants.VIRTUAL_HEIGHT - choosePlanet.getHeight());
         selectButton.setPosition(Constants.VIRTUAL_WIDTH-selectButton.getWidth()-25, 25);
         randomizeButton.setPosition(25, 25);
-        planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
+        planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2 + 20);
+        globeRank.setPosition(Constants.VIRTUAL_WIDTH/2 - globeRank.getWidth()/2, 25);
+        techPlanetStats.setPosition(950, 220);
     }
 
     @Override
@@ -78,6 +87,8 @@ public class CreateStarterPlanetView extends BaseView{
         addActor(background);
         addActor(choosePlanet);
         addActor(planet);
+        addActor(globeRank);
+        addActor(techPlanetStats);
         addActor(selectButton);
         addActor(randomizeButton);
     }
@@ -88,8 +99,8 @@ public class CreateStarterPlanetView extends BaseView{
             case RANDOMIZE_ACTION:
                 removeActor(planet);
                 planet = new Planet(new RandomPlanet(1,1));
-                planet.setSize(400, 400);
-                planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2);
+                planet.setSize(350, 350);
+                planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2 + 20);
                 addActorAt(2, planet);
                 break;
             case SELECT_ACTION:

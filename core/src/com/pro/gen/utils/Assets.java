@@ -93,7 +93,8 @@ public class Assets extends AssetManager {
         load(Pic.Bg3, Texture.class, textureParam);
         load(Pic.Bg4, Texture.class, textureParam);
         load(Pic.Bg5, Texture.class, textureParam);
-        load(Pic.EYE, Texture.class, textureParam);
+        load(Pic.Globe_Rank, Texture.class, textureParam);
+        load(Pic.TechOverlay_VMed, Texture.class, textureParam);
 
         finishLoading();
     }

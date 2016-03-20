@@ -28,6 +28,7 @@ public class Tint {
     public static Color LEADER_RED = new Color(172/255f, 59/255f, 59/255f, 1f);
 
 
+    public static Color Globe_Rank_Orange = new Color(251/255f, 94/255f, 0, 1f);
 
     public static final void resetTints(){
         UNIVERSE_BACKGROUND_COLOR = new Color(22/255f,37/255f,51/255f,1f);

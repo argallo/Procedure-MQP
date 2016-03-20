@@ -63,7 +63,10 @@ public class Pic {
     public static final String Bg4 = "ShipUI/bg4.png";
     public static final String Bg5 = "ShipUI/bg5.png";
 
-    public static final String EYE = "Character/Eyes/eye2.png";
+
+    public static final String Globe_Rank = "Img/globe_rank.png";
+    public static final String TechOverlay_VMed = "Img/tech_overlay_vmed.png";
+
 
 
 
