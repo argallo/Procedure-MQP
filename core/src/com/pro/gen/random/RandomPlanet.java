@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.pro.gen.planet.EyePreset;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.utils.ColorHelper;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.worldcomponents.GlobeMap;
 import com.pro.gen.worldcomponents.GlobeObjectType;
 import com.pro.gen.worldcomponents.Hat;
@@ -24,6 +25,7 @@ public class RandomPlanet {
     private long timeStart; // the time at which it became inhabitable
     private long amtofTime; // the amount of time from timeStart to become habitable
 
+    private String colorType;
     private Color baseColor;
     private GlobeMap lands;
     private GlobeMap clouds;
@@ -36,7 +38,9 @@ public class RandomPlanet {
         planetEnergy = MathUtils.random((int)Math.pow(globeRank, 1.3)*100+600, (int)Math.pow(globeRank, 1.3)*105+800);
         currentXP = 0;
         rankXP = (int)Math.pow(globeRank, 1.2)*100;
-        baseColor = ColorHelper.generateGoodColor();
+        colorType = ColorHelper.generatePlanetColor();
+        baseColor = Color.valueOf(colorType.substring(colorType.indexOf(":") + 1));
+        colorType = colorType.substring(0,colorType.indexOf(":"));
         inhabitable = true;
         timeStart = 0;
         amtofTime = 0;
@@ -45,6 +49,10 @@ public class RandomPlanet {
 
     public Color getPlanetColor(){
         return baseColor;
+    }
+
+    public String getColorType() {
+        return colorType;
     }
 
     public GlobeMap getLands(){

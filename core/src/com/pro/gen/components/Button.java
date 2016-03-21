@@ -19,18 +19,26 @@ public class Button extends TintedImage {
     Color backgroundColor;
     Color pressedColor;
     ButtonAction buttonAction;
+    TintedImage icon;
 
     public Button(String mainImage, Color backgroundColor){
-        this(mainImage, backgroundColor, "", null);
+        this(mainImage, backgroundColor, "", null, null);
     }
 
     public Button(String mainImage, final Color backgroundColor, String buttonText, BitmapFont fontType){
+        this(mainImage, backgroundColor, buttonText, fontType, null);
+    }
+
+    public Button(String mainImage, final Color backgroundColor, String buttonText, BitmapFont fontType, TintedImage icon){
         super(mainImage, backgroundColor);
         pressedColor = (ColorHelper.darken(new Color(backgroundColor), 0.4f));
         if(fontType != null) {
             labelStyle = new Label.LabelStyle(fontType, Color.WHITE);
             buttonLabel = new Label(buttonText, labelStyle);
             buttonLabel.setAlignment(Align.center);
+        }
+        if(icon != null){
+            this.icon = icon;
         }
         this.backgroundColor = backgroundColor;
         this.addListener(new InputListener() {
@@ -73,6 +81,8 @@ public class Button extends TintedImage {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if(icon != null)
+            icon.draw(batch, parentAlpha);
         if(buttonLabel!= null && isVisible())
             buttonLabel.draw(batch, parentAlpha);
     }

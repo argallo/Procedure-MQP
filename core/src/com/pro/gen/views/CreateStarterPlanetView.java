@@ -1,6 +1,8 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
@@ -17,6 +19,7 @@ import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.GlobeRank;
 import com.pro.gen.worldcomponents.Planet;
+import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
 /**
@@ -37,6 +40,7 @@ public class CreateStarterPlanetView extends BaseView{
     private Planet planet;
     private GlobeRank globeRank;
     private TechPlanetStats techPlanetStats;
+    private ShipDoor shipDoor;
 
     @Override
     public void init() {
@@ -48,7 +52,7 @@ public class CreateStarterPlanetView extends BaseView{
         planet = new Planet(new RandomPlanet(1,1));
         globeRank = new GlobeRank(planet.getGlobeRank(), planet.getCurrentXP(), planet.getRankXP());
         //globeRank = new GlobeRank();
-        techPlanetStats = new TechPlanetStats(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getBasePlanetColor().toString());
+        techPlanetStats = new TechPlanetStats(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getColorType());
         selectButton.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
@@ -61,6 +65,7 @@ public class CreateStarterPlanetView extends BaseView{
              handle(RANDOMIZE_ACTION);
             }
         });
+        shipDoor = new ShipDoor(false);
 
     }
 
@@ -91,6 +96,7 @@ public class CreateStarterPlanetView extends BaseView{
         addActor(techPlanetStats);
         addActor(selectButton);
         addActor(randomizeButton);
+        addActor(shipDoor);
     }
 
     @Override
@@ -99,6 +105,7 @@ public class CreateStarterPlanetView extends BaseView{
             case RANDOMIZE_ACTION:
                 removeActor(planet);
                 planet = new Planet(new RandomPlanet(1,1));
+                techPlanetStats.setParams(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getColorType());
                 planet.setSize(350, 350);
                 planet.setPosition(640 - planet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - planet.getHeight() / 2 + 20);
                 addActorAt(2, planet);
@@ -106,7 +113,13 @@ public class CreateStarterPlanetView extends BaseView{
             case SELECT_ACTION:
                 XmlManager manager = new XmlManager();
                 manager.savePlanet(planet);
-                ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.SLIDE_R_TRANSITION);
+                addAction(Actions.sequence(shipDoor.getSlideIn(), Actions.delay(0.5f), new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
+                        return true;
+                    }
+                }));
                 break;
         }
     }

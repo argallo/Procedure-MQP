@@ -8,6 +8,7 @@ import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomGlobeMapInfo;
 import com.pro.gen.random.RandomPlacement;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.worldcomponents.EmptyHat;
 import com.pro.gen.worldcomponents.FuelUnits;
@@ -45,6 +46,7 @@ public class XmlManager {
     public void savePlanet(Planet planet, String slot){
         try {
         xmlWriter.element("planet")
+                .attribute("colortype", planet.getColorType())
                 .attribute("basecolor", planet.getBasePlanetColor())
                 .attribute("size", planet.getPlanetSize())
                 .attribute("energy", planet.getPlanetEnergy())
@@ -100,7 +102,6 @@ public class XmlManager {
     }
 
     PreferenceManager.getInstance().saveString(slot, writer.toString());
-
     }
     //comment
 
@@ -213,6 +214,7 @@ public class XmlManager {
         String planetString = PreferenceManager.getInstance().getString(slot);
         XmlReader.Element root = reader.parse(planetString);
         Color baseColor = Color.valueOf(root.getAttribute("basecolor"));
+        String colorType = root.getAttribute("colortype");
         int size = root.getIntAttribute("size");
         int energy = root.getIntAttribute("energy");
         int globeRank = root.getIntAttribute("globerank");
@@ -247,7 +249,7 @@ public class XmlManager {
 
         Hat hat = new Hat();
 
-        return new Planet(baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR);
+        return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR);
     }
 
 

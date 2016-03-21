@@ -33,6 +33,29 @@ public class ColorHelper {
         return new Color(getRed(color)/255f,getGreen(color)/255f,getBlue(color)/255f,1f);
     }
 
+    public static String generatePlanetColor(){
+        float color = MathUtils.random(82, 203);
+        int rand = MathUtils.random(1,6);
+        int color1 = MathUtils.random(203,247);
+        int color2 = 285-color1;
+        switch (rand){
+            case 1:
+                return "Green:"+new Color(color2/255f, color1/255f, color/255f, 1f).toString();
+            case 2:
+                return "Blue:"+new Color(color2/255f, color/255f, color1/255f, 1f).toString();
+            case 3:
+                return "Purple:"+new Color(color/255f, color2/255f, color1/255f, 1f).toString();
+            case 4:
+                return "Red:"+new Color(color1/255f, color2/255f, color/255f, 1f).toString();
+            case 5:
+                return "Orange:"+new Color(color1/255f, color/255f, color2/255f, 1f).toString();
+            case 6:
+                return "Yellow:"+new Color(color/255f, color1/255f, color2/255f, 1f).toString();
+            default:
+                return null;
+        }
+    }
+
     /**
      * Generates a color at random that isnt too dark or too light
      * @return a random color

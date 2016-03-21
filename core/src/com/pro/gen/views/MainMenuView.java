@@ -25,7 +25,7 @@ public class MainMenuView extends BaseView {
     private TintedImage shipUI;
     private Ship ship;
     private ShipDoor shipDoor;
-    private TravelButton exploreBtn, manageBtn, leaderBtn, dwarfBtn, InventoryBtn;
+    private TravelButton exploreBtn, manageBtn, bossbattleBtn, leaderboardBtn, shopBtn;
     private TitleBar titleBar;
 
     @Override
@@ -38,12 +38,32 @@ public class MainMenuView extends BaseView {
         titleBar = new TitleBar("Main Menu");
         shipDoor = new ShipDoor(true);
 
+        TintedImage exploreIcon = new TintedImage(Pic.Exlopre_Icon);
+        exploreIcon.setSize(90,90);
+        exploreIcon.setPosition(150, 40);
+
+        TintedImage manageIcon = new TintedImage(Pic.ManagePlanets_Icon);
+        manageIcon.setSize(166, 49);
+        manageIcon.setPosition(335, 60);
+
+        TintedImage bossbattleIcon = new TintedImage(Pic.BossBattle_Icon);
+        bossbattleIcon.setSize(24,84);
+        bossbattleIcon.setPosition(625, 45);
+
+        TintedImage leaderboardIcon = new TintedImage(Pic.Leaderboard_Icon);
+        leaderboardIcon.setSize(70,89);
+        leaderboardIcon.setPosition(820, 43);
+
+        TintedImage shopIcon = new TintedImage(Pic.Shop_Icon);
+        shopIcon.setSize(103,83);
+        shopIcon.setPosition(1020, 45);
+
         //Menu Buttons
-        exploreBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Explore", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
-        manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor);
-        leaderBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Leaderboard", Assets.getInstance().getSmallFont(), ViewID.LEADERBOARD, shipDoor);
-        dwarfBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Drawf Capsules", Assets.getInstance().getXSmallFont(), ViewID.CAPSULE, shipDoor);
-        InventoryBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Inventory", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor);
+        exploreBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Explore", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor, exploreIcon);
+        manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor, manageIcon);
+        bossbattleBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Boss Battle", Assets.getInstance().getSmallFont(), ViewID.LEADERBOARD, shipDoor, bossbattleIcon);
+        leaderboardBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Leaderboard", Assets.getInstance().getXSmallFont(), ViewID.CAPSULE, shipDoor, leaderboardIcon);
+        shopBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Shop", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor, shopIcon);
 
     }
 
@@ -54,9 +74,9 @@ public class MainMenuView extends BaseView {
         ship.setSize(400, 200);
         exploreBtn.setSize(200,100);
         manageBtn.setSize(200,100);
-        leaderBtn.setSize(200,100);
-        dwarfBtn.setSize(200,100);
-        InventoryBtn.setSize(200,100);
+        bossbattleBtn.setSize(200, 100);
+        leaderboardBtn.setSize(200, 100);
+        shopBtn.setSize(200, 100);
         shipUI.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
     }
 
@@ -67,9 +87,9 @@ public class MainMenuView extends BaseView {
         titleBar.setPosition(80,600);
         exploreBtn.setPosition(100, 35);
         manageBtn.setPosition(320, 35);
-        leaderBtn.setPosition(540, 35);
-        dwarfBtn.setPosition(760, 35);
-        InventoryBtn.setPosition(980, 35);
+        bossbattleBtn.setPosition(540, 35);
+        leaderboardBtn.setPosition(760, 35);
+        shopBtn.setPosition(980, 35);
     }
 
     @Override
@@ -82,9 +102,9 @@ public class MainMenuView extends BaseView {
         addActor(titleBar);
         addActor(exploreBtn);
         addActor(manageBtn);
-        addActor(leaderBtn);
-        addActor(dwarfBtn);
-        addActor(InventoryBtn);
+        addActor(bossbattleBtn);
+        addActor(leaderboardBtn);
+        addActor(shopBtn);
         addActor(shipDoor);
 
     }

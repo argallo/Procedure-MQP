@@ -66,6 +66,11 @@ public class Pic {
 
     public static final String Globe_Rank = "Img/globe_rank.png";
     public static final String TechOverlay_VMed = "Img/tech_overlay_vmed.png";
+    public static final String Exlopre_Icon = "Img/explore_icon.png";
+    public static final String ManagePlanets_Icon = "Img/manageplanets_icon.png";
+    public static final String BossBattle_Icon = "Img/bossbattle_icon.png";
+    public static final String Leaderboard_Icon = "Img/leaderboard_icon.png";
+    public static final String Shop_Icon = "Img/shop_icon.png";
 
 
 

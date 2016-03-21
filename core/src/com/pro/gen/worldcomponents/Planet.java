@@ -15,7 +15,7 @@ import com.pro.gen.utils.Tint;
  */
 public class Planet extends Group {
 
-
+    private String colorType;
     private TintedImage basePlanet; //base planet includes the base color for the planet
     private GlobeMap lands; //land is the land images with their specific color sizes and positions
     private GlobeMap clouds; //cloud is the land images with their specific color sizes and positions
@@ -37,7 +37,7 @@ public class Planet extends Group {
     }
 
     public Planet(RandomPlanet randomPlanet, Color background){
-        this(randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), randomPlanet.getPlanetSize(),
+        this(randomPlanet.getColorType(), randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), randomPlanet.getPlanetSize(),
                 randomPlanet.getPlanetEnergy(), randomPlanet.getGlobeRank(), randomPlanet.getCurrentXP(), randomPlanet.getRankXP(), randomPlanet.isInhabitable(),
                 randomPlanet.getTimeStart(), randomPlanet.getAmtofTime(), randomPlanet.getHat(), background);
     }
@@ -55,9 +55,10 @@ public class Planet extends Group {
      * @param lands the land that will move around the planet
      * @param clouds the clouds that will float around the planet
      */
-    public Planet (Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, int planetSize, int planetEnergy, int globeRank, int currentXP, int rankXP,
+    public Planet (String colorType, Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, int planetSize, int planetEnergy, int globeRank, int currentXP, int rankXP,
                    boolean inhabitable, long timeStart, long amtofTime, Hat hat, Color background){
 
+        this.colorType = colorType;
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
         this.lands = lands;
         this.clouds = clouds;
@@ -128,10 +129,16 @@ public class Planet extends Group {
         }));
     }
 
+
+
     /**
      * Getters and setters for saving planet to xml
      *
      */
+
+    public String getColorType() {
+        return colorType;
+    }
 
     public int getPlanetSize() {
         return planetSize;

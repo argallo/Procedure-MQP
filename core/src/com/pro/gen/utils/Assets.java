@@ -95,6 +95,11 @@ public class Assets extends AssetManager {
         load(Pic.Bg5, Texture.class, textureParam);
         load(Pic.Globe_Rank, Texture.class, textureParam);
         load(Pic.TechOverlay_VMed, Texture.class, textureParam);
+        load(Pic.Exlopre_Icon, Texture.class, textureParam);
+        load(Pic.ManagePlanets_Icon, Texture.class, textureParam);
+        load(Pic.BossBattle_Icon, Texture.class, textureParam);
+        load(Pic.Leaderboard_Icon, Texture.class, textureParam);
+        load(Pic.Shop_Icon, Texture.class, textureParam);
 
         finishLoading();
     }
