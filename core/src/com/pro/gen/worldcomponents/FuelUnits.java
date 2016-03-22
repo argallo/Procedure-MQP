@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.*;
 import com.pro.gen.utils.Pic;
 
@@ -19,11 +20,13 @@ public class FuelUnits extends Group {
 
     private TintedImage background, fuelIcon;
     private TextLabel unitText;
+    private int units;
 
     public FuelUnits(){
-        background = new TintedImage(com.pro.gen.utils.Pic.Pixel, com.pro.gen.utils.Tint.PURPLE);
+        units = XmlManager.getInstance().getFuelUnits();
+        background = new TintedImage(Pic.Pixel, Tint.PURPLE);
         fuelIcon = new TintedImage(Pic.Fuel_Unit_Icon);
-        unitText = new TextLabel("3 Fuel Units", Assets.getInstance().getSmallFont());
+        unitText = new TextLabel(units+" Fuel Units", Assets.getInstance().getSmallFont());
 
         background.setSize(300, 100);
         fuelIcon.setSize(50, 54);
@@ -39,6 +42,12 @@ public class FuelUnits extends Group {
         setPosition(Constants.VIRTUAL_WIDTH, 10);
         addAction(Actions.sequence(Actions.delay(0.5f), Actions.moveTo(980, 10, 0.5f, Interpolation.exp5)));
 
+    }
+
+    public void useFuel(){
+        units--;
+        unitText.setText(units+" Fuel Units");
+        XmlManager.getInstance().saveFuelUnits(units);
     }
 
 

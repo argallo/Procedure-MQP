@@ -7,6 +7,7 @@ import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Pic;
@@ -28,7 +29,7 @@ public class ExplorePopup extends AbsPopup {
         question = new TextLabel("Are you sure you want to use a Fuel Unit?", Assets.getInstance().getSmallFont());
         question.setPosition(310, 500);
 
-        units = new TextLabel("3 Fuel Units", Assets.getInstance().getSmallFont());
+        units = new TextLabel(XmlManager.getInstance().getFuelUnits()+" Fuel Units", Assets.getInstance().getSmallFont());
         units.setPosition(570, 360);
 
         fuelUnits = new TintedImage(Pic.Fuel_Unit_Icon);

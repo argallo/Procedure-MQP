@@ -17,13 +17,16 @@ public class TintedImage extends Image {
     private Color tint;
     private Color batchColor;
     private Color previousColor = Color.WHITE;
+    private String imageName;
 
     public TintedImage(String imageName){
         this(imageName, Color.WHITE);
+        this.imageName = imageName;
     }
 
     public TintedImage(String imageName, Color tint){
         this(Assets.getInstance().getTextureRegion(imageName), tint);
+        this.imageName = imageName;
     }
 
     public TintedImage(TextureRegion texture, Color tint) {
@@ -85,6 +88,12 @@ public class TintedImage extends Image {
 
     public void setPreviousColor(){
         this.tint = previousColor;
+    }
+
+    public String getImageName() {
+        if(!imageName.isEmpty())
+            return imageName;
+        return "";
     }
 
     public void setImage(String image) {

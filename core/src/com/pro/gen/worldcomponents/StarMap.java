@@ -38,7 +38,21 @@ public class StarMap extends Group {
     private void initStarMap(RandomPlacement rp){
         stars = new ArrayList<TintedImage>();
         for(int i = 0; i < rp.getSize(); i++) {
-            TintedImage star = new TintedImage(rp.getName(), Tint.STAR_WHITE);
+            int starType = MathUtils.random(2);
+            TintedImage star;
+            switch(starType){
+                case 0:
+                    star = new TintedImage(rp.getName(), Tint.STAR_WHITE);
+                    break;
+                case 1:
+                    star = new TintedImage(rp.getName(), Tint.STAR_BLUE);
+                    break;
+                case 2:
+                    star = new TintedImage(rp.getName(), Tint.STAR_RED);
+                    break;
+                default:
+                    star = null;
+            }
             star.setSize(rp.getWidth(i), rp.getHeight(i));
             star.setPosition(rp.getX(i), rp.getY(i));
             stars.add(star);

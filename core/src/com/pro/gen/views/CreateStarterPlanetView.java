@@ -17,6 +17,7 @@ import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
+import com.pro.gen.worldcomponents.FuelUnits;
 import com.pro.gen.worldcomponents.GlobeRank;
 import com.pro.gen.worldcomponents.Planet;
 import com.pro.gen.worldcomponents.ShipDoor;
@@ -111,8 +112,9 @@ public class CreateStarterPlanetView extends BaseView{
                 addActorAt(2, planet);
                 break;
             case SELECT_ACTION:
-                XmlManager manager = new XmlManager();
+                XmlManager manager = XmlManager.getInstance();
                 manager.savePlanet(planet);
+                manager.saveFuelUnits(FuelUnits.MAX_FUEL_REPLENISH);
                 addAction(Actions.sequence(shipDoor.getSlideIn(), Actions.delay(0.5f), new Action() {
                     @Override
                     public boolean act(float delta) {

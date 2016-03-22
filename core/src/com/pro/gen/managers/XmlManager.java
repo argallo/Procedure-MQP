@@ -1,6 +1,7 @@
 package com.pro.gen.managers;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlWriter;
@@ -19,6 +20,7 @@ import com.pro.gen.worldcomponents.SolarSystem;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,14 +29,14 @@ import java.util.List;
  */
 public class XmlManager {
 
-    private XmlWriter xmlWriter;
-    private StringWriter writer;
-    private XmlReader reader;
+    private static final XmlManager INSTANCE = new XmlManager();
 
-    public XmlManager(){
-        writer = new StringWriter();
-        xmlWriter = new XmlWriter(writer);
-        reader = new XmlReader();
+    public static XmlManager getInstance() {
+        return INSTANCE;
+    }
+
+    private XmlManager(){
+
     }
 
     public void savePlanet(Planet planet){
@@ -44,89 +46,32 @@ public class XmlManager {
 
     //finds the next open slot and saves the planet xml here
     public void savePlanet(Planet planet, String slot){
-        try {
-        xmlWriter.element("planet")
-                .attribute("colortype", planet.getColorType())
-                .attribute("basecolor", planet.getBasePlanetColor())
-                .attribute("size", planet.getPlanetSize())
-                .attribute("energy", planet.getPlanetEnergy())
-                .attribute("globerank", planet.getGlobeRank())
-                .attribute("currentxp", planet.getCurrentXP())
-                .attribute("rankxp", planet.getRankXP())
-                .element("habitability")
-                    .attribute("inhabitable",planet.isInhabitable())
-                    .attribute("timestart", planet.getTimeStart())
-                    .attribute("amtoftime",planet.getAmtofTime())
-                    .pop()
-                .element("land")
-                    .attribute("image", planet.getLands().getRandomGlobeMapInfo().getRp().getName())
-                    .attribute("color", planet.getLands().getRandomGlobeMapInfo().getColor())
-                    .attribute("widths", planet.getLands().getRandomGlobeMapInfo().getRp().getWidths())
-                    .attribute("heights", planet.getLands().getRandomGlobeMapInfo().getRp().getHeights())
-                    .attribute("xs", planet.getLands().getRandomGlobeMapInfo().getRp().getXs())
-                    .attribute("ys", planet.getLands().getRandomGlobeMapInfo().getRp().getYs())
-                    .pop()
-                .element("clouds")
-                    .attribute("image", planet.getClouds().getRandomGlobeMapInfo().getRp().getName())
-                    .attribute("color", planet.getClouds().getRandomGlobeMapInfo().getColor())
-                    .attribute("widths", planet.getClouds().getRandomGlobeMapInfo().getRp().getWidths())
-                    .attribute("heights", planet.getClouds().getRandomGlobeMapInfo().getRp().getHeights())
-                    .attribute("xs", planet.getClouds().getRandomGlobeMapInfo().getRp().getXs())
-                    .attribute("ys", planet.getClouds().getRandomGlobeMapInfo().getRp().getYs())
-                    .pop()
-                .element("eyes")
-                    .attribute("whiteSize", planet.getPlanetEyes().getWhiteSize())
-                    .attribute("whiteX", planet.getPlanetEyes().getWhiteX())
-                    .attribute("whiteY", planet.getPlanetEyes().getWhiteY())
-                    .attribute("eyeSize", planet.getPlanetEyes().getEyeSize())
-                    .attribute("eyeX", planet.getPlanetEyes().getEyeX())
-                    .attribute("eyeY", planet.getPlanetEyes().getEyeY())
-                    .attribute("blackSize", planet.getPlanetEyes().getBlackSize())
-                    .attribute("blackX", planet.getPlanetEyes().getBlackX())
-                    .attribute("blackY", planet.getPlanetEyes().getBlackY())
-                    .attribute("glareWidth", planet.getPlanetEyes().getGlareWidth())
-                    .attribute("glareHeight", planet.getPlanetEyes().getGlareHeight())
-                    .attribute("glareX", planet.getPlanetEyes().getGlareX())
-                    .attribute("glareY", planet.getPlanetEyes().getGlareY())
-                    .attribute("rwePosition", planet.getPlanetEyes().getRwePosition())
-                    .attribute("image", planet.getPlanetEyes().getImage())
-                    .attribute("eyeColor", planet.getPlanetEyes().getEyeColor())
-                    .pop()
-                .element("hat")
-                    .attribute("image", "hat1")
-                    .pop()
-                .pop();
-        //LogUtils.Log(writer.toString());
-    } catch (IOException e){
-
-    }
-
-    PreferenceManager.getInstance().saveString(slot, writer.toString());
+        PreferenceManager.getInstance().saveString(slot, xmlPlanet(planet));
     }
     //comment
 
     //updates planet when it gains experience
     public void updatePlanet(String slot, int size, int energy, int rank, int xp){
-        Planet planet = getPlanet(slot);
+        Planet planet = getPlanetFromSlot(slot);
         planet.setPlanetSize(size);
         planet.setPlanetEnergy(energy);
         planet.setGlobeRank(rank);
         planet.setCurrentXP(xp);
-        planet.setRankXP((int)Math.pow(rank, 1.2)*100);
+        planet.setRankXP((int) Math.pow(rank, 1.2) * 100);
         savePlanet(planet, slot);
     }
 
     //updates planet with hat given
     public void addHatToPlanet(Hat hat, String slot){
         removeHatFromList(hat);
-        Planet planet = getPlanet(slot);
+        Planet planet = getPlanetFromSlot(slot);
         planet.setHat(hat);
         savePlanet(planet, slot);
     }
 
     //removes hat from planet at given slot
     public void removeHatFromPlanet(String slot){
-        Planet planet = getPlanet(slot);
+        Planet planet = getPlanetFromSlot(slot);
         //addToHatsList(planet.getHat());
         planet.setHat(new EmptyHat());
     }
@@ -139,6 +84,35 @@ public class XmlManager {
     //Saves solar system and specific planets that can be traveled to
     public void saveSolarSystem(SolarSystem solarSystem){
         // saves full planets as well
+        ArrayList<Planet> planets = solarSystem.getPlanets();
+        String solarSystemString = "";
+        StringWriter writer = new StringWriter();
+        XmlWriter xmlWriter = new XmlWriter(writer);
+        try {
+            xmlWriter.element("solarsystem");
+            for(int i = 0; i < planets.size(); i++){
+                xmlWriter.element("planets",xmlPlanet(planets.get(i)));
+            }
+            xmlWriter.pop();
+            LogUtils.Log(writer.toString());
+            solarSystemString = writer.toString();
+            xmlWriter.flush();
+            xmlWriter.close();
+        }catch (IOException e){}
+
+        PreferenceManager.getInstance().saveString(PreferenceManager.SOLAR_SYSTEM, solarSystemString);
+    }
+
+    public SolarSystem getSolarSystem(){
+        String solarSystemString = PreferenceManager.getInstance().getString(PreferenceManager.SOLAR_SYSTEM);
+        XmlReader reader = new XmlReader();
+        XmlReader.Element root = reader.parse(solarSystemString);
+        ArrayList<Planet> planets = new ArrayList<Planet>();
+        Array<XmlReader.Element> planetArray = root.getChildrenByName("planets");
+        for(XmlReader.Element planet :planetArray){
+            planets.add(getPlanet(planet.getChildByName("planet").toString()));
+        }
+        return new SolarSystem(planets);
     }
 
     //save/updates the fuel units amount
@@ -210,8 +184,12 @@ public class XmlManager {
     }
 
 
-    public Planet getPlanet(String slot){
-        String planetString = PreferenceManager.getInstance().getString(slot);
+    public Planet getPlanetFromSlot(String slot){
+        return getPlanet(PreferenceManager.getInstance().getString(slot));
+    }
+
+    public Planet getPlanet(String planetString){
+        XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(planetString);
         Color baseColor = Color.valueOf(root.getAttribute("basecolor"));
         String colorType = root.getAttribute("colortype");
@@ -244,7 +222,7 @@ public class XmlManager {
         XmlReader.Element eye = root.getChildByName("eyes");
         PlanetEyes eyes = new PlanetEyes(Float.parseFloat(eye.getAttribute("whiteSize")),Float.parseFloat(eye.getAttribute("whiteX")),Float.parseFloat(eye.getAttribute("whiteY")),Float.parseFloat(eye.getAttribute("eyeSize")),Float.parseFloat(eye.getAttribute("eyeX")),Float.parseFloat(eye.getAttribute("eyeY")),Float.parseFloat(eye.getAttribute("blackSize")),
                 Float.parseFloat(eye.getAttribute("blackX")),Float.parseFloat(eye.getAttribute("blackY")),Float.parseFloat(eye.getAttribute("glareWidth")),Float.parseFloat(eye.getAttribute("glareHeight")),Float.parseFloat(eye.getAttribute("glareX")),Float.parseFloat(eye.getAttribute("glareY")),Float.parseFloat(eye.getAttribute("rwePosition")),
-               eye.getAttribute("image"),Color.valueOf(eye.getAttribute("eyeColor")));
+                eye.getAttribute("image"),Color.valueOf(eye.getAttribute("eyeColor")));
 
 
         Hat hat = new Hat();
@@ -261,5 +239,72 @@ public class XmlManager {
         }
         return floats;
     }
+
+    public String xmlPlanet(Planet planet){
+        String planetString = "";
+        StringWriter writer = new StringWriter();
+        XmlWriter xmlWriter = new XmlWriter(writer);
+        try {
+            xmlWriter.element("planet")
+                    .attribute("colortype", planet.getColorType())
+                    .attribute("basecolor", planet.getBasePlanetColor())
+                    .attribute("size", planet.getPlanetSize())
+                    .attribute("energy", planet.getPlanetEnergy())
+                    .attribute("globerank", planet.getGlobeRank())
+                    .attribute("currentxp", planet.getCurrentXP())
+                    .attribute("rankxp", planet.getRankXP())
+                    .element("habitability")
+                    .attribute("inhabitable",planet.isInhabitable())
+                    .attribute("timestart", planet.getTimeStart())
+                    .attribute("amtoftime",planet.getAmtofTime())
+                    .pop()
+                    .element("land")
+                    .attribute("image", planet.getLands().getRandomGlobeMapInfo().getRp().getName())
+                    .attribute("color", planet.getLands().getRandomGlobeMapInfo().getColor())
+                    .attribute("widths", planet.getLands().getRandomGlobeMapInfo().getRp().getWidths())
+                    .attribute("heights", planet.getLands().getRandomGlobeMapInfo().getRp().getHeights())
+                    .attribute("xs", planet.getLands().getRandomGlobeMapInfo().getRp().getXs())
+                    .attribute("ys", planet.getLands().getRandomGlobeMapInfo().getRp().getYs())
+                    .pop()
+                    .element("clouds")
+                    .attribute("image", planet.getClouds().getRandomGlobeMapInfo().getRp().getName())
+                    .attribute("color", planet.getClouds().getRandomGlobeMapInfo().getColor())
+                    .attribute("widths", planet.getClouds().getRandomGlobeMapInfo().getRp().getWidths())
+                    .attribute("heights", planet.getClouds().getRandomGlobeMapInfo().getRp().getHeights())
+                    .attribute("xs", planet.getClouds().getRandomGlobeMapInfo().getRp().getXs())
+                    .attribute("ys", planet.getClouds().getRandomGlobeMapInfo().getRp().getYs())
+                    .pop()
+                    .element("eyes")
+                    .attribute("whiteSize", planet.getPlanetEyes().getWhiteSize())
+                    .attribute("whiteX", planet.getPlanetEyes().getWhiteX())
+                    .attribute("whiteY", planet.getPlanetEyes().getWhiteY())
+                    .attribute("eyeSize", planet.getPlanetEyes().getEyeSize())
+                    .attribute("eyeX", planet.getPlanetEyes().getEyeX())
+                    .attribute("eyeY", planet.getPlanetEyes().getEyeY())
+                    .attribute("blackSize", planet.getPlanetEyes().getBlackSize())
+                    .attribute("blackX", planet.getPlanetEyes().getBlackX())
+                    .attribute("blackY", planet.getPlanetEyes().getBlackY())
+                    .attribute("glareWidth", planet.getPlanetEyes().getGlareWidth())
+                    .attribute("glareHeight", planet.getPlanetEyes().getGlareHeight())
+                    .attribute("glareX", planet.getPlanetEyes().getGlareX())
+                    .attribute("glareY", planet.getPlanetEyes().getGlareY())
+                    .attribute("rwePosition", planet.getPlanetEyes().getRwePosition())
+                    .attribute("image", planet.getPlanetEyes().getImage())
+                    .attribute("eyeColor", planet.getPlanetEyes().getEyeColor())
+                    .pop()
+                    .element("hat")
+                    .attribute("image", "hat1")
+                    .pop()
+                    .pop();
+            //LogUtils.Log(writer.toString());
+            planetString = writer.toString();
+            xmlWriter.flush();
+            xmlWriter.close();
+        } catch (IOException e){
+
+        }
+        return planetString;
+    }
+
 
 }

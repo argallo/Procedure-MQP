@@ -9,6 +9,8 @@ public class Tint {
 
     public static Color UNIVERSE_BACKGROUND_COLOR = new Color(22/255f,37/255f,51/255f,1f);
     public static Color STAR_WHITE = new Color(213/255f,213/255f,218/255f,1f);
+    public static Color STAR_RED = new Color(255/255f, 80/255f, 80/255f, 1f);
+    public static Color STAR_BLUE = new Color(42/255f, 118/255f, 190/255f, 1f);
     public static Color STAR_PURPLE = new Color(110/255f,36/255f,185/255f,1f);
     public static Color STAR_PURPLE_BRIGHT = new Color(173/255f,0,239/255f,1f);
     public static Color PINK = new Color(240/255f, 87/255f, 109/255f, 1f);
@@ -29,6 +31,9 @@ public class Tint {
 
 
     public static Color Globe_Rank_Orange = new Color(251/255f, 94/255f, 0, 1f);
+    public static Color RARE_YELLOW = new Color(233/255f, 217/255f, 86/255f, 1f);
+
+
 
     public static final void resetTints(){
         UNIVERSE_BACKGROUND_COLOR = new Color(22/255f,37/255f,51/255f,1f);

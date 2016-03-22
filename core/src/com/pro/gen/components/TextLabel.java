@@ -63,6 +63,10 @@ public class TextLabel extends Group {
         this.setSize(width, height);
     }
 
+    public void setTint(Color color){
+        style.fontColor = color;
+    }
+
     public void setAlign(int align){
         label.setAlignment(align);
     }

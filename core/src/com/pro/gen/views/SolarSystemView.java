@@ -8,6 +8,7 @@ import com.pro.gen.components.Background;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TitleBar;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.popups.AbsPopup;
 import com.pro.gen.popups.SolarSystemPopup;
 import com.pro.gen.utils.Constants;
@@ -44,7 +45,8 @@ public class SolarSystemView extends BaseView {
         solarSystemPopup = new SolarSystemPopup(this);
         shipUI = new TintedImage(Pic.UI_Open);
         titleBar = new TitleBar("System SuiNxc");
-        solarSystem = new SolarSystem(solarSystemPopup);
+        solarSystem = XmlManager.getInstance().getSolarSystem();
+        solarSystem.setPopup(solarSystemPopup);
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
         fadeOutLayer.setTouchable(Touchable.disabled);
     }
