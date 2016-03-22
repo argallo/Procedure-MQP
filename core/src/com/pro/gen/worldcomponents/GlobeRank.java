@@ -26,8 +26,8 @@ public class GlobeRank extends Group {
 
     public GlobeRank(){
         backgroundPanel = new TintedImage(Pic.Globe_Rank);
-        rankBar = new TintedImage(Pic.Pixel, Tint.Globe_Rank_Orange);
-        currentRankLabel = new TextLabel("47", Tint.Globe_Rank_Orange);
+        rankBar = new TintedImage(Pic.Pixel, Tint.GLOBE_RANK_ORANGE);
+        currentRankLabel = new TextLabel("47", Tint.GLOBE_RANK_ORANGE);
 
         currentXp = 20000;
         rankXp = 49992;
@@ -54,8 +54,8 @@ public class GlobeRank extends Group {
 
     public GlobeRank(int rank, int currentXp, int rankXp){
         backgroundPanel = new TintedImage(Pic.Globe_Rank);
-        rankBar = new TintedImage(Pic.Pixel, Tint.Globe_Rank_Orange);
-        currentRankLabel = new TextLabel(String.valueOf(rank), Tint.Globe_Rank_Orange);
+        rankBar = new TintedImage(Pic.Pixel, Tint.GLOBE_RANK_ORANGE);
+        currentRankLabel = new TextLabel(String.valueOf(rank), Tint.GLOBE_RANK_ORANGE);
 
         this.currentXp = currentXp;
         this.rankXp = rankXp;

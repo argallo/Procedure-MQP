@@ -17,6 +17,7 @@ public class PreferenceManager {
     public static final String SLOT_2 = "PlanetSlot2";
     public static final String SLOT_3 = "PlanetSlot3";
     public static final String SLOT_4 = "PlanetSlot4";
+    public static final String BATTLE_SLOT = "BattleSlot";
     public static final String HAT_LIST = "HatList";
     public static final String MEGA_CRYSTALS = "MegaCrystals";
     public static final String POWER_CRYSTALS = "PowerCrystals";

@@ -20,7 +20,8 @@ public class SolarSystem extends Group {
     TintedImage sun;
     ArrayList<MiniPlanetSystem> miniplanets;
     ArrayList<Planet> planets;
-    MiniPlanet selectedPlanet;
+    MiniPlanet selectedMiniPlanet;
+    Planet selectedPlanet;
     AbsPopup popup;
     private int lowRank, highRank;
 
@@ -69,18 +70,28 @@ public class SolarSystem extends Group {
     }
 
     public void planetClicked(MiniPlanet planet){
-        selectedPlanet = planet;
+        selectedMiniPlanet = planet;
+        for(int i = 0; i < miniplanets.size(); i++){
+            if(miniplanets.get(i).getMiniPlanet().equals(planet)){
+                selectedPlanet = planets.get(i);
+                break;
+            }
+        }
         popup.activatePopup();
     }
 
     public void fadeAway(){
         sun.addAction(Actions.sequence(Actions.sizeTo(1, 1, 0.5f, Interpolation.exp10), Actions.visible(false)));
         for(MiniPlanetSystem planet: miniplanets){
-            planet.fadeOut(selectedPlanet);
+            planet.fadeOut(selectedMiniPlanet);
         }
     }
 
-    public MiniPlanet getSelectedPlanet() {
+    public MiniPlanet getSelectedMiniPlanet() {
+        return selectedMiniPlanet;
+    }
+
+    public Planet getSelectedPlanet() {
         return selectedPlanet;
     }
 

@@ -94,7 +94,6 @@ public class XmlManager {
                 xmlWriter.element("planets",xmlPlanet(planets.get(i)));
             }
             xmlWriter.pop();
-            LogUtils.Log(writer.toString());
             solarSystemString = writer.toString();
             xmlWriter.flush();
             xmlWriter.close();
@@ -226,7 +225,6 @@ public class XmlManager {
 
 
         Hat hat = new Hat();
-
         return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR);
     }
 

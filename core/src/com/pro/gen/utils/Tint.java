@@ -30,8 +30,9 @@ public class Tint {
     public static Color LEADER_RED = new Color(172/255f, 59/255f, 59/255f, 1f);
 
 
-    public static Color Globe_Rank_Orange = new Color(251/255f, 94/255f, 0, 1f);
+    public static Color GLOBE_RANK_ORANGE = new Color(251/255f, 94/255f, 0, 1f);
     public static Color RARE_YELLOW = new Color(233/255f, 217/255f, 86/255f, 1f);
+    public static Color GLOBE_RANK_GREEN = new Color(40/255f, 164/255f, 78/255f, 1f);
 
 
 
