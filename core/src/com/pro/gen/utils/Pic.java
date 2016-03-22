@@ -73,6 +73,7 @@ public class Pic {
     public static final String Leaderboard_Icon = "Img/leaderboard_icon.png";
     public static final String Shop_Icon = "Img/shop_icon.png";
     public static final String Star_Twinkle = "Img/twinkle.png";
+    public static final String Laser_Icon = "Img/laser_icon.png";
 
 
 

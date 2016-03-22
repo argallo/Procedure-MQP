@@ -64,7 +64,10 @@ public class PlanetView extends BaseView {
         fadeOutLayer.setTouchable(Touchable.disabled);
         globeRank = new TextLabel("Globe Rank", Tint.GLOBE_RANK_GREEN);
         globeRankNumber = new TextLabel(planet.getGlobeRank()+"", Tint.GLOBE_RANK_ORANGE);
-        laserBattleBtn = new Button(Pic.Pixel, Tint.MED_PURPLE, "Laser Battle", Assets.getInstance().getMidFont());//TODO:add icon
+        TintedImage laserIcon = new TintedImage(Pic.Laser_Icon);
+        laserIcon.setSize(187, 137);
+        laserIcon.setPosition(100, Constants.VIRTUAL_HEIGHT/2 - 75);
+        laserBattleBtn = new Button(Pic.Pixel, Tint.DARK_PURPLE, "Laser Battle", Assets.getInstance().getMidFont(), laserIcon);
         backBtn = new Button(Pic.Back_Button, Color.WHITE);
 
         laserBattleBtn.setButtonAction(new ButtonAction() {

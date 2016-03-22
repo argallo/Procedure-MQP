@@ -101,6 +101,7 @@ public class Assets extends AssetManager {
         load(Pic.BossBattle_Icon, Texture.class, textureParam);
         load(Pic.Leaderboard_Icon, Texture.class, textureParam);
         load(Pic.Shop_Icon, Texture.class, textureParam);
+        load(Pic.Laser_Icon, Texture.class, textureParam);
         load(Pic.Star_Twinkle, Texture.class, textureParam);
 
         finishLoading();
