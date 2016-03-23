@@ -11,6 +11,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TitleBar;
 import com.pro.gen.components.TravelButton;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.popups.AbsPopup;
 import com.pro.gen.popups.ExplorePopup;
 import com.pro.gen.utils.Assets;
@@ -130,6 +131,7 @@ public class ExploreView extends BaseView {
             case FLY:
                 stars.pause();
                 rareStars.pause();
+                starTracker.pause();
                 popup.activatePopup();
                 break;
             case CURRENT:
@@ -137,6 +139,7 @@ public class ExploreView extends BaseView {
             default:
                 stars.unpause();
                 rareStars.unpause();
+                starTracker.unpause();
         }
     }
 
@@ -167,6 +170,7 @@ public class ExploreView extends BaseView {
                     @Override
                     public boolean act(float delta) {
                         if(newSystem) {
+                            XmlManager.getInstance().saveFuelUnits(XmlManager.getInstance().getFuelUnits()-1);
                             SolarSystem solarSystem = new SolarSystem(getLowRank(), getHighRank());
                         }
                         ViewManager.getInstance().transitionViewTo(ViewID.SOLAR_SYSTEM, TransitionType.DEFAULT_TRANSITION);

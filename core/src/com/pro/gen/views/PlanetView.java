@@ -59,7 +59,7 @@ public class PlanetView extends BaseView {
         shipUI = new TintedImage(Pic.UI_Open);
         shipUI.setTouchable(Touchable.disabled);
         techPlanetStats = new TechPlanetStats(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getColorType());
-        titleBar = new TitleBar("Planet "+generateRandomName());
+        titleBar = new TitleBar("Planet "+planet.getPlanetName());
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
         fadeOutLayer.setTouchable(Touchable.disabled);
         globeRank = new TextLabel("Globe Rank", Tint.GLOBE_RANK_GREEN);
@@ -67,7 +67,7 @@ public class PlanetView extends BaseView {
         TintedImage laserIcon = new TintedImage(Pic.Laser_Icon);
         laserIcon.setSize(187, 137);
         laserIcon.setPosition(100, Constants.VIRTUAL_HEIGHT/2 - 75);
-        laserBattleBtn = new Button(Pic.Pixel, Tint.DARK_PURPLE, "Laser Battle", Assets.getInstance().getMidFont(), laserIcon);
+        laserBattleBtn = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "Laser Battle", Assets.getInstance().getMidFont(), laserIcon);
         backBtn = new Button(Pic.Back_Button, Color.WHITE);
 
         laserBattleBtn.setButtonAction(new ButtonAction() {
@@ -170,16 +170,6 @@ public class PlanetView extends BaseView {
 
     public void openingAnimation(){
         fadeOutLayer.addAction(Actions.fadeOut(2f));
-    }
-
-    public String generateRandomName(){
-        String alphabet = "ABCDEFGHIJKLMNOPQURTUVWXYZ1234567890-_";
-        int length = MathUtils.random(5,7);
-        String name = "";
-        for(int i = 0; i < length; i++){
-            name += alphabet.charAt(MathUtils.random(alphabet.length()-1));
-        }
-        return name;
     }
 
 }

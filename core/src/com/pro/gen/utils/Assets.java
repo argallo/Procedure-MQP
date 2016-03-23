@@ -96,6 +96,7 @@ public class Assets extends AssetManager {
         load(Pic.Globe_Rank, Texture.class, textureParam);
         load(Pic.TechOverlay_VMed, Texture.class, textureParam);
         load(Pic.TechOverlay_HSmall, Texture.class, textureParam);
+        load(Pic.TechOverlay_HLarge, Texture.class, textureParam);
         load(Pic.Exlopre_Icon, Texture.class, textureParam);
         load(Pic.ManagePlanets_Icon, Texture.class, textureParam);
         load(Pic.BossBattle_Icon, Texture.class, textureParam);
@@ -103,6 +104,7 @@ public class Assets extends AssetManager {
         load(Pic.Shop_Icon, Texture.class, textureParam);
         load(Pic.Laser_Icon, Texture.class, textureParam);
         load(Pic.Star_Twinkle, Texture.class, textureParam);
+        load(Pic.Target, Texture.class, textureParam);
 
         finishLoading();
     }

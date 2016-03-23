@@ -48,7 +48,7 @@ public class SolarSystemView extends BaseView {
         shipDoor = new ShipDoor(false);
         solarSystemPopup = new SolarSystemPopup(this);
         shipUI = new TintedImage(Pic.UI_Open);
-        titleBar = new TitleBar("System SuiNxc");
+        titleBar = new TitleBar("Solar System");
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
         solarSystem = XmlManager.getInstance().getSolarSystem();
         solarSystem.setPopup(solarSystemPopup);

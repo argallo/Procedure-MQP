@@ -192,6 +192,7 @@ public class XmlManager {
         XmlReader.Element root = reader.parse(planetString);
         Color baseColor = Color.valueOf(root.getAttribute("basecolor"));
         String colorType = root.getAttribute("colortype");
+        String planetName = root.getAttribute("planetname");
         int size = root.getIntAttribute("size");
         int energy = root.getIntAttribute("energy");
         int globeRank = root.getIntAttribute("globerank");
@@ -225,7 +226,7 @@ public class XmlManager {
 
 
         Hat hat = new Hat();
-        return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR);
+        return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR, planetName);
     }
 
 
@@ -251,6 +252,7 @@ public class XmlManager {
                     .attribute("globerank", planet.getGlobeRank())
                     .attribute("currentxp", planet.getCurrentXP())
                     .attribute("rankxp", planet.getRankXP())
+                    .attribute("planetname", planet.getPlanetName())
                     .element("habitability")
                     .attribute("inhabitable",planet.isInhabitable())
                     .attribute("timestart", planet.getTimeStart())

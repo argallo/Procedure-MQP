@@ -33,6 +33,15 @@ public class Tint {
     public static Color GLOBE_RANK_ORANGE = new Color(251/255f, 94/255f, 0, 1f);
     public static Color RARE_YELLOW = new Color(233/255f, 217/255f, 86/255f, 1f);
     public static Color GLOBE_RANK_GREEN = new Color(40/255f, 164/255f, 78/255f, 1f);
+    public static Color OPAQUE_PURPLE = new Color(91/255f, 80/255f, 99/255f, 0.8f);
+
+    public static Color TARGET_BLUE = new Color(0/255f, 80/255f, 201/255f, 1f);
+    public static Color TARGET_RED = new Color(255/255f, 0, 76/255f, 1f);
+    public static Color TARGET_GREEN = new Color(133/255f, 255/255f, 0, 1f);
+    public static Color TARGET_YELLOW = new Color(255/255f, 240/255f, 0, 1f);
+    public static Color TARGET_ORANGE = new Color(251/255f, 94/255f, 0, 1f);
+    public static Color TARGET_PURPLE = new Color(142/255f, 0, 251/255f, 1f);
+
 
 
 

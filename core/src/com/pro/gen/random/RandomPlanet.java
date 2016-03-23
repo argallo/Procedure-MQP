@@ -24,6 +24,7 @@ public class RandomPlanet {
     private boolean inhabitable; //whether the planet is inhabitable
     private long timeStart; // the time at which it became inhabitable
     private long amtofTime; // the amount of time from timeStart to become habitable
+    private String planetName;
 
     private String colorType;
     private Color baseColor;
@@ -31,6 +32,7 @@ public class RandomPlanet {
     private GlobeMap clouds;
     private PlanetEyes planetEyes;
     private Hat hat;
+
 
     public RandomPlanet(int lowRank, int highRank){
         globeRank = MathUtils.random(lowRank, highRank);
@@ -40,11 +42,22 @@ public class RandomPlanet {
         rankXP = (int)Math.pow(globeRank, 1.2)*100;
         colorType = ColorHelper.generatePlanetColor();
         baseColor = Color.valueOf(colorType.substring(colorType.indexOf(":") + 1));
-        colorType = colorType.substring(0,colorType.indexOf(":"));
+        colorType = colorType.substring(0, colorType.indexOf(":"));
         inhabitable = true;
         timeStart = 0;
         amtofTime = 0;
+        planetName = generateRandomName();
         hat = new Hat();//TODO: make empty hat and something that uses star rarity to randomly generate hats
+    }
+
+    public String generateRandomName(){
+        String alphabet = "ABCDEFGHIJKLMNOPQURTUVWXYZ1234567890-_";
+        int length = MathUtils.random(5,6);
+        String name = "";
+        for(int i = 0; i < length; i++){
+            name += alphabet.charAt(MathUtils.random(alphabet.length()-1));
+        }
+        return name;
     }
 
     public Color getPlanetColor(){
@@ -101,5 +114,9 @@ public class RandomPlanet {
 
     public Hat getHat() {
         return hat;
+    }
+
+    public String getPlanetName() {
+        return planetName;
     }
 }

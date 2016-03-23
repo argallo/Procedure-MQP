@@ -31,6 +31,7 @@ public class Planet extends Group {
     private boolean inhabitable; //whether the planet is inhabitable
     private long timeStart; // the time at which it became inhabitable
     private long amtofTime; // the amount of time from timeStart to become habitable
+    private String planetName;
 
     public Planet(RandomPlanet randomPlanet){
        this(randomPlanet, Tint.UNIVERSE_BACKGROUND_COLOR);
@@ -39,7 +40,7 @@ public class Planet extends Group {
     public Planet(RandomPlanet randomPlanet, Color background){
         this(randomPlanet.getColorType(), randomPlanet.getPlanetColor(), randomPlanet.getLands(), randomPlanet.getClouds(), randomPlanet.getPlanetEyes(), randomPlanet.getPlanetSize(),
                 randomPlanet.getPlanetEnergy(), randomPlanet.getGlobeRank(), randomPlanet.getCurrentXP(), randomPlanet.getRankXP(), randomPlanet.isInhabitable(),
-                randomPlanet.getTimeStart(), randomPlanet.getAmtofTime(), randomPlanet.getHat(), background);
+                randomPlanet.getTimeStart(), randomPlanet.getAmtofTime(), randomPlanet.getHat(), background, randomPlanet.getPlanetName());
     }
 
     /**
@@ -56,7 +57,7 @@ public class Planet extends Group {
      * @param clouds the clouds that will float around the planet
      */
     public Planet (String colorType, Color planetColor, GlobeMap lands, GlobeMap clouds, PlanetEyes planetEyes, int planetSize, int planetEnergy, int globeRank, int currentXP, int rankXP,
-                   boolean inhabitable, long timeStart, long amtofTime, Hat hat, Color background){
+                   boolean inhabitable, long timeStart, long amtofTime, Hat hat, Color background, String planetName){
 
         this.colorType = colorType;
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
@@ -72,6 +73,7 @@ public class Planet extends Group {
         this.timeStart = timeStart;
         this.amtofTime = amtofTime;
         this.hat = hat;
+        this.planetName = planetName;
 
 
         circleHole_Right = new TintedImage(Pic.Circle_Hole_Right, background);
@@ -226,5 +228,9 @@ public class Planet extends Group {
 
     public void setTimeStart(long timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public String getPlanetName() {
+        return planetName;
     }
 }

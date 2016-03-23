@@ -52,7 +52,7 @@ public class SolarSystem extends Group {
         this.planets = planets;
         miniplanets = new ArrayList<MiniPlanetSystem>();
         for(int i = 0; i < planets.size(); i++){
-            miniplanets.add(new MiniPlanetSystem(planets.get(i).getBasePlanetColor(), this, getLayout(i,planets.size())));
+            miniplanets.add(new MiniPlanetSystem(planets.get(i).getBasePlanetColor(), this, getLayout(i,planets.size()),planets.get(i).getGlobeRank()));
             addActor(miniplanets.get(i));
         }
     }
@@ -64,7 +64,7 @@ public class SolarSystem extends Group {
         miniplanets = new ArrayList<MiniPlanetSystem>();
         for(int i = 0; i < planetNum; i++){
             planets.add(new Planet(new RandomPlanet(lowRank, highRank))); //TODO: add rare param to random planet
-            miniplanets.add(new MiniPlanetSystem(planets.get(i).getBasePlanetColor(), this, getLayout(i,planetNum)));
+            miniplanets.add(new MiniPlanetSystem(planets.get(i).getBasePlanetColor(), this, getLayout(i,planetNum), planets.get(i).getGlobeRank()));
             addActor(miniplanets.get(i));
         }
     }

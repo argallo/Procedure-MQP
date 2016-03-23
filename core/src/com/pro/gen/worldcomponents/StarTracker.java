@@ -24,6 +24,7 @@ public class StarTracker extends Group {
     private int lowRank = 0;
     private int highRank = 0;
     private float timer = 0;
+    private boolean pause = false;
 
 
     public StarTracker(StarMap stars, StarMap rareStars){
@@ -56,10 +57,12 @@ public class StarTracker extends Group {
     public void act(float delta) {
         super.act(delta);
         setPosition(currentStar.getX() - getWidth() / 2 + currentStar.getWidth() / 2, currentStar.getY() - getHeight() / 2 + currentStar.getHeight() / 2);
-        timer+=delta;
-        if(timer > 1){
-            timer = 0;
-            findStar(getStarMap());
+        if(!pause) {
+            timer += delta;
+            if (timer > 1) {
+                timer = 0;
+                findStar(getStarMap());
+            }
         }
     }
 
@@ -130,5 +133,13 @@ public class StarTracker extends Group {
 
     public int getHighRank() {
         return highRank;
+    }
+
+    public void pause(){
+        pause = true;
+    }
+
+    public void unpause(){
+        pause = false;
     }
 }

@@ -22,7 +22,7 @@ public class SolarSystemPopup extends com.pro.gen.popups.AbsPopup {
 
     public SolarSystemPopup(BaseView baseView) {
         super(baseView);
-        question = new TextLabel("Would you like to visit Planet 9q82y3r?", Assets.getInstance().getSmallFont());
+        question = new TextLabel("Would you like to visit the Planet?", Assets.getInstance().getSmallFont());
         question.setPosition(310, 500);
 
         no = new Button(Pic.Curve_square, Tint.PURPLE, "CANCEL", Assets.getInstance().getSmallFont());

@@ -67,6 +67,7 @@ public class Pic {
     public static final String Globe_Rank = "Img/globe_rank.png";
     public static final String TechOverlay_VMed = "Img/tech_overlay_vmed.png";
     public static final String TechOverlay_HSmall = "Img/tech_overlay_hsmall.png";
+    public static final String TechOverlay_HLarge = "Img/tech_overlay_hlarge.png";
     public static final String Exlopre_Icon = "Img/explore_icon.png";
     public static final String ManagePlanets_Icon = "Img/manageplanets_icon.png";
     public static final String BossBattle_Icon = "Img/bossbattle_icon.png";
@@ -74,6 +75,7 @@ public class Pic {
     public static final String Shop_Icon = "Img/shop_icon.png";
     public static final String Star_Twinkle = "Img/twinkle.png";
     public static final String Laser_Icon = "Img/laser_icon.png";
+    public static final String Target = "Img/target.png";
 
 
 
