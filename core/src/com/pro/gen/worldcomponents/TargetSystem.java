@@ -3,7 +3,6 @@ package com.pro.gen.worldcomponents;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
@@ -28,11 +27,13 @@ public class TargetSystem extends Group {
     private TintedImage myTarget;
     private TextLabel counterLabel;
     private int avaliableTargetCount = 0;
+    private MiniGame miniGame;
 
     private boolean beginGame = false;
     private boolean finishUp = false;
 
-    public TargetSystem(String playerTargetColor){
+    public TargetSystem(String playerTargetColor, MiniGame miniGame){
+        this.miniGame = miniGame;
         this.playerTargetColor = getPlayerColor(playerTargetColor);
         targets = new ArrayList<Target>();
         removalList = new ArrayList<Target>();
@@ -59,6 +60,9 @@ public class TargetSystem extends Group {
             target.updateLife(delta);
         }
         removeFromList();
+        if(finishUp&&targets.size() == 0){
+            miniGame.targetsDestroyed();
+        }
     }
 
     public void begin() {
@@ -72,7 +76,6 @@ public class TargetSystem extends Group {
             LogUtils.Log(avaliableTargetCount);
             if(avaliableTargetCount == MAX_AVA_TARGETS){
                 finishUp = true;
-                LogUtils.Log("FININSH");
             }
         }
         final Target target = new Target(Pic.Target, targetColor, this);
@@ -179,4 +182,7 @@ public class TargetSystem extends Group {
         removalList.clear();
     }
 
+    public int getTargetCounter() {
+        return targetCounter;
+    }
 }

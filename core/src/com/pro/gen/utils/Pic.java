@@ -76,6 +76,7 @@ public class Pic {
     public static final String Star_Twinkle = "Img/twinkle.png";
     public static final String Laser_Icon = "Img/laser_icon.png";
     public static final String Target = "Img/target.png";
+    public static final String Power_Bar = "Img/power_bar.png";
 
 
 
