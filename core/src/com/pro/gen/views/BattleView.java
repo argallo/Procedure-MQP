@@ -12,7 +12,6 @@ import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
-import com.pro.gen.popups.AbsPopup;
 import com.pro.gen.popups.LosingsPopup;
 import com.pro.gen.popups.WinningsPopup;
 import com.pro.gen.utils.Constants;
@@ -137,7 +136,7 @@ public class BattleView extends BaseView {
                 fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.2f), Actions.fadeIn(0.5f), new Action() {
                     @Override
                     public boolean act(float delta) {
-                        ViewManager.getInstance().transitionViewTo(ViewID.DESTROY, TransitionType.DEFAULT_TRANSITION);
+                        ViewManager.getInstance().transitionViewTo(ViewID.BATTLE, TransitionType.DEFAULT_TRANSITION);
                         return true;
                     }
                 }));

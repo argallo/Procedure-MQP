@@ -2,18 +2,20 @@ package com.pro.gen.managers;
 
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.views.BaseView;
+import com.pro.gen.views.BattleView;
+import com.pro.gen.views.BossView;
 import com.pro.gen.views.CapsuleView;
 import com.pro.gen.views.CreateAccountView;
 import com.pro.gen.views.CreateStarterPlanetView;
 import com.pro.gen.views.EmptyView;
+import com.pro.gen.views.ExploreView;
 import com.pro.gen.views.LeaderboardView;
 import com.pro.gen.views.MainMenuView;
-import com.pro.gen.views.PlanetlistView;
-import com.pro.gen.views.SplashView;
-import com.pro.gen.views.BattleView;
-import com.pro.gen.views.ExploreView;
 import com.pro.gen.views.PlanetView;
+import com.pro.gen.views.PlanetlistView;
+import com.pro.gen.views.ShopView;
 import com.pro.gen.views.SolarSystemView;
+import com.pro.gen.views.SplashView;
 
 /**
  * Created by Gallo on 8/11/2015.
@@ -40,7 +42,7 @@ public class ViewBuilderFactory {
                 return new SolarSystemView();
             case PLANET:
                 return new PlanetView();
-            case DESTROY:
+            case BATTLE:
                 return new BattleView();
             case CAPSULE:
                 return new CapsuleView();
@@ -48,6 +50,10 @@ public class ViewBuilderFactory {
                 return new LeaderboardView();
             case PLANETLIST:
                 return new PlanetlistView();
+            case BOSS:
+                return new BossView();
+            case STORE:
+                return new ShopView();
             default:
                 return new EmptyView();
         }

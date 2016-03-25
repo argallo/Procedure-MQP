@@ -1,7 +1,6 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -11,13 +10,9 @@ import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TitleBar;
-import com.pro.gen.components.TravelButton;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
-import com.pro.gen.popups.PlanetPopup;
-import com.pro.gen.random.RandomPlanet;
-
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Item;
@@ -27,7 +22,6 @@ import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.Planet;
-import com.pro.gen.worldcomponents.PlanetFatePanel;
 import com.pro.gen.worldcomponents.StarMap;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
@@ -41,7 +35,6 @@ public class PlanetView extends BaseView {
     private TitleBar titleBar;
     private TintedImage shipUI;
     private Planet planet;
-    private PlanetPopup planetPopup;
     private TintedImage fadeOutLayer;
     private TextLabel globeRank;
     private TextLabel globeRankNumber;
@@ -55,7 +48,6 @@ public class PlanetView extends BaseView {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         planet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.BATTLE_SLOT);
         stars = new StarMap(0, 120, new Item(Pic.Circle_Small, new Range(1f,1f),3f, 12f), 400);
-        planetPopup = new PlanetPopup(this);
         shipUI = new TintedImage(Pic.UI_Open);
         shipUI.setTouchable(Touchable.disabled);
         techPlanetStats = new TechPlanetStats(planet.getPlanetSize(), planet.getPlanetEnergy(), planet.getColorType());
@@ -124,7 +116,6 @@ public class PlanetView extends BaseView {
         addActor(techPlanetStats);
         addActor(laserBattleBtn);
         addActor(backBtn);
-        addActor(planetPopup);
         addActor(fadeOutLayer);
 
         openingAnimation();
@@ -144,7 +135,7 @@ public class PlanetView extends BaseView {
                 fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.4f),Actions.fadeIn(2f), new Action() {
                     @Override
                     public boolean act(float delta) {
-                        ViewManager.getInstance().transitionViewTo(ViewID.DESTROY, TransitionType.DEFAULT_TRANSITION);
+                        ViewManager.getInstance().transitionViewTo(ViewID.BATTLE, TransitionType.DEFAULT_TRANSITION);
                         return true;
                     }
                 }));

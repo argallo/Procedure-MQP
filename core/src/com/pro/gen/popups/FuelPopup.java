@@ -1,6 +1,7 @@
 package com.pro.gen.popups;
 
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
@@ -13,42 +14,57 @@ import com.pro.gen.utils.Tint;
 import com.pro.gen.views.BaseView;
 
 /**
- * Created by Gallo on 1/17/2016.
+ * Created by Gallo on 3/25/2016.
  */
-public class PlanetPopup extends com.pro.gen.popups.AbsPopup {
-
-    private int type;
+public class FuelPopup extends AbsPopup {
+    public final static int WALK = 22;
+    public final static int WAIT = 23;
 
     private TextLabel question;
-    private Button yes, no;
+    private Button walk, wait;
+    private int numberOfSteps = 0;
 
-    public PlanetPopup(BaseView baseView) {
+    public FuelPopup(BaseView baseView) {
         super(baseView);
 
-        question = new TextLabel("Building an Army will Cost §700 g crystals", Assets.getInstance().getSmallFont());
+        question = new TextLabel("How would you like to replenish Fuel?", Assets.getInstance().getSmallFont());
         question.setPosition(300, 500);
 
 
-        no = new Button(Pic.Curve_square, Tint.PURPLE, "CANCEL", Assets.getInstance().getSmallFont());
-        yes = new Button(Pic.Curve_square, Tint.PURPLE, "PURCHASE", Assets.getInstance().getSmallFont());
+        wait = new Button(Pic.Curve_square, Tint.PURPLE, "Wait 10 Minutes", Assets.getInstance().getSmallFont());
+
+        switch (MathUtils.random(2)){
+            case 0:
+                walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 700 Steps", Assets.getInstance().getSmallFont());
+                numberOfSteps = 700;
+                break;
+            case 1:
+                walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 1000 Steps", Assets.getInstance().getSmallFont());
+                numberOfSteps = 1000;
+                break;
+            case 2:
+                walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 1300 Steps", Assets.getInstance().getSmallFont());
+                numberOfSteps = 1300;
+                break;
+        }
 
         setupButtons();
 
-        no.setSize(200, 100);
-        yes.setSize(200, 100);
+        wait.setSize(280, 100);
+        walk.setSize(280, 100);
 
-        no.setPosition(280, 200);
-        yes.setPosition(780, 200);
+        wait.setPosition(280, 200);
+        walk.setPosition(740, 200);
 
         question.setVisible(false);
 
-        no.setVisible(false);
-        yes.setVisible(false);
+        wait.setVisible(false);
+        walk.setVisible(false);
 
 
         addActor(question);
-        addActor(no);
-        addActor(yes);
+        addActor(wait);
+        addActor(walk);
 
     }
 
@@ -61,8 +77,8 @@ public class PlanetPopup extends com.pro.gen.popups.AbsPopup {
                     @Override
                     public boolean act(float delta) {
                         question.setVisible(true);
-                        no.setVisible(true);
-                        yes.setVisible(true);
+                        wait.setVisible(true);
+                        walk.setVisible(true);
                         return true;
                     }
                 }));
@@ -74,8 +90,8 @@ public class PlanetPopup extends com.pro.gen.popups.AbsPopup {
                                                   @Override
                                                   public boolean act(float delta) {
                                                       question.setVisible(false);
-                                                      no.setVisible(false);
-                                                      yes.setVisible(false);
+                                                      wait.setVisible(false);
+                                                      walk.setVisible(false);
                                                       return true;
                                                   }
                                               }, Actions.delay(0.1f),
@@ -84,19 +100,23 @@ public class PlanetPopup extends com.pro.gen.popups.AbsPopup {
     }
 
     public void setupButtons(){
-        yes.setButtonAction(new ButtonAction() {
+        walk.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
                 deactivatePopup();
-                baseView.handle(type);
+                baseView.handle(WALK);
             }
         });
-        no.setButtonAction(new ButtonAction() {
+        wait.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
                 deactivatePopup();
-                baseView.handle(AbsPopup.NO);
+                baseView.handle(WAIT);
             }
         });
+    }
+
+    public int getNumberOfSteps() {
+        return numberOfSteps;
     }
 }

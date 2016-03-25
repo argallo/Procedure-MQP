@@ -14,9 +14,10 @@ import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.ShipDoor;
 
 /**
- * Created by Gallo on 2/5/2016.
+ * Created by Gallo on 3/25/2016.
  */
-public class PlanetlistView extends BaseView {
+public class ShopView extends BaseView {
+
 
 
     private Background background;
@@ -37,7 +38,7 @@ public class PlanetlistView extends BaseView {
         shipUI = new TintedImage(Pic.UI_Open);
         shipUI.setTouchable(Touchable.disabled);
         header = new TintedImage(Pic.Header_Bar, Tint.PURPLE);
-        headerText = new TextLabel("Manage Planets", Assets.getInstance().getSmallFont());
+        headerText = new TextLabel("Shop", Assets.getInstance().getSmallFont());
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
 
 
@@ -74,6 +75,4 @@ public class PlanetlistView extends BaseView {
     public void handle(int outcome) {
 
     }
-
-
 }

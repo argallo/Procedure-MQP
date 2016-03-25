@@ -60,10 +60,10 @@ public class MainMenuView extends BaseView {
 
         //Menu Buttons
         exploreBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Explore", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor, exploreIcon);
-        manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.EXPLORE, shipDoor, manageIcon);
-        bossbattleBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Boss Battle", Assets.getInstance().getSmallFont(), ViewID.LEADERBOARD, shipDoor, bossbattleIcon);
-        leaderboardBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Leaderboard", Assets.getInstance().getXSmallFont(), ViewID.CAPSULE, shipDoor, leaderboardIcon);
-        shopBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Shop", Assets.getInstance().getSmallFont(), ViewID.EXPLORE, shipDoor, shopIcon);
+        manageBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Manage Planets", Assets.getInstance().getXSmallFont(), ViewID.PLANETLIST, shipDoor, manageIcon);
+        bossbattleBtn = new TravelButton(Pic.Curve_square ,Tint.PURPLE, "Boss Battle", Assets.getInstance().getSmallFont(), ViewID.BOSS, shipDoor, bossbattleIcon);
+        leaderboardBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Leaderboard", Assets.getInstance().getXSmallFont(), ViewID.LEADERBOARD, shipDoor, leaderboardIcon);
+        shopBtn = new TravelButton(Pic.Curve_square, Tint.PURPLE, "Shop", Assets.getInstance().getSmallFont(), ViewID.STORE, shipDoor, shopIcon);
 
     }
 

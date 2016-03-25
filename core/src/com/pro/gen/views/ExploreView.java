@@ -14,10 +14,10 @@ import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.popups.AbsPopup;
 import com.pro.gen.popups.ExplorePopup;
+import com.pro.gen.popups.FuelPopup;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Item;
-import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Range;
 import com.pro.gen.utils.Tint;
@@ -43,6 +43,7 @@ public class ExploreView extends BaseView {
     private FuelUnits fuelUnits;
     private StarTracker starTracker;
     private ExplorePopup popup;
+    private FuelPopup fuelPopup;
     private Button flyToStar;
     private Button currentStar;
     private TravelButton backBtn;
@@ -60,13 +61,15 @@ public class ExploreView extends BaseView {
         popup = new ExplorePopup(this);
         starTracker = new StarTracker(stars, rareStars);
         shipUI = new TintedImage(Pic.UI_Open);
+        shipUI.setTouchable(Touchable.disabled);
         titleBar = new TitleBar("Select a Star");
         shipDoor = new ShipDoor(true);
-        fuelUnits = new FuelUnits();
+        fuelUnits = new FuelUnits(this);
+        fuelPopup = new FuelPopup(this);
         if(XmlManager.getInstance().hasHabitable()) {
             flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
         } else {
-            flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "No Habitable Planets\nin Slots", Assets.getInstance().getXSmallFont());
+            flyToStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "No Habitable Planets\nin Slots", Assets.getInstance().getXSmallFont());
             flyToStar.setTouchable(Touchable.disabled);
         }
         if(XmlManager.getInstance().hasSolarSystem() && XmlManager.getInstance().hasHabitable()) {
@@ -75,6 +78,9 @@ public class ExploreView extends BaseView {
             currentStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "Current Star", Assets.getInstance().getSmallFont());
             currentStar.setTouchable(Touchable.disabled);
         }
+
+
+
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
         fadeOutLayer.setTouchable(Touchable.disabled);
@@ -102,6 +108,7 @@ public class ExploreView extends BaseView {
         backBtn.setSize(60, 60);
         flyToStar.setSize(250, 80);
         currentStar.setSize(250, 80);
+
     }
 
     @Override
@@ -110,6 +117,7 @@ public class ExploreView extends BaseView {
         backBtn.setPosition(50, 55);
         flyToStar.setPosition(Constants.VIRTUAL_WIDTH / 2 + 10, 13);
         currentStar.setPosition(Constants.VIRTUAL_WIDTH / 2 - currentStar.getWidth() - 10, 13);
+
     }
 
     @Override
@@ -126,6 +134,7 @@ public class ExploreView extends BaseView {
         addActor(currentStar);
         addActor(shipDoor);
         addActor(popup);
+        addActor(fuelPopup);
 
         openingAnimation();
         addActor(fadeOutLayer);
@@ -146,6 +155,16 @@ public class ExploreView extends BaseView {
                 break;
             case CURRENT:
                 flyToSolarSystem(false);
+                break;
+            case FuelUnits.REPLENISH:
+                fuelPopup.activatePopup();
+                break;
+            case FuelPopup.WALK:
+                fuelUnits.walker(fuelPopup.getNumberOfSteps()); //TODO: XMLmanager handle setting steps
+                break;
+            case FuelPopup.WAIT:
+                fuelUnits.waiter(); //TODO: XMLmanager handle setting
+                break;
             default:
                 stars.unpause();
                 rareStars.unpause();
