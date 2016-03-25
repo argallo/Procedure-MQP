@@ -45,6 +45,7 @@ public class CreateStarterPlanetView extends BaseView{
 
     @Override
     public void init() {
+        PreferenceManager.getInstance().clear();
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         choosePlanet = new TitleLabel(CHOOSE_PLANET);
         selectButton = new Button(Pic.Pixel, Tint.PINK, SELECT_BTN, Assets.getInstance().getMidFont());

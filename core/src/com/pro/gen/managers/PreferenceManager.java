@@ -59,16 +59,21 @@ public class PreferenceManager {
     }
 
     public void saveInt(String key, int value){
-        preferences.putInteger(key,value);
+        preferences.putInteger(key, value);
         preferences.flush();
     }
 
     public String getString(String key){
-        return preferences.getString(key,"");
+        return preferences.getString(key, "");
     }
 
     public int getInt(String key){
         return preferences.getInteger(key, 0);
+    }
+
+    public void clear(){
+        preferences.clear();
+        preferences.flush();
     }
 
 }

@@ -77,10 +77,12 @@ public class KillerShip extends Group {
 
 
         blast.addAction(Actions.sequence(Actions.delay(6.7f), Actions.visible(true), Actions.scaleBy(20, 20), Actions.scaleBy(10, 10, 0.6f, Interpolation.swingOut)));
-        blastBackgroundR.addAction(Actions.sequence(Actions.delay(6.7f), Actions.visible(true), Actions.scaleBy(20, 20), Actions.scaleBy(30, 30, 0.6f, Interpolation.swingOut), Actions.repeat(6, Actions.sequence(
+        blastBackgroundR.addAction(Actions.sequence(Actions.delay(6.7f), Actions.visible(true), Actions.scaleBy(20, 20), Actions.scaleBy(30, 30, 0.6f, Interpolation.swingOut),
+                Actions.repeat(6, Actions.sequence(
                 Actions.scaleBy(10, 10, 0.7f, Interpolation.pow2), Actions.scaleBy(-10, -10, 0.7f, Interpolation.pow2)))));
 
-        blastBackgroundO.addAction(Actions.sequence(Actions.delay(6.7f), Actions.visible(true), Actions.scaleBy(20, 20), Actions.scaleBy(60, 60, 1f, Interpolation.swingOut), Actions.repeat(6, Actions.sequence(
+        blastBackgroundO.addAction(Actions.sequence(Actions.delay(6.7f), Actions.visible(true), Actions.scaleBy(20, 20), Actions.scaleBy(60, 60, 1f, Interpolation.swingOut),
+                Actions.repeat(6, Actions.sequence(
                 Actions.scaleBy(15, 15, 0.7f, Interpolation.pow2), Actions.scaleBy(-15, -15, 0.7f, Interpolation.pow2)
         )), new Action() {
             @Override

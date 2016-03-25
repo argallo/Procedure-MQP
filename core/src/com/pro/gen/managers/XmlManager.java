@@ -40,8 +40,21 @@ public class XmlManager {
     }
 
     public void savePlanet(Planet planet){
-        //TODO: potentially make this check for next open slot depending on what will call this.
-        savePlanet(planet, PreferenceManager.SLOT_1);
+        savePlanet(planet, checkOpenSlot());
+    }
+
+    public String checkOpenSlot(){
+        if(PreferenceManager.getInstance().getString(PreferenceManager.SLOT_1).equals("")){
+            return PreferenceManager.SLOT_1;
+        } else if(PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+            return PreferenceManager.SLOT_2;
+        } else if(PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+            return PreferenceManager.SLOT_3;
+        } else if(PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+            return PreferenceManager.SLOT_4;
+        } else {
+            return null;
+        }
     }
 
     //finds the next open slot and saves the planet xml here
@@ -81,6 +94,13 @@ public class XmlManager {
         PreferenceManager.getInstance().saveString(slot, "");
     }
 
+    public boolean hasSolarSystem(){
+        if(PreferenceManager.getInstance().getString(PreferenceManager.SOLAR_SYSTEM).equals("")){
+            return false;
+        }
+        return true;
+    }
+
     //Saves solar system and specific planets that can be traveled to
     public void saveSolarSystem(SolarSystem solarSystem){
         // saves full planets as well
@@ -102,7 +122,19 @@ public class XmlManager {
         PreferenceManager.getInstance().saveString(PreferenceManager.SOLAR_SYSTEM, solarSystemString);
     }
 
-    public SolarSystem getSolarSystem(){
+    public void removePlanetFromSolarSystem(Planet planet){
+        LogUtils.Log(planet.getPlanetName());
+        ArrayList<Planet> planets = getSolarSystemPlanets();
+        for(Planet splanets: planets){
+            if(splanets.getPlanetName().equals(planet.getPlanetName())){
+                planets.remove(splanets);
+                break;
+            }
+        }
+        saveSolarSystem(new SolarSystem(planets));
+    }
+
+    public ArrayList<Planet> getSolarSystemPlanets(){
         String solarSystemString = PreferenceManager.getInstance().getString(PreferenceManager.SOLAR_SYSTEM);
         XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(solarSystemString);
@@ -111,7 +143,11 @@ public class XmlManager {
         for(XmlReader.Element planet :planetArray){
             planets.add(getPlanet(planet.getChildByName("planet").toString()));
         }
-        return new SolarSystem(planets);
+        return planets;
+    }
+
+    public SolarSystem getSolarSystem(){
+        return new SolarSystem(getSolarSystemPlanets());
     }
 
     //save/updates the fuel units amount
@@ -147,6 +183,7 @@ public class XmlManager {
 
     //saves/updates power crystals
     public void savePowerCrystals(int crystals){
+        LogUtils.Log(crystals);
         PreferenceManager.getInstance().saveInt(PreferenceManager.POWER_CRYSTALS, crystals);
     }
 
@@ -182,6 +219,12 @@ public class XmlManager {
         return PreferenceManager.getInstance().getInt(PreferenceManager.BOSS_LEVEL);
     }
 
+    public boolean hasEmptySlot(){
+        if(checkOpenSlot()!= null){
+            return true;
+        }
+        return false;
+    }
 
     public Planet getPlanetFromSlot(String slot){
         return getPlanet(PreferenceManager.getInstance().getString(slot));

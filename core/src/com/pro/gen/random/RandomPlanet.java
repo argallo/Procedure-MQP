@@ -36,10 +36,10 @@ public class RandomPlanet {
 
     public RandomPlanet(int lowRank, int highRank){
         globeRank = MathUtils.random(lowRank, highRank);
-        planetSize = MathUtils.random((int)Math.pow(globeRank, 1.3)*100+200, (int)Math.pow(globeRank, 1.3)*105+300);
-        planetEnergy = MathUtils.random((int)Math.pow(globeRank, 1.3)*100+600, (int)Math.pow(globeRank, 1.3)*105+800);
+        planetSize = MathUtils.random((int)(Math.pow(globeRank, 1.3)*105+300), (int)(Math.pow(globeRank+1, 1.3)*105+300));
+        planetEnergy = MathUtils.random((int)(Math.pow(globeRank, 1.3)*105+800), (int)(Math.pow(globeRank+1, 1.3)*105+800));
         currentXP = 0;
-        rankXP = (int)Math.pow(globeRank, 1.2)*100;
+        rankXP = (int)(Math.pow(globeRank, 1.2)*100);
         colorType = ColorHelper.generatePlanetColor();
         baseColor = Color.valueOf(colorType.substring(colorType.indexOf(":") + 1));
         colorType = colorType.substring(0, colorType.indexOf(":"));

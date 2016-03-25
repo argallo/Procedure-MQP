@@ -120,10 +120,10 @@ public class Planet extends Group {
     }
 
     public void burn(){
-        addAction(Actions.sequence(Actions.delay(6.8f), new Action() {
+        addAction(Actions.sequence(Actions.delay(6.5f), new Action() {
             @Override
             public boolean act(float delta) {
-                basePlanet.addAction(Actions.color(Tint.DEAD_PLANET_RED, 8f));
+                basePlanet.addAction(Actions.color(Tint.DEAD_PLANET_RED, 6f));
                 lands.burn(Tint.DEAD_PLANET_LAND);
                 clouds.burn(Tint.DEAD_PLANET_CLOUD);
                 return true;
@@ -131,6 +131,19 @@ public class Planet extends Group {
         }));
     }
 
+    public int gainXp(int xp){
+        int rankUps = 0;
+        currentXP += xp;
+        while(currentXP >= rankXP){
+            currentXP -= rankXP;
+            globeRank++;
+            rankXP = (int) (Math.pow(globeRank, 1.2) * 100);
+            setPlanetSize((((int)(Math.pow(globeRank+1, 1.3)*105+300))*getPlanetSize())/((int)(Math.pow(globeRank, 1.3)*105+300)));
+            setPlanetEnergy((((int) (Math.pow(globeRank+1, 1.3) * 105 + 800)) * getPlanetEnergy()) / ((int) (Math.pow(globeRank, 1.3) * 105 + 800)));
+            rankUps++;
+        }
+        return rankUps;
+    }
 
 
     /**
@@ -208,6 +221,7 @@ public class Planet extends Group {
 
     public void setGlobeRank(int globeRank) {
         this.globeRank = globeRank;
+        setRankXP((int)Math.pow(globeRank, 1.2)*100);
     }
 
     public void setHat(Hat hat) {

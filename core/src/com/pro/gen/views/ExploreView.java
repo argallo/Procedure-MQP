@@ -64,7 +64,12 @@ public class ExploreView extends BaseView {
         shipDoor = new ShipDoor(true);
         fuelUnits = new FuelUnits();
         flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
-        currentStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Current Star", Assets.getInstance().getSmallFont());
+        if(XmlManager.getInstance().hasSolarSystem()) {
+            currentStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Current Star", Assets.getInstance().getSmallFont());
+        } else {
+            currentStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "Current Star", Assets.getInstance().getSmallFont());
+            currentStar.setTouchable(Touchable.disabled);
+        }
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
         fadeOutLayer.setTouchable(Touchable.disabled);

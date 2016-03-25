@@ -40,7 +40,7 @@ public class DynamicCounter extends TextLabel {
         }));
     }
 
-    
-
-
+    public int getCurrentAmount() {
+        return currentAmount;
+    }
 }
