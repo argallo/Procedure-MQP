@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.utils.Assets;
@@ -39,6 +40,7 @@ public class GlobeRank extends Group {
         this.rank = rank;
 
         rankXpLabel = new TextLabel(currentXp+"/"+rankXp, Color.WHITE, Assets.getInstance().getXSmallFont());
+        rankXpLabel.setAlign(Align.left);
         rankBar.setSize(1, 25);
         rankBar.setPosition(34, 29);
 

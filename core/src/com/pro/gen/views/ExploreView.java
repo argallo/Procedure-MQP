@@ -63,8 +63,13 @@ public class ExploreView extends BaseView {
         titleBar = new TitleBar("Select a Star");
         shipDoor = new ShipDoor(true);
         fuelUnits = new FuelUnits();
-        flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
-        if(XmlManager.getInstance().hasSolarSystem()) {
+        if(XmlManager.getInstance().hasHabitable()) {
+            flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
+        } else {
+            flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "No Habitable Planets\nin Slots", Assets.getInstance().getXSmallFont());
+            flyToStar.setTouchable(Touchable.disabled);
+        }
+        if(XmlManager.getInstance().hasSolarSystem() && XmlManager.getInstance().hasHabitable()) {
             currentStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Current Star", Assets.getInstance().getSmallFont());
         } else {
             currentStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "Current Star", Assets.getInstance().getSmallFont());

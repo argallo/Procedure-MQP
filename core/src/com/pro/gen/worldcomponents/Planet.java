@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.pro.gen.components.TintedImage;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.random.RandomPlanet;
@@ -120,6 +121,9 @@ public class Planet extends Group {
     }
 
     public void burn(){
+        setInhabitable(true);
+        setTimeStart(TimeUtils.millis());
+        setAmtofTime(600000);
         addAction(Actions.sequence(Actions.delay(6.5f), new Action() {
             @Override
             public boolean act(float delta) {

@@ -226,6 +226,84 @@ public class XmlManager {
         return false;
     }
 
+    public String getCurrentSlot(){
+        Planet planet;
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_1).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_1);
+            if(!planet.isInhabitable()){
+                return PreferenceManager.SLOT_1;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
+            if(!planet.isInhabitable()){
+                return PreferenceManager.SLOT_2;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
+            if(!planet.isInhabitable()){
+                return PreferenceManager.SLOT_3;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
+            if(!planet.isInhabitable()){
+                return PreferenceManager.SLOT_4;
+            }
+        }
+        return null;
+    }
+
+    public Planet getFirstHabitablePlanet(){
+        Planet planet;
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_1).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_1);
+            if(!planet.isInhabitable()){
+                return planet;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
+            if(!planet.isInhabitable()){
+                return planet;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
+            if(!planet.isInhabitable()){
+                return planet;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
+            if(!planet.isInhabitable()){
+                return planet;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasHabitable(){
+        Planet planet;
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_1).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_1);
+            if(!planet.isInhabitable()){
+                return true;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
+            if(!planet.isInhabitable()){
+                return true;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
+            if(!planet.isInhabitable()){
+                return true;
+            }
+        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+            planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
+            if(!planet.isInhabitable()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Planet getPlanetFromSlot(String slot){
         return getPlanet(PreferenceManager.getInstance().getString(slot));
     }

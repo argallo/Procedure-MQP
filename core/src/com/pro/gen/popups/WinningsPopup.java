@@ -49,11 +49,11 @@ public class WinningsPopup extends AbsPopup {
 
         powerCrystal = new TintedImage(Pic.Power_Crystal);
         powerCrystal.setSize(25, 50);
-        powerCrystal.setPosition(Constants.VIRTUAL_WIDTH / 2 - powerCrystal.getWidth() / 2, Constants.VIRTUAL_HEIGHT / 2 - powerCrystal.getHeight() / 2);
+        powerCrystal.setPosition(Constants.VIRTUAL_WIDTH / 2 - powerCrystal.getWidth() / 2-30, Constants.VIRTUAL_HEIGHT / 2 - powerCrystal.getHeight() / 2);
         powerCrystal.setVisible(false);
 
         powerCounter = new DynamicCounter(XmlManager.getInstance().getPowerCrystals());
-        powerCounter.setPosition(Constants.VIRTUAL_WIDTH / 2 - powerCrystal.getWidth() / 2 + 40, Constants.VIRTUAL_HEIGHT / 2 - powerCrystal.getHeight() / 2 - 5);
+        powerCounter.setPosition(Constants.VIRTUAL_WIDTH / 2 - powerCrystal.getWidth() / 2 + 10, Constants.VIRTUAL_HEIGHT / 2 - powerCrystal.getHeight() / 2 - 5);
         powerCounter.setVisible(false);
 
         addActor(powerCounter);
@@ -104,8 +104,16 @@ public class WinningsPopup extends AbsPopup {
         keepBtn.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                deactivatePopup();
-                WinningsPopup.this.baseView.handle(KEEP);
+                title.setTint(Tint.GLOBE_RANK_GREEN);
+                title.setText("Planet Saved to Slot!");
+                addAction(Actions.sequence(Actions.delay(1f), new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        deactivatePopup();
+                        WinningsPopup.this.baseView.handle(KEEP);
+                        return true;
+                    }
+                }));
             }
         });
         addActor(keepBtn);

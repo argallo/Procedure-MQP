@@ -18,6 +18,9 @@ import com.pro.gen.views.BattleView;
  */
 public class LaserAnimation extends Group {
 
+    public final static int PLAYER = 0;
+    public final static int ENEMY = 1;
+
     private TintedImage playerBeamTip, enemyBeamTip;
     private TintedImage playerBeam, enemyBeam;
     private TintedImage blastBackgroundO, blastBackgroundR, blast;
@@ -83,7 +86,7 @@ public class LaserAnimation extends Group {
         addActor(blast);
 
 
-        if(winner == 0) {
+        if(winner == PLAYER) {
             activateLasersPlayer();
         } else {
             activateLasersEnemy();
@@ -191,8 +194,10 @@ public class LaserAnimation extends Group {
         playerBeamTip.addAction(Actions.sequence(Actions.delay(0f), Actions.scaleTo(0, 0, 0.1f), Actions.visible(false), new Action() {
             @Override
             public boolean act(float delta) {
-                if(winner == 0){
-                    AbsPopup popup = new WinningsPopup(battleView);
+                if(winner == PLAYER){
+                    battleView.activatePopup(PLAYER);
+                } else {
+                    battleView.activatePopup(ENEMY);
                 }
                 return true;
             }

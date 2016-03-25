@@ -13,6 +13,7 @@ import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.popups.AbsPopup;
+import com.pro.gen.popups.LosingsPopup;
 import com.pro.gen.popups.WinningsPopup;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Pic;
@@ -38,19 +39,22 @@ public class BattleView extends BaseView {
     LaserAnimation laserAnimation;
     //private KillerShip killerShip;
     private WinningsPopup winningsPopup;
+    private LosingsPopup losingsPopup;
 
     private GlobeRank globeRank;
     private TechPlanetStats techPlanetStats;
 
     private TintedImage fadeOutLayer;
     private Button backBtn;
+    private String currentSlot;
 
 
     @Override
     public void init() {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         enemyPlanet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.BATTLE_SLOT);
-        playerPlanet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.SLOT_1);//TODO: check to see which are habitable
+        playerPlanet = XmlManager.getInstance().getFirstHabitablePlanet();
+        currentSlot = XmlManager.getInstance().getCurrentSlot();
         titleBar = new TitleLabel("Laser Battle");
         miniGame = new MiniGame(this);
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
@@ -63,11 +67,8 @@ public class BattleView extends BaseView {
             }
         });
 
-        //laserAnimation = new LaserAnimation(0, this);
-        playWinningAnimation(0);
-        winningsPopup = new WinningsPopup(this);
-        winningsPopup.activatePopup();
 
+        //losingsPopup.activatePopup();
     }
 
     @Override
@@ -92,13 +93,8 @@ public class BattleView extends BaseView {
         addActor(enemyPlanet);
         addActor(playerPlanet);
         addActor(titleBar);
-        addActor(winningsPopup);
-        //addActor(miniGame);
-//        addActor(laserAnimation);
+        addActor(miniGame);
 
-
-
-        //addActor(winningsPopup);
     }
 
     @Override
@@ -133,6 +129,30 @@ public class BattleView extends BaseView {
                 XmlManager.getInstance().savePlanet(enemyPlanet);
                 XmlManager.getInstance().removePlanetFromSolarSystem(enemyPlanet);
                 addActor(backBtn);
+                break;
+            case LosingsPopup.NEXT:
+                openingAnimation();
+                addActor(fadeOutLayer);
+                fadeOutLayer.setVisible(true);
+                fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.2f), Actions.fadeIn(0.5f), new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        ViewManager.getInstance().transitionViewTo(ViewID.DESTROY, TransitionType.DEFAULT_TRANSITION);
+                        return true;
+                    }
+                }));
+                break;
+            case LosingsPopup.RETURN:
+                openingAnimation();
+                addActor(fadeOutLayer);
+                fadeOutLayer.setVisible(true);
+                fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.2f), Actions.fadeIn(0.5f), new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
+                        return true;
+                    }
+                }));
                 break;
             case 1:
                 openingAnimation();
@@ -210,7 +230,21 @@ public class BattleView extends BaseView {
     }
 
     public void playWinningAnimation(int winner){
+        laserAnimation = new LaserAnimation(winner, this);
+        addActor(laserAnimation);
+    }
 
+    public void activatePopup(int popup){
+        if(popup == 0){
+            winningsPopup = new WinningsPopup(this);
+            winningsPopup.activatePopup();
+            addActor(winningsPopup);
+        } else {
+            XmlManager.getInstance().savePlanet(playerPlanet, currentSlot);
+            losingsPopup = new LosingsPopup(this);
+            addActor(losingsPopup);
+            losingsPopup.activatePopup();
+        }
     }
 
     public Planet getEnemyPlanet() {

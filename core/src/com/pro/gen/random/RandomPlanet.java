@@ -43,7 +43,7 @@ public class RandomPlanet {
         colorType = ColorHelper.generatePlanetColor();
         baseColor = Color.valueOf(colorType.substring(colorType.indexOf(":") + 1));
         colorType = colorType.substring(0, colorType.indexOf(":"));
-        inhabitable = true;
+        inhabitable = false;
         timeStart = 0;
         amtofTime = 0;
         planetName = generateRandomName();
