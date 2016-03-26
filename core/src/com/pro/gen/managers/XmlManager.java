@@ -305,7 +305,11 @@ public class XmlManager {
     }
 
     public Planet getPlanetFromSlot(String slot){
-        return getPlanet(PreferenceManager.getInstance().getString(slot));
+        String planetString = PreferenceManager.getInstance().getString(slot);
+        if(!planetString.equals("")){
+            return getPlanet(planetString);
+        }
+        return null;
     }
 
     public Planet getPlanet(String planetString){
