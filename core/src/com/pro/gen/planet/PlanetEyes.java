@@ -70,7 +70,7 @@ public class PlanetEyes extends Group {
     }
 
     //constructor for generating new eyes
-    public PlanetEyes(){
+    public PlanetEyes(boolean rare){
         whiteSize = MathUtils.random((planetWidth/2) * 0.45f, (planetWidth/2) * 0.70f);
         whiteX = MathUtils.random((planetWidth/2)*0.0f, (planetWidth/2)*0.2f);;
         whiteY = MathUtils.random((planetHeight /2)*0.65f, (planetHeight /2)*0.85f);;
@@ -91,8 +91,40 @@ public class PlanetEyes extends Group {
         eyeColor = ColorHelper.generateGoodColor();
         rwePosition = MathUtils.random(130, 180);
 
-        image = Pic.Solar_Planet;
-        //Circle, cylinder, solar_planet, triangle, sun, title bar, healthbar,
+        if(rare){
+            switch (MathUtils.random(6)){
+                case 0:
+                    image = Pic.Header_Bar;
+                    break;
+                case 1:
+                    image = Pic.Cylinder;
+                    break;
+                case 2:
+                    image = Pic.Triangle_Eye;
+                    break;
+                case 3:
+                    image = Pic.Sun_large;
+                    break;
+                case 4:
+                    image = Pic.Title_Bar;
+                    break;
+                case 5:
+                    image = Pic.Target;
+                    break;
+                case 6:
+                    image = Pic.Star_Twinkle;
+                    break;
+            }
+        } else {
+            switch (MathUtils.random(1)){
+                case 0:
+                    image = Pic.Solar_Planet;
+                    break;
+                case 1:
+                    image = Pic.Circle_Large;
+                    break;
+            }
+        }
 
         init();
     }
@@ -198,6 +230,15 @@ public class PlanetEyes extends Group {
 
         planetWidth = width;
         planetHeight = height;
+
+        leftWhiteEye.setOrigin(leftWhiteEye.getWidth()/2, leftWhiteEye.getHeight()/2);
+        leftEye.setOrigin(leftEye.getWidth()/2, leftEye.getHeight()/2);
+        leftBlackImage.setOrigin(leftBlackImage.getWidth()/2, leftBlackImage.getHeight()/2);
+        leftGlare.setOrigin(leftGlare.getWidth()/2, leftGlare.getHeight()/2);
+        rightWhiteEye.setOrigin(rightWhiteEye.getWidth()/2, rightWhiteEye.getHeight()/2);
+        rightEye.setOrigin(rightEye.getWidth()/2, rightEye.getHeight()/2);
+        rightBlackImage.setOrigin(rightBlackImage.getWidth()/2, rightBlackImage.getHeight()/2);
+        rightGlare.setOrigin(rightGlare.getWidth()/2, rightGlare.getHeight()/2);
 
         setEyePosition();
     }

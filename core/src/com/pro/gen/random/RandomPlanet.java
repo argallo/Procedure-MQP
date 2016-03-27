@@ -1,12 +1,9 @@
 package com.pro.gen.random;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
-import com.pro.gen.planet.EyePreset;
 import com.pro.gen.planet.PlanetEyes;
 import com.pro.gen.utils.ColorHelper;
-import com.pro.gen.utils.LogUtils;
 import com.pro.gen.worldcomponents.GlobeMap;
 import com.pro.gen.worldcomponents.GlobeObjectType;
 import com.pro.gen.worldcomponents.Hat;
@@ -77,7 +74,7 @@ public class RandomPlanet {
     }
 
     public PlanetEyes getPlanetEyes(){
-        return new PlanetEyes();
+        return new PlanetEyes(false);
     }
 
     public int getCurrentXP() {

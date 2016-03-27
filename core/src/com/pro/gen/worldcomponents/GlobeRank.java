@@ -93,12 +93,23 @@ public class GlobeRank extends Group {
         return rankUps;
     }
 
-
     private float calculateRankWidth(){
         return (currentXp*rankDistance)/rankXp;
     }
 
 
+    public void newPlanetRanks(int rank, int currentXp, int rankXp){
+        this.currentXp = currentXp;
+        this.rankXp = rankXp;
+        this.rank = rank;
+
+        currentRankLabel.setText(String.valueOf(rank));
+        rankXpLabel.setText(currentXp+"/"+rankXp);
+        rankBar.clearActions();
+        rankBar.setSize(1, 25);
+        progress();
+
+    }
 
 
 }

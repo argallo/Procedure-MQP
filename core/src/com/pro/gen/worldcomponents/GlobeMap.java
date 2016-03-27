@@ -77,6 +77,13 @@ public class GlobeMap extends Group {
         });
     }
 
+    public void instantBurn(Color color){
+        speed = 0;
+        for(TintedImage piece: globePieces){
+            piece.addAction(Actions.color(color));
+        }
+    }
+
     public RandomGlobeMapInfo getRandomGlobeMapInfo() {
         return randomGlobeMapInfo;
     }

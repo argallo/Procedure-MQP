@@ -38,6 +38,7 @@ public class PlanetlistView extends BaseView {
 
     private ArrayList<Button> slots;
     private ArrayList<Planet> planets;
+    private int selectedPlanetIndex = 0;
     private GlobeRank globeRank;
     private TechPlanetStats techPlanetStats;
     private Button remove, selectHat;
@@ -62,8 +63,8 @@ public class PlanetlistView extends BaseView {
         planets = new ArrayList<Planet>();
         miniPlanets = new ArrayList<TintedImage>();
         slots = new ArrayList<Button>();
+        habitableLabel = new TextLabel("", Assets.getInstance().getSmallFont());
 
-        setupPlanets();
     }
 
     @Override
@@ -72,6 +73,7 @@ public class PlanetlistView extends BaseView {
         rowDivider.setSize(Constants.VIRTUAL_WIDTH, 25);
         header.setSize(400, 80);
         backBtn.setSize(60, 60);
+
     }
 
     @Override
@@ -80,6 +82,7 @@ public class PlanetlistView extends BaseView {
         header.setPosition(Constants.VIRTUAL_WIDTH / 2 - header.getWidth() / 2, 620);
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
+        habitableLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - habitableLabel.getWidth()/2, (Constants.VIRTUAL_HEIGHT/2)+20);
     }
 
     @Override
@@ -90,11 +93,16 @@ public class PlanetlistView extends BaseView {
         addActor(header);
         addActor(headerText);
         addActor(backBtn);
+        addActor(habitableLabel);
+
+        setupPlanets();
+
         addActor(shipDoor);
     }
 
     @Override
     public void handle(int outcome) {
+        setSelectedPlanet(planets.get(outcome), outcome);
 
     }
 
@@ -130,43 +138,66 @@ public class PlanetlistView extends BaseView {
             if(i < miniPlanets.size()) {
                 TintedImage miniPlanet = miniPlanets.get(i);
                 miniPlanet.setSize(100, 100);
-                miniPlanet.setPosition((120 * (i + 1) + 20), 600);
-                button = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "", Assets.getInstance().getMidFont(), miniPlanet);
+                miniPlanet.setPosition((110 * (i)+30), 400);
+                button = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "", Assets.getInstance().getSmallFont(), miniPlanet);
+                button.setSize(100, 100);
+                button.setPosition((110 * (i)+30), 400);
+                addActor(button);
+                slots.add(button);
+                final int x = i;
+                slots.get(i).setButtonAction(new ButtonAction() {
+                    @Override
+                    public void buttonPressed() {
+                        handle(x);
+                    }
+                });
             }
             else {
-                button = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "Empty", Assets.getInstance().getMidFont());
+                button = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "Empty", Assets.getInstance().getSmallFont());
+                button.setSize(100, 100);
+                button.setPosition((110 * (i)+30), 400);
+                addActor(button);
+                slots.add(button);
             }
-            button.setSize(100, 100);
-            button.setPosition((120 * (i + 1) + 20), 600);
-            addActor(button);
-            slots.add(button);
+
         }
 
-        slots.get(0).setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                handle(5);
+        for(Planet planet : planets){
+            planet.setSize(250,250);
+            planet.setPosition(510,100);
+            planet.setVisible(false);
+            if (planet.isInhabitable()){
+                planet.instantBurn();
             }
-        });
-        slots.get(1).setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                handle(6);
-            }
-        });
-        slots.get(2).setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                handle(7);
-            }
-        });
-        slots.get(3).setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                handle(8);
-            }
-        });
+            planet.setBackgroundTint(Tint.DARK_PURPLE);
+            addActor(planet);
+        }
 
+        globeRank = new GlobeRank(1,0,100); // default init params
+        globeRank.setPosition(50,50);
+        addActor(globeRank);
+
+        techPlanetStats = new TechPlanetStats(0,0,"Blue"); // default init params
+        techPlanetStats.setPosition(930, 100);
+        addActor(techPlanetStats);
+
+        setSelectedPlanet(planets.get(0), 0);
+
+    }
+
+    public void setSelectedPlanet(Planet selectedPlanet, int index){
+        selectedPlanetIndex = index;
+        for(Planet planet : planets){
+            planet.setVisible(false);
+        }
+        selectedPlanet.setVisible(true);
+        globeRank.newPlanetRanks(selectedPlanet.getGlobeRank(),selectedPlanet.getCurrentXP(),selectedPlanet.getRankXP());
+        techPlanetStats.setParams(selectedPlanet.getPlanetSize(), selectedPlanet.getPlanetEnergy(), selectedPlanet.getColorType());
+        if(selectedPlanet.isInhabitable()){
+            habitableLabel.setText("Inhabitable");
+        } else {
+            habitableLabel.setText("");
+        }
     }
 
 

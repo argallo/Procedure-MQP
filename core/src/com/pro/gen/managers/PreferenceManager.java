@@ -24,6 +24,7 @@ public class PreferenceManager {
     public static final String FUEL_UNITS = "FuelUnits";
     public static final String FUEL_TIMER = "FuelTimer";
     public static final String BOSS_LEVEL = "BossLevel";
+    public static final String BOSS_SLOT = "BossSlot";
     public static final String SOLAR_SYSTEM = "SolarSystem";
 
 

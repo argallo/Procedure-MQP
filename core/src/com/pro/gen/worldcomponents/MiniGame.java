@@ -30,7 +30,7 @@ public class MiniGame extends Group {
     private float powerPercent = 0;
     private TextLabel countdownLabel;
 
-    private TextLabel finalTargetLabel, finalOutputLabel;
+    private TextLabel finalTargetLabel, finalOutputLabel, finalChanceLabel;
     private Button beginBattleBtn;
 
     public MiniGame(BattleView battleView){
@@ -127,11 +127,33 @@ public class MiniGame extends Group {
                     @Override
                     public boolean act(float delta) {
                         finalTargetLabel = new TextLabel("Targets Destroyed: "+targetsAmt);
-                        finalOutputLabel = new TextLabel("Output Power Percent: "+(powerPercent*100));
+                        finalOutputLabel = new TextLabel("Output Power Percent: "+(int)(powerPercent*100)+"%");
+
+                        float enemyTotal = battleView.getEnemyPlanet().getPlanetSize()+battleView.getEnemyPlanet().getPlanetEnergy();
+                        float playerTotal = (battleView.getPlayerPlanet().getPlanetSize()*(targetsAmt/10)) + (battleView.getPlayerPlanet().getPlanetEnergy()*powerPercent);
+                        int baseColorBonus = battleView.getBaseColorBonus();
+                        switch (baseColorBonus){
+                            case 1:
+                                playerTotal*=1.3;
+                                break;
+                            case 2:
+                                playerTotal*=1.1;
+                                break;
+                            case 5:
+                                enemyTotal*=1.28;
+                                break;
+                            case 4:
+                                enemyTotal*=1.09;
+                                break;
+                        }
+                        finalChanceLabel = new TextLabel("Percent Chance to win: "+(int)((playerTotal/enemyTotal)*100)+"%");
+
+
                         beginBattleBtn = new Button(Pic.Pixel, Tint.BLAST_RED, "Start Battle", Assets.getInstance().getMidFont());
                         beginBattleBtn.setSize(300,70);
                         finalTargetLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - finalTargetLabel.getWidth() / 2, techOverlay.getY() + (techOverlay.getHeight() / 2 - finalTargetLabel.getHeight() / 2)+50);
                         finalOutputLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - finalOutputLabel.getWidth() / 2, techOverlay.getY() + (techOverlay.getHeight() / 2 - finalOutputLabel.getHeight() / 2)-50);
+                        finalChanceLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - finalChanceLabel.getWidth() / 2, techOverlay.getY() + (techOverlay.getHeight() / 2 - finalChanceLabel.getHeight() / 2)+150);
                         beginBattleBtn.setPosition(Constants.VIRTUAL_WIDTH / 2 - beginBattleBtn.getWidth() / 2, techOverlay.getY() + (techOverlay.getHeight() / 2 - beginBattleBtn.getHeight() / 2)-140);
                         beginBattleBtn.setButtonAction(new ButtonAction() {
                             @Override
@@ -141,6 +163,7 @@ public class MiniGame extends Group {
                         });
                         addActor(finalTargetLabel);
                         addActor(finalOutputLabel);
+                        addActor(finalChanceLabel);
                         addActor(beginBattleBtn);
                         return true;
                     }

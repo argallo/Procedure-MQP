@@ -219,6 +219,14 @@ public class XmlManager {
         return PreferenceManager.getInstance().getInt(PreferenceManager.BOSS_LEVEL);
     }
 
+    public void saveBossPlanet(Planet planet){
+        PreferenceManager.getInstance().saveString(PreferenceManager.BOSS_SLOT, xmlPlanet(planet));
+    }
+
+    public Planet getBossPlanet(){
+        return getPlanet(PreferenceManager.getInstance().getString(PreferenceManager.BOSS_SLOT));
+    }
+
     public boolean hasEmptySlot(){
         if(checkOpenSlot()!= null){
             return true;
@@ -233,17 +241,20 @@ public class XmlManager {
             if(!planet.isInhabitable()){
                 return PreferenceManager.SLOT_1;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
             if(!planet.isInhabitable()){
                 return PreferenceManager.SLOT_2;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
             if(!planet.isInhabitable()){
                 return PreferenceManager.SLOT_3;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
             if(!planet.isInhabitable()){
                 return PreferenceManager.SLOT_4;
@@ -259,17 +270,20 @@ public class XmlManager {
             if(!planet.isInhabitable()){
                 return planet;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
             if(!planet.isInhabitable()){
                 return planet;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
             if(!planet.isInhabitable()){
                 return planet;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
             if(!planet.isInhabitable()){
                 return planet;
@@ -285,17 +299,21 @@ public class XmlManager {
             if(!planet.isInhabitable()){
                 return true;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
+        }
+
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_2).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_2);
             if(!planet.isInhabitable()){
                 return true;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_3).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_3);
             if(!planet.isInhabitable()){
                 return true;
             }
-        } else if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
+        }
+        if(!PreferenceManager.getInstance().getString(PreferenceManager.SLOT_4).equals("")){
             planet = getPlanetFromSlot(PreferenceManager.SLOT_4);
             if(!planet.isInhabitable()){
                 return true;

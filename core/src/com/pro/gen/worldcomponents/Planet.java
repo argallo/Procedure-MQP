@@ -82,6 +82,11 @@ public class Planet extends Group {
         attachActors();
     }
 
+    public void setBackgroundTint(Color color){
+        circleHole_left.setTint(color);
+        circleHole_Right.setTint(color);
+    }
+
     /**
      * Attach four actors that make up a planet
      */
@@ -133,6 +138,12 @@ public class Planet extends Group {
                 return true;
             }
         }));
+    }
+
+    public void instantBurn(){
+        basePlanet.addAction(Actions.color(Tint.DEAD_PLANET_RED));
+        lands.instantBurn(Tint.DEAD_PLANET_LAND);
+        clouds.instantBurn(Tint.DEAD_PLANET_CLOUD);
     }
 
     public int gainXp(int xp){

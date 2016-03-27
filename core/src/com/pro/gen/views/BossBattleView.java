@@ -1,7 +1,6 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -13,8 +12,10 @@ import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
+import com.pro.gen.popups.BossWinningsPopup;
 import com.pro.gen.popups.LosingsPopup;
 import com.pro.gen.popups.WinningsPopup;
+import com.pro.gen.random.RareRandomPlanet;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
@@ -27,9 +28,9 @@ import com.pro.gen.worldcomponents.Planet;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
 /**
- * Created by Gallo on 1/21/2016.
+ * Created by Gallo on 3/27/2016.
  */
-public class BattleView extends BaseView {
+public class BossBattleView extends BattleView{
 
 
     private Background background;
@@ -37,7 +38,7 @@ public class BattleView extends BaseView {
     private Planet enemyPlanet, playerPlanet;
     private MiniGame miniGame;
     LaserAnimation laserAnimation;
-    private WinningsPopup winningsPopup;
+    private BossWinningsPopup winningsPopup;
     private LosingsPopup losingsPopup;
 
     private GlobeRank globeRank;
@@ -51,10 +52,10 @@ public class BattleView extends BaseView {
     @Override
     public void init() {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
-        enemyPlanet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.BATTLE_SLOT);
+        enemyPlanet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.BOSS_SLOT);
         playerPlanet = XmlManager.getInstance().getFirstHabitablePlanet();
         currentSlot = XmlManager.getInstance().getCurrentSlot();
-        titleBar = new TitleLabel("Laser Battle");
+        titleBar = new TitleLabel("Boss Battle");
         miniGame = new MiniGame(this);
         fadeOutLayer = new TintedImage(Pic.Pixel, new Color(Tint.STAR_WHITE));
         fadeOutLayer.setTouchable(Touchable.disabled);
@@ -66,8 +67,6 @@ public class BattleView extends BaseView {
             }
         });
 
-
-        //losingsPopup.activatePopup();
     }
 
     @Override
@@ -106,7 +105,8 @@ public class BattleView extends BaseView {
                         globeRank = new GlobeRank(playerPlanet.getGlobeRank(), playerPlanet.getCurrentXP(), playerPlanet.getRankXP());
                         int rankups = playerPlanet.gainXp(enemyPlanet.getRankXP() / 3);
                         XmlManager.getInstance().savePlanet(playerPlanet, XmlManager.getInstance().getCurrentSlot());
-                        XmlManager.getInstance().removePlanetFromSolarSystem(enemyPlanet);
+                        XmlManager.getInstance().saveBossLevel(XmlManager.getInstance().getBossLevel()+1);
+                        XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,true,false)));
                         globeRank.setPosition(450, 50);
                         globeRank.rankUp(rankups, playerPlanet.getCurrentXP());
 
@@ -115,18 +115,19 @@ public class BattleView extends BaseView {
                         addActor(techPlanetStats);
                         addActor(globeRank);
                         addActor(backBtn);
-                        //ViewManager.getInstance().transitionViewTo(ViewID.SOLAR_SYSTEM, TransitionType.SLIDE_R_TRANSITION);
                         return true;
                     }
                 }));
                 break;
             case WinningsPopup.MONEY:
-                XmlManager.getInstance().removePlanetFromSolarSystem(enemyPlanet);
+                XmlManager.getInstance().saveBossLevel(XmlManager.getInstance().getBossLevel()+1);
+                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,true,false)));
                 addActor(backBtn);
                 break;
             case WinningsPopup.KEEP:
                 XmlManager.getInstance().savePlanet(enemyPlanet);
-                XmlManager.getInstance().removePlanetFromSolarSystem(enemyPlanet);
+                XmlManager.getInstance().saveBossLevel(XmlManager.getInstance().getBossLevel()+1);
+                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,true,false)));
                 addActor(backBtn);
                 break;
             case LosingsPopup.NEXT:
@@ -136,7 +137,7 @@ public class BattleView extends BaseView {
                 fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.2f), Actions.fadeIn(0.5f), new Action() {
                     @Override
                     public boolean act(float delta) {
-                        ViewManager.getInstance().transitionViewTo(ViewID.BATTLE, TransitionType.DEFAULT_TRANSITION);
+                        ViewManager.getInstance().transitionViewTo(ViewID.BOSS_BATTLE, TransitionType.DEFAULT_TRANSITION);
                         return true;
                     }
                 }));
@@ -160,7 +161,7 @@ public class BattleView extends BaseView {
                 fadeOutLayer.addAction(Actions.sequence(Actions.delay(0.2f), Actions.fadeIn(0.5f), new Action() {
                     @Override
                     public boolean act(float delta) {
-                        ViewManager.getInstance().transitionViewTo(ViewID.SOLAR_SYSTEM, TransitionType.DEFAULT_TRANSITION);
+                        ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
                         return true;
                     }
                 }));
@@ -179,8 +180,8 @@ public class BattleView extends BaseView {
     }
 
     public int findWinner(int targetsAmt, float powerPercent){
-        float playerTotal = (playerPlanet.getPlanetSize()*(targetsAmt/10)) + (playerPlanet.getPlanetEnergy()*powerPercent);
-        float enemyTotal = (enemyPlanet.getPlanetSize()*(MathUtils.random(6,15)/15)) + (enemyPlanet.getPlanetEnergy()*MathUtils.random(0.15f,1f));
+        float playerTotal = playerPlanet.getPlanetSize()*(targetsAmt/10) + playerPlanet.getPlanetEnergy()*powerPercent;
+        float enemyTotal = enemyPlanet.getPlanetSize()*(targetsAmt/15) + enemyPlanet.getPlanetEnergy()*powerPercent;
         int baseColorBonus = getBaseColorBonus();
         switch (baseColorBonus){
             case 1:
@@ -235,7 +236,7 @@ public class BattleView extends BaseView {
 
     public void activatePopup(int popup){
         if(popup == 0){
-            winningsPopup = new WinningsPopup(this);
+            winningsPopup = new BossWinningsPopup(this);
             winningsPopup.activatePopup();
             addActor(winningsPopup);
         } else {
@@ -258,4 +259,5 @@ public class BattleView extends BaseView {
         fadeOutLayer.setVisible(false);
         fadeOutLayer.addAction(Actions.fadeOut(0));
     }
+
 }

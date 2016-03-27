@@ -106,6 +106,8 @@ public class Assets extends AssetManager {
         load(Pic.Star_Twinkle, Texture.class, textureParam);
         load(Pic.Target, Texture.class, textureParam);
         load(Pic.Power_Bar, Texture.class, textureParam);
+        load(Pic.Boss_Plat, Texture.class, textureParam);
+        load(Pic.Triangle_Eye, Texture.class, textureParam);
 
         finishLoading();
     }

@@ -13,6 +13,10 @@ public class Hat extends Group{
 
     }
 
+    public Hat(boolean hasHat){
+
+    }
+
 
 
 }

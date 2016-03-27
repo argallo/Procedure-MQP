@@ -11,6 +11,7 @@ import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.random.RandomPlanet;
+import com.pro.gen.random.RareRandomPlanet;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Pic;
@@ -115,6 +116,13 @@ public class CreateStarterPlanetView extends BaseView{
             case SELECT_ACTION:
                 XmlManager manager = XmlManager.getInstance();
                 manager.savePlanet(planet);
+
+                //test code
+               // manager.savePlanet(new Planet(new RandomPlanet(2,3)));
+                //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
+
+                manager.saveBossLevel(1);
+                manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, true, false))); //TODO: add hats for boss levels
                 manager.saveFuelUnits(FuelUnits.MAX_FUEL_REPLENISH);
                 addAction(Actions.sequence(shipDoor.getSlideIn(), Actions.delay(0.5f), new Action() {
                     @Override

@@ -3,6 +3,7 @@ package com.pro.gen.managers;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.views.BaseView;
 import com.pro.gen.views.BattleView;
+import com.pro.gen.views.BossBattleView;
 import com.pro.gen.views.BossView;
 import com.pro.gen.views.CapsuleView;
 import com.pro.gen.views.CreateAccountView;
@@ -54,6 +55,8 @@ public class ViewBuilderFactory {
                 return new BossView();
             case STORE:
                 return new ShopView();
+            case BOSS_BATTLE:
+                return new BossBattleView();
             default:
                 return new EmptyView();
         }
