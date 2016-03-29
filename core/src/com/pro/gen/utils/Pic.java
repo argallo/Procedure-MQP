@@ -79,6 +79,8 @@ public class Pic {
     public static final String Power_Bar = "Img/power_bar.png";
     public static final String Boss_Plat = "Img/boss_plat.png";
     public static final String Triangle_Eye = "Img/triangle_eye.png";
+    public static final String DuRag_Hat = "Img/du_rag_hat.png";
+    public static final String Top_Hat = "Img/top_hat.png";
 
 
 

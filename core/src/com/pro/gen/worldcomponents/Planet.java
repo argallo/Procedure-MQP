@@ -97,7 +97,7 @@ public class Planet extends Group {
         addActor(clouds);
         addActor(circleHole_left);
         addActor(circleHole_Right);
-
+        addActor(hat);
 
 
 
@@ -116,6 +116,7 @@ public class Planet extends Group {
 
         circleHole_Right.setX(width * 1.5f);
         basePlanet.setX(width * 0.5f + basePlanet.getWidth() / 2);
+        hat.resizeHat(width,height);
 
 
     }

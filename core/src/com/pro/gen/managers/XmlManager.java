@@ -11,7 +11,6 @@ import com.pro.gen.random.RandomPlacement;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Tint;
-import com.pro.gen.worldcomponents.EmptyHat;
 import com.pro.gen.worldcomponents.FuelUnits;
 import com.pro.gen.worldcomponents.GlobeMap;
 import com.pro.gen.worldcomponents.Hat;
@@ -86,7 +85,7 @@ public class XmlManager {
     public void removeHatFromPlanet(String slot){
         Planet planet = getPlanetFromSlot(slot);
         //addToHatsList(planet.getHat());
-        planet.setHat(new EmptyHat());
+        planet.setHat(new Hat(0));
     }
 
     //removes planet at given slot and shifts other slots down
@@ -367,11 +366,11 @@ public class XmlManager {
                 Float.parseFloat(eye.getAttribute("blackX")),Float.parseFloat(eye.getAttribute("blackY")),Float.parseFloat(eye.getAttribute("glareWidth")),Float.parseFloat(eye.getAttribute("glareHeight")),Float.parseFloat(eye.getAttribute("glareX")),Float.parseFloat(eye.getAttribute("glareY")),Float.parseFloat(eye.getAttribute("rwePosition")),
                 eye.getAttribute("image"),Color.valueOf(eye.getAttribute("eyeColor")));
 
-
-        Hat hat = new Hat();
-        return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hat,Tint.UNIVERSE_BACKGROUND_COLOR, planetName);
+        XmlReader.Element hat = root.getChildByName("hat");
+        Hat hats = new Hat(hat.getAttribute("image"), Integer.parseInt(hat.getAttribute("hatID")),Color.valueOf(hat.getAttribute("hatColor")), Integer.parseInt(hat.getAttribute("effect")),
+                Integer.parseInt(hat.getAttribute("powerAmt")));
+        return new Planet(colorType, baseColor,landMap, cloudMap, eyes,size,energy,globeRank,currentXP,rankXP,inhabitable,timeStart,amtofTime,hats,Tint.UNIVERSE_BACKGROUND_COLOR, planetName);
     }
-
 
     private float[] createFloatArray(String stringArray){
         List<String> list = Arrays.asList(stringArray.substring(1, stringArray.length() - 1).split(", "));
@@ -397,9 +396,9 @@ public class XmlManager {
                     .attribute("rankxp", planet.getRankXP())
                     .attribute("planetname", planet.getPlanetName())
                     .element("habitability")
-                    .attribute("inhabitable",planet.isInhabitable())
+                    .attribute("inhabitable", planet.isInhabitable())
                     .attribute("timestart", planet.getTimeStart())
-                    .attribute("amtoftime",planet.getAmtofTime())
+                    .attribute("amtoftime", planet.getAmtofTime())
                     .pop()
                     .element("land")
                     .attribute("image", planet.getLands().getRandomGlobeMapInfo().getRp().getName())
@@ -436,7 +435,11 @@ public class XmlManager {
                     .attribute("eyeColor", planet.getPlanetEyes().getEyeColor())
                     .pop()
                     .element("hat")
-                    .attribute("image", "hat1")
+                    .attribute("image", planet.getHat().getImage())
+                    .attribute("hatID", planet.getHat().getHatID())
+                    .attribute("hatColor", planet.getHat().getHatColor())
+                    .attribute("effect", planet.getHat().getEffect())
+                    .attribute("powerAmt", planet.getHat().getPowerAmt())
                     .pop()
                     .pop();
             //LogUtils.Log(writer.toString());

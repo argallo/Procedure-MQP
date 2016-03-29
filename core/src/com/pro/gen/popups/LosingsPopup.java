@@ -28,7 +28,7 @@ public class LosingsPopup extends AbsPopup {
     public LosingsPopup(BaseView baseView) {
         super(baseView);
 
-        title = new TextLabel("Your Planet was Destoryed!");
+        title = new TextLabel("Your Planet was Destroyed!");
         title.setPosition(Constants.VIRTUAL_WIDTH / 2 - title.getWidth() / 2, 500);
         title.setVisible(false);
         addActor(title);

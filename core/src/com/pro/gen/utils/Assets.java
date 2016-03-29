@@ -108,6 +108,8 @@ public class Assets extends AssetManager {
         load(Pic.Power_Bar, Texture.class, textureParam);
         load(Pic.Boss_Plat, Texture.class, textureParam);
         load(Pic.Triangle_Eye, Texture.class, textureParam);
+        load(Pic.DuRag_Hat, Texture.class, textureParam);
+        load(Pic.Top_Hat, Texture.class, textureParam);
 
         finishLoading();
     }

@@ -23,6 +23,6 @@ public class RareRandomPlanet extends RandomPlanet {
 
     @Override
     public Hat getHat() {
-        return new Hat(hasHat);
+        return new Hat(0);
     }
 }
