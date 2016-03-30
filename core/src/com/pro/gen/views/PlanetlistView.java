@@ -16,6 +16,7 @@ import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.GlobeRank;
 import com.pro.gen.worldcomponents.Hat;
+import com.pro.gen.worldcomponents.HatsInventory;
 import com.pro.gen.worldcomponents.Planet;
 import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
@@ -41,12 +42,10 @@ public class PlanetlistView extends BaseView {
     private int selectedPlanetIndex = 0;
     private GlobeRank globeRank;
     private TechPlanetStats techPlanetStats;
-    private Button remove, selectHat;
+    private Button remove;
     private TextLabel todaysStepsLabel, habitableLabel;
     private ArrayList<TintedImage> miniPlanets;
-
-    private int currentSelectedSlot = 1;
-    private Hat hat;//TODO:IMPLEMENT HATS!
+    private HatsInventory hatsInventory;
 
 
     @Override
@@ -64,6 +63,7 @@ public class PlanetlistView extends BaseView {
         miniPlanets = new ArrayList<TintedImage>();
         slots = new ArrayList<Button>();
         habitableLabel = new TextLabel("", Assets.getInstance().getSmallFont());
+        hatsInventory = new HatsInventory();
 
     }
 
@@ -84,7 +84,6 @@ public class PlanetlistView extends BaseView {
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
         habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 20);
-
     }
 
     @Override
@@ -99,7 +98,7 @@ public class PlanetlistView extends BaseView {
 
         setupPlanets();
 
-
+        addActor(hatsInventory);
         addActor(shipDoor);
     }
 
@@ -214,10 +213,10 @@ public class PlanetlistView extends BaseView {
         remove.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
-                if (planets.get(currentSelectedSlot).getHat().getHatID() == 0) {
+                if (planets.get(selectedPlanetIndex).getHat().getHatID() == 0) {
                     //TODO: BUILD HAT PICKING SCREEN
                 } else {
-                    XmlManager.getInstance().removeHatFromPlanet(XmlManager.getInstance().convertSlotintToString(currentSelectedSlot));
+                    XmlManager.getInstance().removeHatFromPlanet(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
                 }
             }
         });

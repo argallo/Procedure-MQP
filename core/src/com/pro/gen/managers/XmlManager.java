@@ -201,14 +201,14 @@ public class XmlManager {
 
     //gets list of hats and adds new hat to list
     public void addToHatsList(Hat hat){
-        List<Hat> hatList = getHatList();
+        ArrayList<Hat> hatList = getHatList();
         hatList.add(hat);
         saveHatList(hatList);
     }
 
     //removes hat from the list
     public void removeHatFromList(Hat hat){
-        List<Hat> hatList = getHatList();
+        ArrayList<Hat> hatList = getHatList();
         for (Hat hatFromList: hatList){
             if(hatFromList.getHatID() == hat.getHatID() && hatFromList.getHatColor().toString().equals(hat.getHatColor().toString()) && hatFromList.getPowerAmt() == hat.getPowerAmt()){
                 hatList.remove(hatFromList);
@@ -217,11 +217,11 @@ public class XmlManager {
         }
     }
 
-    public List<Hat> getHatList(){
+    public ArrayList<Hat> getHatList(){
         String hatString = PreferenceManager.getInstance().getString(PreferenceManager.HAT_LIST);
         XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(hatString);
-        List<Hat> hatList = new ArrayList<Hat>();
+        ArrayList<Hat> hatList = new ArrayList<Hat>();
         Array<XmlReader.Element> hatArray = root.getChildrenByName("hat");
         for(XmlReader.Element hat :hatArray){
             hatList.add(new Hat(hat.getAttribute("image"), Integer.parseInt(hat.getAttribute("hatID")),Color.valueOf(hat.getAttribute("hatColor")), Integer.parseInt(hat.getAttribute("effect")),
@@ -230,7 +230,7 @@ public class XmlManager {
         return hatList;
     }
 
-    public void saveHatList(List<Hat> hats){
+    public void saveHatList(ArrayList<Hat> hats){
 
         String hatString = "";
         StringWriter writer = new StringWriter();
@@ -241,13 +241,14 @@ public class XmlManager {
                 xmlWriter.element("hat")
                         .attribute("image", hats.get(i).getImage())
                         .attribute("hatID", hats.get(i).getHatID())
-                        .attribute("hatColor", hats.get(i).getHatColor())
+                        .attribute("hatColor", hats.get(i).getHatColor().toString())
                         .attribute("effect", hats.get(i).getEffect())
                         .attribute("powerAmt", hats.get(i).getPowerAmt())
                         .pop();
             }
             xmlWriter.pop();
             hatString = writer.toString();
+            LogUtils.Log(hatString);
             xmlWriter.flush();
             xmlWriter.close();
         }catch (IOException e){}

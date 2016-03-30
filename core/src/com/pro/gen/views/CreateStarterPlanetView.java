@@ -21,9 +21,13 @@ import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.FuelUnits;
 import com.pro.gen.worldcomponents.GlobeRank;
+import com.pro.gen.worldcomponents.Hat;
 import com.pro.gen.worldcomponents.Planet;
 import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -121,6 +125,37 @@ public class CreateStarterPlanetView extends BaseView{
                 //test code
                // manager.savePlanet(new Planet(new RandomPlanet(2,3)));
                 //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
+
+                ArrayList<Hat> hats = new ArrayList<Hat>();
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+
+                manager.saveHatList(hats);
+
+
 
                 manager.saveBossLevel(1);
 

@@ -62,6 +62,7 @@ public class Hat extends Group{
             this.image = getRandomHat();
             this.effect = MathUtils.random(10);
             this.powerAmt = getPowerAmt(rankLevel);
+            this.hatColor = ColorHelper.generateGoodColor();
             hatImage = new TintedImage(image, hatColor);
             setHatSize();
             addActor(hatImage);
@@ -75,6 +76,17 @@ public class Hat extends Group{
             hatImage = new TintedImage(image, hatColor);
         }
 
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x,y);
+        hatImage.setPosition(0,0);
+    }
+
+    @Override
+    public void setSize(float width, float height) {
+        hatImage.setSize(width,height);
     }
 
     public void setHatSize(){
