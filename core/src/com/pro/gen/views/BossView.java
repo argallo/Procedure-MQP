@@ -101,7 +101,7 @@ public class BossView extends BaseView {
         shipUI.setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         backBtn.setSize(60, 60);
         boss.setSize(278,435);
-        bossPlanet.setSize(400,400);
+        bossPlanet.setSize(350,350);
         battleBtn.setSize(280,90);
         megaCrystal.setSize(70,50);
 
@@ -112,11 +112,11 @@ public class BossView extends BaseView {
         titleBar.setPosition(80, 600);
         backBtn.setPosition(50, 55);
         boss.setPosition(80, 120);
-        bossPlanet.setPosition(640 - bossPlanet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - bossPlanet.getHeight() / 2);
+        bossPlanet.setPosition(640 - bossPlanet.getWidth() / 6, Constants.VIRTUAL_HEIGHT / 2 - bossPlanet.getHeight() / 2-40);
         techPlanetStats.setPosition(940, 200);
         battleBtn.setPosition(950, 80);
-        globeRank.setPosition(480, 580);
-        globeRankNumber.setPosition(760, 580);
+        globeRank.setPosition(480, 620);
+        globeRankNumber.setPosition(760, 620);
         reward.setPosition(480,40);
         megaCrystal.setPosition(reward.getWidth()+490,45);
     }

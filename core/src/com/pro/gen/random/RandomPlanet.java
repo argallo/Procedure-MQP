@@ -44,7 +44,7 @@ public class RandomPlanet {
         timeStart = 0;
         amtofTime = 0;
         planetName = generateRandomName();
-        hat = new Hat(globeRank);//TODO: make empty hat and something that uses star rarity to randomly generate hats
+        hat = new Hat(0);//TODO: make empty hat and something that uses star rarity to randomly generate hats
     }
 
     public String generateRandomName(){

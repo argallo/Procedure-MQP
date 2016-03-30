@@ -142,4 +142,8 @@ public class StarTracker extends Group {
     public void unpause(){
         pause = false;
     }
+
+    public boolean isRare(){
+        return rarityLabel.getText().equals("Rare");
+    }
 }

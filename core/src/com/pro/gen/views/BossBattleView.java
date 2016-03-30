@@ -1,6 +1,7 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -121,13 +122,13 @@ public class BossBattleView extends BattleView{
                 break;
             case WinningsPopup.MONEY:
                 XmlManager.getInstance().saveBossLevel(XmlManager.getInstance().getBossLevel()+1);
-                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,true,false)));
+                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,(MathUtils.random(0, 100) > 70) ? false : true, (MathUtils.random(0,100) > 22) ? false : true)));
                 addActor(backBtn);
                 break;
             case WinningsPopup.KEEP:
                 XmlManager.getInstance().savePlanet(enemyPlanet);
                 XmlManager.getInstance().saveBossLevel(XmlManager.getInstance().getBossLevel()+1);
-                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,true,false)));
+                XmlManager.getInstance().saveBossPlanet(new Planet(new RareRandomPlanet((XmlManager.getInstance().getBossLevel()+1)*2,(XmlManager.getInstance().getBossLevel()+1)*2,(MathUtils.random(0,100) > 70) ? false : true, (MathUtils.random(0,100) > 22) ? false : true)));
                 addActor(backBtn);
                 break;
             case LosingsPopup.NEXT:

@@ -1,6 +1,7 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Background;
@@ -122,7 +123,8 @@ public class CreateStarterPlanetView extends BaseView{
                 //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
 
                 manager.saveBossLevel(1);
-                manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, true, false))); //TODO: add hats for boss levels
+
+                manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, (MathUtils.random(0,100) > 70) ? false : true, (MathUtils.random(0,100) > 10) ? false : true)));
                 manager.saveFuelUnits(FuelUnits.MAX_FUEL_REPLENISH);
                 addAction(Actions.sequence(shipDoor.getSlideIn(), Actions.delay(0.5f), new Action() {
                     @Override

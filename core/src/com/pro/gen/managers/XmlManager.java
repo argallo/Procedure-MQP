@@ -84,7 +84,7 @@ public class XmlManager {
     //removes hat from planet at given slot
     public void removeHatFromPlanet(String slot){
         Planet planet = getPlanetFromSlot(slot);
-        //addToHatsList(planet.getHat());
+        addToHatsList(planet.getHat());
         planet.setHat(new Hat(0));
     }
 
@@ -201,12 +201,58 @@ public class XmlManager {
 
     //gets list of hats and adds new hat to list
     public void addToHatsList(Hat hat){
-
+        List<Hat> hatList = getHatList();
+        hatList.add(hat);
+        saveHatList(hatList);
     }
 
     //removes hat from the list
     public void removeHatFromList(Hat hat){
+        List<Hat> hatList = getHatList();
+        for (Hat hatFromList: hatList){
+            if(hatFromList.getHatID() == hat.getHatID() && hatFromList.getHatColor().toString().equals(hat.getHatColor().toString()) && hatFromList.getPowerAmt() == hat.getPowerAmt()){
+                hatList.remove(hatFromList);
+                break;
+            }
+        }
+    }
 
+    public List<Hat> getHatList(){
+        String hatString = PreferenceManager.getInstance().getString(PreferenceManager.HAT_LIST);
+        XmlReader reader = new XmlReader();
+        XmlReader.Element root = reader.parse(hatString);
+        List<Hat> hatList = new ArrayList<Hat>();
+        Array<XmlReader.Element> hatArray = root.getChildrenByName("hat");
+        for(XmlReader.Element hat :hatArray){
+            hatList.add(new Hat(hat.getAttribute("image"), Integer.parseInt(hat.getAttribute("hatID")),Color.valueOf(hat.getAttribute("hatColor")), Integer.parseInt(hat.getAttribute("effect")),
+                    Integer.parseInt(hat.getAttribute("powerAmt"))));
+        }
+        return hatList;
+    }
+
+    public void saveHatList(List<Hat> hats){
+
+        String hatString = "";
+        StringWriter writer = new StringWriter();
+        XmlWriter xmlWriter = new XmlWriter(writer);
+        try {
+            xmlWriter.element("hatlist");
+            for(int i = 0; i < hats.size(); i++){
+                xmlWriter.element("hat")
+                        .attribute("image", hats.get(i).getImage())
+                        .attribute("hatID", hats.get(i).getHatID())
+                        .attribute("hatColor", hats.get(i).getHatColor())
+                        .attribute("effect", hats.get(i).getEffect())
+                        .attribute("powerAmt", hats.get(i).getPowerAmt())
+                        .pop();
+            }
+            xmlWriter.pop();
+            hatString = writer.toString();
+            xmlWriter.flush();
+            xmlWriter.close();
+        }catch (IOException e){}
+
+        PreferenceManager.getInstance().saveString(PreferenceManager.HAT_LIST, hatString);
     }
 
     //saves/updates boss level
@@ -450,6 +496,22 @@ public class XmlManager {
 
         }
         return planetString;
+    }
+
+
+    public String convertSlotintToString(int slot){
+        switch (slot){
+            case 0:
+                return PreferenceManager.SLOT_1;
+            case 1:
+                return PreferenceManager.SLOT_2;
+            case 2:
+                return PreferenceManager.SLOT_3;
+            case 3:
+                return PreferenceManager.SLOT_4;
+            default:
+                return PreferenceManager.SLOT_1;
+        }
     }
 
 

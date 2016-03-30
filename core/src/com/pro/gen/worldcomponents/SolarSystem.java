@@ -8,6 +8,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.popups.AbsPopup;
 import com.pro.gen.random.RandomPlanet;
+import com.pro.gen.random.RareRandomPlanet;
 import com.pro.gen.utils.*;
 
 import java.util.ArrayList;
@@ -24,13 +25,15 @@ public class SolarSystem extends Group {
     Planet selectedPlanet;
     AbsPopup popup;
     private int lowRank, highRank;
+    private boolean isRare;
 
     /**
      * Constructor for creating new SolarSystem
      */
-    public SolarSystem(int lowRank, int highRank) {
+    public SolarSystem(int lowRank, int highRank, boolean isRare) {
         this.lowRank = lowRank;
         this.highRank = highRank;
+        this.isRare = isRare;
         setSize(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         sun = new TintedImage(Pic.Sun_large);
         sun.setSize(150, 150);
@@ -63,7 +66,11 @@ public class SolarSystem extends Group {
         planets = new ArrayList<Planet>();
         miniplanets = new ArrayList<MiniPlanetSystem>();
         for(int i = 0; i < planetNum; i++){
-            planets.add(new Planet(new RandomPlanet(lowRank, highRank))); //TODO: add rare param to random planet
+            if(isRare) {
+                planets.add(new Planet(new RareRandomPlanet(lowRank, highRank, MathUtils.random(1, 2) > 1 ? true : false, MathUtils.random(1,100) > 20 ? false : true)));
+            } else {
+                planets.add(new Planet(new RandomPlanet(lowRank, highRank)));
+            }
             miniplanets.add(new MiniPlanetSystem(planets.get(i).getBasePlanetColor(), this, getLayout(i,planetNum), planets.get(i).getGlobeRank()));
             addActor(miniplanets.get(i));
         }

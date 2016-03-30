@@ -9,11 +9,13 @@ import com.pro.gen.worldcomponents.Hat;
 public class RareRandomPlanet extends RandomPlanet {
 
     private boolean rareEyes, hasHat;
+    int highRank;
 
     public RareRandomPlanet(int lowRank, int highRank, boolean rareEyes, boolean hasHat) {
         super(lowRank, highRank);
         this.hasHat = hasHat;
         this.rareEyes = rareEyes;
+        this.highRank = highRank;
     }
 
     @Override
@@ -23,6 +25,10 @@ public class RareRandomPlanet extends RandomPlanet {
 
     @Override
     public Hat getHat() {
-        return new Hat(0);
+        if(hasHat) {
+            return new Hat(highRank);
+        } else {
+            return new Hat(0);
+        }
     }
 }

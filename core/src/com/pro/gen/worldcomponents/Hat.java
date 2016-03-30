@@ -27,6 +27,12 @@ public class Hat extends Group{
 
     public final static int TOP_HAT = 1;
     public final static int DURAG_HAT = 2;
+    public final static int GRAD_HAT = 3;
+    public final static int BASEBALL_HAT = 4;
+    public final static int PAPER_HAT = 5;
+    public final static int SANTA_HAT = 6;
+    public final static int WPI_GRAD_HAT = 7;
+    public final static int CHAMP_HAT = 8;
 
 
 
@@ -51,14 +57,23 @@ public class Hat extends Group{
     }
 
     public Hat(int rankLevel){
-        this.hatID = MathUtils.random(1,2);
-        this.image = getRandomHat();
-        this.hatColor = ColorHelper.generateGoodColor();
-        this.effect = MathUtils.random(10);
-        this.powerAmt = getPowerAmt(rankLevel);
-        hatImage = new TintedImage(image, hatColor);
-        setHatSize();
-        addActor(hatImage);
+        if(rankLevel > 0) {
+            this.hatID = MathUtils.random(1, 4);
+            this.image = getRandomHat();
+            this.effect = MathUtils.random(10);
+            this.powerAmt = getPowerAmt(rankLevel);
+            hatImage = new TintedImage(image, hatColor);
+            setHatSize();
+            addActor(hatImage);
+        }
+        else {
+            this.hatID = 0;
+            this.image = Pic.Pixel;
+            this.hatColor = Color.CLEAR;
+            this.effect = -1;
+            this.powerAmt = 0;
+            hatImage = new TintedImage(image, hatColor);
+        }
 
     }
 
@@ -71,6 +86,30 @@ public class Hat extends Group{
             case DURAG_HAT:
                 hatImage.setSize(250,90);
                 hatImage.setPosition(355, 320);
+                break;
+            case GRAD_HAT:
+                hatImage.setSize(130,100);
+                hatImage.setPosition(460, 335);
+                break;
+            case PAPER_HAT:
+                hatImage.setSize(140,150);
+                hatImage.setPosition(455, 330);
+                break;
+            case SANTA_HAT:
+                hatImage.setSize(140,150);
+                hatImage.setPosition(455, 330);
+                break;
+            case WPI_GRAD_HAT:
+                hatImage.setSize(130,100);
+                hatImage.setPosition(460, 335);
+                break;
+            case BASEBALL_HAT:
+                hatImage.setSize(200,120);
+                hatImage.setPosition(435, 301);
+                break;
+            case CHAMP_HAT:
+                hatImage.setSize(200,120);
+                hatImage.setPosition(435, 301);
                 break;
         }
     }
@@ -116,6 +155,18 @@ public class Hat extends Group{
                 return Pic.Top_Hat;
             case DURAG_HAT:
                 return Pic.DuRag_Hat;
+            case GRAD_HAT:
+                return Pic.Grad_Hat;
+            case PAPER_HAT:
+                return Pic.Paper_Hat;
+            case SANTA_HAT:
+                return Pic.Santa_Hat;
+            case WPI_GRAD_HAT:
+                return Pic.WPI_Grad_Hat;
+            case BASEBALL_HAT:
+                return Pic.Baseball_Hat;
+            case CHAMP_HAT:
+                return Pic.Champ_Hat;
             default:
                 return null;
         }

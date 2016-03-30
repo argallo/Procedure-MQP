@@ -74,6 +74,7 @@ public class PlanetlistView extends BaseView {
         header.setSize(400, 80);
         backBtn.setSize(60, 60);
 
+
     }
 
     @Override
@@ -82,7 +83,8 @@ public class PlanetlistView extends BaseView {
         header.setPosition(Constants.VIRTUAL_WIDTH / 2 - header.getWidth() / 2, 620);
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
-        habitableLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - habitableLabel.getWidth()/2, (Constants.VIRTUAL_HEIGHT/2)+20);
+        habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 20);
+
     }
 
     @Override
@@ -97,13 +99,13 @@ public class PlanetlistView extends BaseView {
 
         setupPlanets();
 
+
         addActor(shipDoor);
     }
 
     @Override
     public void handle(int outcome) {
         setSelectedPlanet(planets.get(outcome), outcome);
-
     }
 
 
@@ -182,6 +184,7 @@ public class PlanetlistView extends BaseView {
         addActor(techPlanetStats);
 
         setSelectedPlanet(planets.get(0), 0);
+        setupHatButton(planets.get(0));
 
     }
 
@@ -198,6 +201,27 @@ public class PlanetlistView extends BaseView {
         } else {
             habitableLabel.setText("");
         }
+    }
+
+    public void setupHatButton(Planet selectedPlanet){
+        if(selectedPlanet.getHat().getHatID() == 0){
+            remove = new Button(Pic.Pixel, Tint.MED_PURPLE, "Select Hat", Assets.getInstance().getXSmallFont());
+        } else {
+            remove = new Button(Pic.Pixel, Tint.MED_PURPLE, "Remove Hat", Assets.getInstance().getXSmallFont());
+        }
+        remove.setSize(120, 40);
+        remove.setPosition(780, 150);
+        remove.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                if (planets.get(currentSelectedSlot).getHat().getHatID() == 0) {
+                    //TODO: BUILD HAT PICKING SCREEN
+                } else {
+                    XmlManager.getInstance().removeHatFromPlanet(XmlManager.getInstance().convertSlotintToString(currentSelectedSlot));
+                }
+            }
+        });
+        addActor(remove);
     }
 
 

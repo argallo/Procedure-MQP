@@ -110,6 +110,12 @@ public class Assets extends AssetManager {
         load(Pic.Triangle_Eye, Texture.class, textureParam);
         load(Pic.DuRag_Hat, Texture.class, textureParam);
         load(Pic.Top_Hat, Texture.class, textureParam);
+        load(Pic.Grad_Hat, Texture.class, textureParam);
+        load(Pic.Paper_Hat, Texture.class, textureParam);
+        load(Pic.Santa_Hat, Texture.class, textureParam);
+        load(Pic.WPI_Grad_Hat, Texture.class, textureParam);
+        load(Pic.Baseball_Hat, Texture.class, textureParam);
+        load(Pic.Champ_Hat, Texture.class, textureParam);
 
         finishLoading();
     }

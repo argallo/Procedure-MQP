@@ -81,6 +81,12 @@ public class Pic {
     public static final String Triangle_Eye = "Img/triangle_eye.png";
     public static final String DuRag_Hat = "Img/du_rag_hat.png";
     public static final String Top_Hat = "Img/top_hat.png";
+    public static final String Grad_Hat = "Img/grad_hat.png";
+    public static final String Paper_Hat = "Img/paper_hat.png";
+    public static final String Santa_Hat = "Img/santa_hat.png";
+    public static final String WPI_Grad_Hat = "Img/wpi_grad_hat.png";
+    public static final String Baseball_Hat = "Img/baseball_hat.png";
+    public static final String Champ_Hat = "Img/champ_hat.png";
 
 
 

@@ -200,7 +200,7 @@ public class ExploreView extends BaseView {
                     public boolean act(float delta) {
                         if(newSystem) {
                             XmlManager.getInstance().saveFuelUnits(XmlManager.getInstance().getFuelUnits()-1);
-                            SolarSystem solarSystem = new SolarSystem(getLowRank(), getHighRank());
+                            SolarSystem solarSystem = new SolarSystem(getLowRank(), getHighRank(), starTracker.isRare());
                         }
                         ViewManager.getInstance().transitionViewTo(ViewID.SOLAR_SYSTEM, TransitionType.DEFAULT_TRANSITION);
                         return true;
