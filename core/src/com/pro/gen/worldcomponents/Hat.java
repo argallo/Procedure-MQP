@@ -187,27 +187,27 @@ public class Hat extends Group{
     public String getEffectDescription(){
         switch (effect){
             case LASER_BOOST:
-                return "Increase Laser Boost";
+                return "Increase Laser Boost by "+powerAmt+"%";
             case COLOR_RED:
-                return "Makes all enemies behave as a Red Planet";
+                return "Makes all enemies behave\nas a Red Planet";
             case COLOR_BLUE:
-                return "Makes all enemies behave as a Blue Planet";
+                return "Makes all enemies behave\nas a Blue Planet";
             case COLOR_GREEN:
-                return "Makes all enemies behave as a Green Planet";
+                return "Makes all enemies behave\nas a Green Planet";
             case COLOR_ORANGE:
-                return "Makes all enemies behave as a Orange Planet";
+                return "Makes all enemies behave\nas a Orange Planet";
             case COLOR_PURPLE:
-                return "Makes all enemies behave as a Purple Planet";
+                return "Makes all enemies behave\nas a Purple Planet";
             case COLOR_YELLOW:
-                return "Makes all enemies behave as a Yellow Planet";
+                return "Makes all enemies behave\nas a Yellow Planet";
             case KO:
-                return "Chance for One-Hit KO";
+                return "Chance for One-Hit KO "+powerAmt+"%";
             case FIRST_SLOT:
-                return "Laser Boost when on a planet in 1nd slot";
+                return "Laser Boost when on a planet\nin 1nd slot by "+powerAmt+"%";
             case SECOND_SLOT:
-                return "Laser Boost when on a planet in 2nd slot";
+                return "Laser Boost when on a planet\nin 2nd slot by "+powerAmt+"%";
             case THIRD_SLOT:
-                return "Laser Boost when on a planet in 3nd slot";
+                return "Laser Boost when on a planet\nin 3nd slot by "+powerAmt+"%";
         }
         return null;
     }

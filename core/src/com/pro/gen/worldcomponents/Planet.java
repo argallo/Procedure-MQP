@@ -241,7 +241,12 @@ public class Planet extends Group {
     }
 
     public void setHat(Hat hat) {
+        removeActor(hat);
         this.hat = hat;
+        hat.setPosition(0,0);
+        hat.setHatSize();
+        hat.resizeHat(getWidth()/3, getHeight());
+        addActor(hat);
     }
 
     public void setInhabitable(boolean inhabitable) {

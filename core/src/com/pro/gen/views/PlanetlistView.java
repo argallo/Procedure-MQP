@@ -63,8 +63,8 @@ public class PlanetlistView extends BaseView {
         miniPlanets = new ArrayList<TintedImage>();
         slots = new ArrayList<Button>();
         habitableLabel = new TextLabel("", Assets.getInstance().getSmallFont());
-        hatsInventory = new HatsInventory();
-
+        hatsInventory = new HatsInventory(this);
+        hatsInventory.setVisible(false);
     }
 
     @Override
@@ -214,7 +214,7 @@ public class PlanetlistView extends BaseView {
             @Override
             public void buttonPressed() {
                 if (planets.get(selectedPlanetIndex).getHat().getHatID() == 0) {
-                    //TODO: BUILD HAT PICKING SCREEN
+                    hatsInventory.setVisible(true);
                 } else {
                     XmlManager.getInstance().removeHatFromPlanet(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
                 }
@@ -224,4 +224,11 @@ public class PlanetlistView extends BaseView {
     }
 
 
+    public ArrayList<Planet> getPlanets() {
+        return planets;
+    }
+
+    public int getSelectedPlanetIndex() {
+        return selectedPlanetIndex;
+    }
 }
