@@ -73,21 +73,6 @@ public class XmlManager {
         savePlanet(planet, slot);
     }
 
-    //updates planet with hat given
-    public void addHatToPlanet(Hat hat, String slot){
-        removeHatFromList(hat);
-        Planet planet = getPlanetFromSlot(slot);
-        planet.setHat(hat);
-        savePlanet(planet, slot);
-    }
-
-    //removes hat from planet at given slot
-    public void removeHatFromPlanet(String slot){
-        Planet planet = getPlanetFromSlot(slot);
-        addToHatsList(planet.getHat());
-        planet.setHat(new Hat(0));
-    }
-
     //removes planet at given slot and shifts other slots down
     public void deletePlanet(String slot){
         PreferenceManager.getInstance().saveString(slot, "");
@@ -206,17 +191,6 @@ public class XmlManager {
         saveHatList(hatList);
     }
 
-    //removes hat from the list
-    public void removeHatFromList(Hat hat){
-        ArrayList<Hat> hatList = getHatList();
-        for (Hat hatFromList: hatList){
-            if(hatFromList.getHatID() == hat.getHatID() && hatFromList.getHatColor().toString().equals(hat.getHatColor().toString()) && hatFromList.getPowerAmt() == hat.getPowerAmt()){
-                hatList.remove(hatFromList);
-                break;
-            }
-        }
-    }
-
     public ArrayList<Hat> getHatList(){
         String hatString = PreferenceManager.getInstance().getString(PreferenceManager.HAT_LIST);
         XmlReader reader = new XmlReader();
@@ -248,7 +222,7 @@ public class XmlManager {
             }
             xmlWriter.pop();
             hatString = writer.toString();
-            LogUtils.Log(hatString);
+           // LogUtils.Log(hatString);
             xmlWriter.flush();
             xmlWriter.close();
         }catch (IOException e){}

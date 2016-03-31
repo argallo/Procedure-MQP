@@ -11,6 +11,7 @@ import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.ViewID;
@@ -105,6 +106,7 @@ public class PlanetlistView extends BaseView {
     @Override
     public void handle(int outcome) {
         setSelectedPlanet(planets.get(outcome), outcome);
+        updateHatButton(planets.get(outcome));
     }
 
 
@@ -193,7 +195,7 @@ public class PlanetlistView extends BaseView {
             planet.setVisible(false);
         }
         selectedPlanet.setVisible(true);
-        globeRank.newPlanetRanks(selectedPlanet.getGlobeRank(),selectedPlanet.getCurrentXP(),selectedPlanet.getRankXP());
+        globeRank.newPlanetRanks(selectedPlanet.getGlobeRank(), selectedPlanet.getCurrentXP(), selectedPlanet.getRankXP());
         techPlanetStats.setParams(selectedPlanet.getPlanetSize(), selectedPlanet.getPlanetEnergy(), selectedPlanet.getColorType());
         if(selectedPlanet.isInhabitable()){
             habitableLabel.setText("Inhabitable");
@@ -216,11 +218,26 @@ public class PlanetlistView extends BaseView {
                 if (planets.get(selectedPlanetIndex).getHat().getHatID() == 0) {
                     hatsInventory.setVisible(true);
                 } else {
-                    XmlManager.getInstance().removeHatFromPlanet(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
+                    LogUtils.Log("Remove Hat");
+                    Hat hat = planets.get(selectedPlanetIndex).getHat();
+                    LogUtils.Log(hat.getHatID());
+                    planets.get(selectedPlanetIndex).setHat(new Hat(0));
+                    XmlManager.getInstance().addToHatsList(hat);
+                    XmlManager.getInstance().savePlanet(planets.get(selectedPlanetIndex), XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
+                    updateHatButton(planets.get(selectedPlanetIndex));
+                    hatsInventory.updateInventory();
                 }
             }
         });
         addActor(remove);
+    }
+
+    public void updateHatButton(Planet selectedPlanet){
+        if(selectedPlanet.getHat().getHatID() == 0){
+            remove.setText("Select Hat");
+        } else {
+            remove.setText("Remove Hat");
+        }
     }
 
 

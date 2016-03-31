@@ -241,7 +241,7 @@ public class Planet extends Group {
     }
 
     public void setHat(Hat hat) {
-        removeActor(hat);
+        removeActor(this.hat);
         this.hat = hat;
         hat.setPosition(0,0);
         hat.setHatSize();

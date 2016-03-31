@@ -27,7 +27,6 @@ import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -123,8 +122,9 @@ public class CreateStarterPlanetView extends BaseView{
                 manager.savePlanet(planet);
 
                 //test code
-               // manager.savePlanet(new Planet(new RandomPlanet(2,3)));
+               manager.savePlanet(new Planet(new RandomPlanet(2,3)));
                 //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
+                manager.savePowerCrystals(300);
 
                 ArrayList<Hat> hats = new ArrayList<Hat>();
                 hats.add(new Hat(10));
