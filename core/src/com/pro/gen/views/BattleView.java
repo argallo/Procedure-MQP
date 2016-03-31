@@ -21,6 +21,7 @@ import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 import com.pro.gen.worldcomponents.GlobeRank;
+import com.pro.gen.worldcomponents.Hat;
 import com.pro.gen.worldcomponents.LaserAnimation;
 import com.pro.gen.worldcomponents.MiniGame;
 import com.pro.gen.worldcomponents.Planet;
@@ -204,11 +205,42 @@ public class BattleView extends BaseView {
     }
 
     public int getBaseColorBonus(){
-        String playerColor = playerPlanet.getColorType();
-        String enemyColor = enemyPlanet.getColorType();
+        String playerColor = "";
+        String enemyColor = "";
+        if(playerPlanet.getHat().getEffect() > 0 && playerPlanet.getHat().getEffect() < 7){
+            enemyColor = colorHatEffect(playerPlanet.getHat());
+        } else {
+            enemyColor = enemyPlanet.getColorType();
+        }
+
+        if(enemyPlanet.getHat().getEffect() > 0 && enemyPlanet.getHat().getEffect() < 7){
+            playerColor = colorHatEffect(enemyPlanet.getHat());
+        } else {
+            playerColor = playerPlanet.getColorType();
+        }
+
         int playerColorID = getColorID(playerColor);
         int enemyColorID = getColorID(enemyColor);
         return (playerColorID - enemyColorID) % 6;
+    }
+
+    public String colorHatEffect(Hat hat){
+        switch (hat.getEffect()){
+            case Hat.COLOR_BLUE:
+                return "Blue";
+            case Hat.COLOR_GREEN:
+                return "Green";
+            case Hat.COLOR_ORANGE:
+                return "Orange";
+            case Hat.COLOR_PURPLE:
+                return "Purple";
+            case Hat.COLOR_RED:
+                return "Red";
+            case Hat.COLOR_YELLOW:
+                return "Yellow";
+            default:
+                return "";
+        }
     }
 
     public int getColorID(String color){
