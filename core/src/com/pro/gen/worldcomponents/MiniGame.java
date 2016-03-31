@@ -146,7 +146,14 @@ public class MiniGame extends Group {
                                 enemyTotal*=1.09;
                                 break;
                         }
-                        finalChanceLabel = new TextLabel("Percent Chance to win: "+(int)((playerTotal/enemyTotal)*100)+"%");
+                        if((int)((playerTotal/enemyTotal)*100) < 33){
+                            finalChanceLabel = new TextLabel("Percent Chance to win: Low");
+                        } else if((int)((playerTotal/enemyTotal)*100) < 66){
+                            finalChanceLabel = new TextLabel("Percent Chance to win: Good");
+                        } else {
+                            finalChanceLabel = new TextLabel("Percent Chance to win: High");
+                        }
+
 
 
                         beginBattleBtn = new Button(Pic.Pixel, Tint.BLAST_RED, "Start Battle", Assets.getInstance().getMidFont());

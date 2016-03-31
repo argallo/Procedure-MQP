@@ -18,6 +18,7 @@ import com.pro.gen.popups.LosingsPopup;
 import com.pro.gen.popups.WinningsPopup;
 import com.pro.gen.random.RareRandomPlanet;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
@@ -213,6 +214,21 @@ public class BossBattleView extends BattleView{
                 return 1;
             }
         }
+
+
+        //LASER BOOST
+        if(playerPlanet.getHat().getEffect() == Hat.LASER_BOOST || (playerPlanet.getHat().getEffect() == Hat.FIRST_SLOT && currentSlot.equals(PreferenceManager.SLOT_1)) ||
+                (playerPlanet.getHat().getEffect() == Hat.SECOND_SLOT && currentSlot.equals(PreferenceManager.SLOT_2)) ||
+                (playerPlanet.getHat().getEffect() == Hat.THIRD_SLOT && currentSlot.equals(PreferenceManager.SLOT_3))){
+            playerTotal *= (1+(playerPlanet.getHat().getPowerAmt()/100f));
+            LogUtils.Log(playerTotal);
+        }
+
+        if(enemyPlanet.getHat().getEffect() == Hat.LASER_BOOST){
+            enemyTotal *= (1+(enemyPlanet.getHat().getPowerAmt()/100f));
+        }
+
+
         if(playerTotal > enemyTotal){
             return 0;
         } else {
