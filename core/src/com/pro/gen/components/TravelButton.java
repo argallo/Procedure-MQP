@@ -52,6 +52,7 @@ public class TravelButton extends Button {
         });
     }
 
-
-
+    public void setShipDoor(ShipDoor shipDoor) {
+        this.shipDoor = shipDoor;
+    }
 }

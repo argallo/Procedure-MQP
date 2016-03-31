@@ -76,6 +76,31 @@ public class XmlManager {
     //removes planet at given slot and shifts other slots down
     public void deletePlanet(String slot){
         PreferenceManager.getInstance().saveString(slot, "");
+        if(slot.equals(PreferenceManager.SLOT_1)){
+            slide(PreferenceManager.getInstance().SLOT_2, PreferenceManager.SLOT_1);
+            slide(PreferenceManager.getInstance().SLOT_3, PreferenceManager.SLOT_2);
+            slide(PreferenceManager.getInstance().SLOT_4, PreferenceManager.SLOT_3);
+            PreferenceManager.getInstance().saveString(PreferenceManager.getInstance().SLOT_4, "");
+        } else if(slot.equals(PreferenceManager.SLOT_2)){
+            slide(PreferenceManager.getInstance().SLOT_3, PreferenceManager.SLOT_2);
+            slide(PreferenceManager.getInstance().SLOT_4, PreferenceManager.SLOT_3);
+            PreferenceManager.getInstance().saveString(PreferenceManager.getInstance().SLOT_4, "");
+        } else if (slot.equals(PreferenceManager.SLOT_3)){
+            slide(PreferenceManager.getInstance().SLOT_4, PreferenceManager.SLOT_3);
+            PreferenceManager.getInstance().saveString(PreferenceManager.getInstance().SLOT_4, "");
+        }
+    }
+
+    public void slide(String slotFrom, String slotTo){
+        String planetString = PreferenceManager.getInstance().getString(slotFrom);
+        PreferenceManager.getInstance().saveString(slotTo, planetString);
+    }
+
+    public void swap(String slotFrom, String slotTo){
+        String planetStringFrom = PreferenceManager.getInstance().getString(slotFrom);
+        String planetStringTo = PreferenceManager.getInstance().getString(slotTo);
+        PreferenceManager.getInstance().saveString(slotTo, planetStringFrom);
+        PreferenceManager.getInstance().saveString(slotFrom, planetStringTo);
     }
 
     public boolean hasSolarSystem(){

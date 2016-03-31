@@ -33,7 +33,7 @@ public class PlanetlistView extends BaseView {
     private Background background;
     private TintedImage shipUI;
     private TintedImage rowDivider;
-    private Button backBtn;
+    private TravelButton backBtn;
     private TintedImage header;
     private TextLabel headerText;
     private ShipDoor shipDoor;
@@ -47,12 +47,21 @@ public class PlanetlistView extends BaseView {
     private TextLabel todaysStepsLabel, habitableLabel;
     private ArrayList<TintedImage> miniPlanets;
     private HatsInventory hatsInventory;
+    private Button deletePlanet, moveLeft, moveRight;
 
+    private int restartSlot = 0;
 
     @Override
     public void init() {
-        background = new Background(Pic.Pixel, Tint.DARK_PURPLE);
+        restart();
         shipDoor = new ShipDoor(true);
+        backBtn.setShipDoor(shipDoor);
+
+    }
+
+    public void restart() {
+        background = new Background(Pic.Pixel, Tint.DARK_PURPLE);
+        shipDoor = new ShipDoor(false);
         rowDivider = new TintedImage(Pic.Pixel, Tint.MED_PURPLE);
         shipUI = new TintedImage(Pic.UI_Open);
         shipUI.setTouchable(Touchable.disabled);
@@ -66,6 +75,55 @@ public class PlanetlistView extends BaseView {
         habitableLabel = new TextLabel("", Assets.getInstance().getSmallFont());
         hatsInventory = new HatsInventory(this);
         hatsInventory.setVisible(false);
+        deletePlanet = new Button(Pic.Curve_rectangle, Tint.BLAST_RED, "Release Planet", Assets.getInstance().getXSmallFont());
+        deletePlanet.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                if(planets.size() > 1) {
+                    XmlManager.getInstance().deletePlanet(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
+                    restartSlot = 0;
+                    clear();
+                    init();
+                    setSizes();
+                    setPositions();
+                    addActors();
+                }
+            }
+        });
+        moveLeft = new Button(Pic.Pixel, Tint.BLAST_RED, "<", Assets.getInstance().getMidFont());
+        moveRight = new Button(Pic.Pixel, Tint.BLAST_RED, ">", Assets.getInstance().getMidFont());
+
+        moveLeft.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                if(selectedPlanetIndex > 0){
+                    XmlManager.getInstance().swap(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex), XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex - 1));
+                    restartSlot = selectedPlanetIndex-1;
+                    clear();
+                    restart();
+                    setSizes();
+                    setPositions();
+                    addActors();
+                }
+            }
+        });
+
+        moveRight.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                if(selectedPlanetIndex < 3 && XmlManager.getInstance().getPlanetFromSlot(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex+1))!=null){
+                    XmlManager.getInstance().swap(XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex), XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex+1));
+                    restartSlot = selectedPlanetIndex+1;
+                    clear();
+                    restart();
+                    setSizes();
+                    setPositions();
+                    addActors();
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -74,6 +132,9 @@ public class PlanetlistView extends BaseView {
         rowDivider.setSize(Constants.VIRTUAL_WIDTH, 25);
         header.setSize(400, 80);
         backBtn.setSize(60, 60);
+        deletePlanet.setSize(200, 40);
+        moveLeft.setSize(60,60);
+        moveRight.setSize(60,60);
 
 
     }
@@ -85,6 +146,9 @@ public class PlanetlistView extends BaseView {
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
         habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 20);
+        deletePlanet.setPosition(150,220);
+        moveLeft.setPosition(180, 330);
+        moveRight.setPosition(250, 330);
     }
 
     @Override
@@ -99,12 +163,20 @@ public class PlanetlistView extends BaseView {
 
         setupPlanets();
 
+        addActor(deletePlanet);
+        addActor(moveLeft);
+        addActor(moveRight);
+
         addActor(hatsInventory);
         addActor(shipDoor);
     }
 
     @Override
     public void handle(int outcome) {
+        for(Button button :slots){
+            button.setTint(Tint.MEDIUM_GRAY);
+        }
+        slots.get(outcome).setTint(Tint.RARE_YELLOW);
         setSelectedPlanet(planets.get(outcome), outcome);
         updateHatButton(planets.get(outcome));
     }
@@ -177,15 +249,16 @@ public class PlanetlistView extends BaseView {
         }
 
         globeRank = new GlobeRank(1,0,100); // default init params
-        globeRank.setPosition(50,50);
+        globeRank.setPosition(50, 50);
         addActor(globeRank);
 
         techPlanetStats = new TechPlanetStats(0,0,"Blue"); // default init params
         techPlanetStats.setPosition(930, 100);
         addActor(techPlanetStats);
 
-        setSelectedPlanet(planets.get(0), 0);
-        setupHatButton(planets.get(0));
+        setSelectedPlanet(planets.get(restartSlot), restartSlot);
+        setupHatButton(planets.get(restartSlot));
+        slots.get(restartSlot).setTint(Tint.RARE_YELLOW);
 
     }
 

@@ -123,6 +123,7 @@ public class CreateStarterPlanetView extends BaseView{
 
                 //test code
                manager.savePlanet(new Planet(new RandomPlanet(2,3)));
+                manager.savePlanet(new Planet(new RandomPlanet(6,15)));
                 //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
                 manager.savePowerCrystals(300);
 
