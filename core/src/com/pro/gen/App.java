@@ -9,10 +9,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pro.gen.components.AppStage;
+import com.pro.gen.managers.DatabaseManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.ViewID;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class App implements ApplicationListener {
 
@@ -38,6 +43,10 @@ public class App implements ApplicationListener {
         Gdx.input.setInputProcessor(stage);
 
         fpsLogger = new FPSLogger();
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", "Jim");
+        DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPENED, params, null);
     }
 
     /**
@@ -71,6 +80,7 @@ public class App implements ApplicationListener {
     @Override
     public void pause() {
         // stage.pause();
+        LogUtils.Log("PAUSING");
     }
 
     @Override
@@ -84,6 +94,7 @@ public class App implements ApplicationListener {
         //AudioUtils.dispose();
         stage.dispose();
         Assets.getInstance().dispose();
+        LogUtils.Log("DEStroYING");
     }
 
 
