@@ -2,6 +2,7 @@ package com.pro.gen;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,6 +29,7 @@ public class App implements ApplicationListener {
     private FPSLogger fpsLogger;
     long startTime;
 
+
     @Override
     public void create () {
         initCamera();
@@ -43,10 +45,6 @@ public class App implements ApplicationListener {
         Gdx.input.setInputProcessor(stage);
 
         fpsLogger = new FPSLogger();
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "Jim");
-        DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPENED, params, null);
     }
 
     /**
@@ -80,7 +78,6 @@ public class App implements ApplicationListener {
     @Override
     public void pause() {
         // stage.pause();
-        LogUtils.Log("PAUSING");
     }
 
     @Override
@@ -94,7 +91,7 @@ public class App implements ApplicationListener {
         //AudioUtils.dispose();
         stage.dispose();
         Assets.getInstance().dispose();
-        LogUtils.Log("DEStroYING");
+        LogUtils.Log("DISPOSING");
     }
 
 

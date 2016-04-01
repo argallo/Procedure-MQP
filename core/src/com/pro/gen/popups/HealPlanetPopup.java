@@ -1,7 +1,6 @@
 package com.pro.gen.popups;
 
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
@@ -18,9 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Gallo on 3/25/2016.
+ * Created by Gallo-Desktop on 4/1/2016.
  */
-public class FuelPopup extends AbsPopup {
+public class HealPlanetPopup extends AbsPopup{
     public final static int WALK = 22;
     public final static int WAIT = 23;
 
@@ -28,7 +27,7 @@ public class FuelPopup extends AbsPopup {
     private Button walk, wait;
     private int numberOfSteps = 0;
 
-    public FuelPopup(BaseView baseView) {
+    public HealPlanetPopup(BaseView baseView) {
         super(baseView);
 
         question = new TextLabel("How would you like to replenish Fuel?", Assets.getInstance().getSmallFont());

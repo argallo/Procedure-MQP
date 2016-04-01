@@ -9,6 +9,7 @@ import com.pro.gen.components.TintedImage;
 import com.pro.gen.components.TravelButton;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.XmlManager;
+import com.pro.gen.popups.HealPlanetPopup;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
@@ -45,9 +46,11 @@ public class PlanetlistView extends BaseView {
     private TechPlanetStats techPlanetStats;
     private Button remove;
     private TextLabel todaysStepsLabel, habitableLabel;
+    private Button healPlanet;
     private ArrayList<TintedImage> miniPlanets;
     private HatsInventory hatsInventory;
     private Button deletePlanet, moveLeft, moveRight;
+    private HealPlanetPopup healPlanetPopup;
 
     private int restartSlot = 0;
 
@@ -68,7 +71,7 @@ public class PlanetlistView extends BaseView {
         header = new TintedImage(Pic.Header_Bar, Tint.PURPLE);
         headerText = new TextLabel("Manage Planets", Assets.getInstance().getSmallFont());
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
-
+        healPlanetPopup = new HealPlanetPopup(this);
         planets = new ArrayList<Planet>();
         miniPlanets = new ArrayList<TintedImage>();
         slots = new ArrayList<Button>();
@@ -123,6 +126,14 @@ public class PlanetlistView extends BaseView {
             }
         });
 
+        healPlanet = new Button(Pic.Pixel, Tint.GLOBE_RANK_GREEN, "Heal Planet", Assets.getInstance().getXSmallFont());
+        healPlanet.setButtonAction(new ButtonAction() {
+            @Override
+            public void buttonPressed() {
+                healPlanetPopup.activatePopup();
+            }
+        });
+
 
     }
 
@@ -133,8 +144,9 @@ public class PlanetlistView extends BaseView {
         header.setSize(400, 80);
         backBtn.setSize(60, 60);
         deletePlanet.setSize(200, 40);
-        moveLeft.setSize(60,60);
-        moveRight.setSize(60,60);
+        moveLeft.setSize(60, 60);
+        moveRight.setSize(60, 60);
+        healPlanet.setSize(120, 60);
 
 
     }
@@ -146,9 +158,10 @@ public class PlanetlistView extends BaseView {
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
         habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 20);
-        deletePlanet.setPosition(150,220);
+        deletePlanet.setPosition(150, 220);
         moveLeft.setPosition(180, 330);
         moveRight.setPosition(250, 330);
+        healPlanet.setPosition(780, 330);
     }
 
     @Override
@@ -160,6 +173,7 @@ public class PlanetlistView extends BaseView {
         addActor(headerText);
         addActor(backBtn);
         addActor(habitableLabel);
+        addActor(healPlanet);
 
         setupPlanets();
 
@@ -167,18 +181,25 @@ public class PlanetlistView extends BaseView {
         addActor(moveLeft);
         addActor(moveRight);
 
+        addActor(healPlanetPopup);
         addActor(hatsInventory);
         addActor(shipDoor);
     }
 
     @Override
     public void handle(int outcome) {
-        for(Button button :slots){
-            button.setTint(Tint.MEDIUM_GRAY);
+        if(outcome == HealPlanetPopup.WALK){//TODO:save these through xml and load them back based on the planet.
+            healPlanet.setText("0/100 Steps");
+        } else if(outcome == HealPlanetPopup.WAIT){
+            healPlanet.setText("10 mins");
+        } else {
+            for (Button button : slots) {
+                button.setTint(Tint.MEDIUM_GRAY);
+            }
+            slots.get(outcome).setTint(Tint.RARE_YELLOW);
+            setSelectedPlanet(planets.get(outcome), outcome);
+            updateHatButton(planets.get(outcome));
         }
-        slots.get(outcome).setTint(Tint.RARE_YELLOW);
-        setSelectedPlanet(planets.get(outcome), outcome);
-        updateHatButton(planets.get(outcome));
     }
 
 
@@ -271,8 +292,10 @@ public class PlanetlistView extends BaseView {
         globeRank.newPlanetRanks(selectedPlanet.getGlobeRank(), selectedPlanet.getCurrentXP(), selectedPlanet.getRankXP());
         techPlanetStats.setParams(selectedPlanet.getPlanetSize(), selectedPlanet.getPlanetEnergy(), selectedPlanet.getColorType());
         if(selectedPlanet.isInhabitable()){
+            healPlanet.setVisible(false);
             habitableLabel.setText("Inhabitable");
         } else {
+            healPlanet.setVisible(true);
             habitableLabel.setText("");
         }
     }

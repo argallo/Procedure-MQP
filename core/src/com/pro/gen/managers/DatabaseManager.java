@@ -16,6 +16,7 @@ public class DatabaseManager {
     public static final String LOGIN = "login.php";
     public static final String OPENED = "opened.php";
     public static final String CLOSED = "closed.php";
+    public static final String OPTION = "options.php";
 
     private static final DatabaseManager INSTANCE = new DatabaseManager();
 
