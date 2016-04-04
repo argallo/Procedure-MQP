@@ -18,7 +18,9 @@ package com.pro.gen.android;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -26,6 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.net.HttpStatus;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -44,12 +48,26 @@ import com.pro.gen.common.logger.LogView;
 import com.pro.gen.common.logger.LogWrapper;
 import com.pro.gen.common.logger.MessageOnlyLogFilter;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import static java.text.DateFormat.getDateInstance;
 import static java.text.DateFormat.getTimeInstance;
@@ -71,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private static final String AUTH_PENDING = "auth_state_pending";
     private static boolean authInProgress = false;
+    private StringBuilder builder;
+    private static final String MY_PREFS_NAME = "daysteps";
 
     public static GoogleApiClient mClient = null;
 
@@ -78,15 +98,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // This method sets up our custom logger, which will print all log messages to the device
-        // screen, as well as to adb logcat.
-        initializeLogging();
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String restoredText = prefs.getString("steps", null);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        if (restoredText == null || !restoredText.equals(dateFormat.format(cal.getTime()))) {
+            SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor.putString("steps", dateFormat.format(cal.getTime()));
+            editor.commit();
+            builder = new StringBuilder();
+            // This method sets up our custom logger, which will print all log messages to the device
+            // screen, as well as to adb logcat.
+            initializeLogging();
 
-        if (savedInstanceState != null) {
-            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
+            if (savedInstanceState != null) {
+                authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
+            }
+
+            buildFitnessClient();
+        } else {
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, AndroidLauncher.class));
         }
 
-        buildFitnessClient();
+
     }
 
     /**
@@ -233,14 +268,15 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Return a {@link DataReadRequest} for all step count changes in the past week.
      */
-    public static DataReadRequest queryFitnessData() {
+    public DataReadRequest queryFitnessData() {
         // [START build_read_data_request]
         // Setting a start and end date using a range of 1 week before this moment.
         Calendar cal = Calendar.getInstance();
         Date now = new Date();
+        now.setHours(0);
         cal.setTime(now);
         long endTime = cal.getTimeInMillis();
-        cal.add(Calendar.WEEK_OF_YEAR, -1);
+        cal.add(Calendar.DATE, -1);
         long startTime = cal.getTimeInMillis();
 
         java.text.DateFormat dateFormat = getDateInstance();
@@ -257,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                         // Analogous to a "Group By" in SQL, defines how data should be aggregated.
                         // bucketByTime allows for a time span, whereas bucketBySession would allow
                         // bucketing by "sessions", which would need to be defined in code.
-                .bucketByTime(1, TimeUnit.DAYS)
+                .bucketByTime(2, TimeUnit.MINUTES)
                 .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
                 .build();
         // [END build_read_data_request]
@@ -273,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
      * consideration. A better option would be to dump the data you receive to a local data
      * directory to avoid exposing it to other applications.
      */
-    public static void printData(DataReadResult dataReadResult) {
+    public void printData(DataReadResult dataReadResult) {
         // [START parse_read_data_result]
         // If the DataReadRequest object specified aggregated data, dataReadResult will be returned
         // as buckets containing DataSets, instead of just DataSets.
@@ -286,6 +322,24 @@ public class MainActivity extends AppCompatActivity {
                     dumpDataSet(dataSet);
                 }
             }
+
+            try {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("username", "Jim");
+                String encodedString = URLEncoder.encode(builder.toString(), "UTF-8");
+                Log.i(TAG, builder.toString());
+                params.put("stepdata", encodedString);
+
+                performPostCall("http://2firestudios.com/www/weeklysteps.php", params);
+            } catch (Exception e){
+
+            }
+
+            Log.d("FINSIHED", "SENT");
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, AndroidLauncher.class));
+
+
         }
 
         /*else if (dataReadResult.getDataSets().size() > 0) {
@@ -300,22 +354,93 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // [START parse_dataset]
-    private static void dumpDataSet(DataSet dataSet) {
-        //Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
+    private void dumpDataSet(DataSet dataSet) {
         DateFormat dateFormat = getTimeInstance();
 
         for (DataPoint dp : dataSet.getDataPoints()) {
             //Log.i(TAG, "Data point:");
             //Log.i(TAG, "\tType: " + dp.getDataType().getName());
-            Log.i(TAG, "\tdate"+ new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS))));
+            builder.append("<DayEntry date=\""+ new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS)))+"\" "+
+                    "starttime=\""+dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS))+"\" "+
+                    "endtime=\""+dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS))+"\" ");
+            Log.i(TAG, "\tdate" + new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS))));
             Log.i(TAG, "\tStart: " + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
             Log.i(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
             for(Field field : dp.getDataType().getFields()) {
                 Log.i(TAG, "\tField: " + field.getName() +
                         " Value: " + dp.getValue(field));
+                builder.append("steps=\""+dp.getValue(field)+"\"");
             }
+            builder.append("></DayEntry>\n");
         }
+
+
+
+
+
     }
+
+    public String  performPostCall(String requestURL,
+                                   HashMap<String, String> postDataParams) {
+        URL url;
+        String response = "";
+        try {
+            url = new URL(requestURL);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(postDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode=conn.getResponseCode();
+            Log.i(TAG, ""+responseCode);
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    response+=line;
+                }
+            }
+            else {
+                response="";
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String, String> entry : params.entrySet()){
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+
+        return result.toString();
+    }
+
+
     // [END parse_dataset]
 
     /**

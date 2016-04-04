@@ -8,6 +8,7 @@ import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TitleLabel;
+import com.pro.gen.managers.DatabaseManager;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
 import com.pro.gen.managers.XmlManager;
@@ -27,6 +28,8 @@ import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Gallo on 9/10/2015.
@@ -159,8 +162,12 @@ public class CreateStarterPlanetView extends BaseView{
 
 
                 manager.saveBossLevel(1);
+                manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, (MathUtils.random(0, 100) > 70) ? false : true, (MathUtils.random(0, 100) > 10) ? false : true)));
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", "Jim");
+                params.put("score", "0");
+                DatabaseManager.getInstance().makeDBCall(DatabaseManager.INIT, params, null);
 
-                manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, (MathUtils.random(0,100) > 70) ? false : true, (MathUtils.random(0,100) > 10) ? false : true)));
                 manager.saveFuelUnits(FuelUnits.MAX_FUEL_REPLENISH);
                 addAction(Actions.sequence(shipDoor.getSlideIn(), Actions.delay(0.5f), new Action() {
                     @Override

@@ -9,6 +9,7 @@ import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TintedImage;
+import com.pro.gen.managers.DatabaseManager;
 import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
@@ -16,6 +17,9 @@ import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.views.BossBattleView;
 import com.pro.gen.worldcomponents.DynamicCounter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Gallo on 3/27/2016.
@@ -151,8 +155,12 @@ public class BossWinningsPopup extends AbsPopup{
                         powerCounter.setVisible(true);
                         megaCounter.setVisible(true);
                         megaCrystal.setVisible(true);
-                        XmlManager.getInstance().saveMegaCrystals(megaCounter.getCurrentAmount()+((BossBattleView)baseView).getEnemyPlanet().getGlobeRank());
-                        megaCounter.updateAmount(megaCounter.getCurrentAmount()+((BossBattleView)baseView).getEnemyPlanet().getGlobeRank());
+                        XmlManager.getInstance().saveMegaCrystals(megaCounter.getCurrentAmount() + ((BossBattleView) baseView).getEnemyPlanet().getGlobeRank());
+                        megaCounter.updateAmount(megaCounter.getCurrentAmount() + ((BossBattleView) baseView).getEnemyPlanet().getGlobeRank());
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("username", "Jim");
+                        params.put("score", String.valueOf(XmlManager.getInstance().getMegaCrystals()));
+                        DatabaseManager.getInstance().makeDBCall(DatabaseManager.SCORE, params, null);
                         return true;
                     }
                 }));

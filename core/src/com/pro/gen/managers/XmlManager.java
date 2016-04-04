@@ -375,6 +375,32 @@ public class XmlManager {
         return null;
     }
 
+    public ArrayList<String> getUsernames(String xmlString){
+        ArrayList<String> usernames = new ArrayList<String>();
+        XmlReader reader = new XmlReader();
+        XmlReader.Element root = reader.parse(xmlString);
+        Array<XmlReader.Element> userArray = root.getChildrenByName("username");
+        LogUtils.Log("root name "+root.getName());
+        LogUtils.Log(root.getChildByName("username").getText());
+        for(XmlReader.Element user :userArray){
+            LogUtils.Log("Username="+user.getText());
+            usernames.add(user.getText());
+        }
+        return usernames;
+    }
+
+    public ArrayList<String> getScores(String xmlString){
+        ArrayList<String> scores = new ArrayList<String>();
+        XmlReader reader = new XmlReader();
+        XmlReader.Element root = reader.parse(xmlString);
+        Array<XmlReader.Element> scoreArray = root.getChildrenByName("score");
+        for(XmlReader.Element score :scoreArray){
+            LogUtils.Log("Score="+score.getText());
+            scores.add(score.getText());
+        }
+        return scores;
+    }
+
     public Planet getPlanet(String planetString){
         XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(planetString);

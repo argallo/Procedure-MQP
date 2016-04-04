@@ -17,6 +17,11 @@ public class DatabaseManager {
     public static final String OPENED = "opened.php";
     public static final String CLOSED = "closed.php";
     public static final String OPTION = "options.php";
+    public static final String WEEKLY = "weeklysteps.php";
+    public static final String SCORE = "leaderboard.php";
+    public static final String INIT = "leaderboardinit.php";
+    public static final String LEADERBOARD = "getleaderboard.php";
+
 
     private static final DatabaseManager INSTANCE = new DatabaseManager();
 
