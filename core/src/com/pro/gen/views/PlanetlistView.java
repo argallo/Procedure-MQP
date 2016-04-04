@@ -334,7 +334,7 @@ public class PlanetlistView extends BaseView {
                 healPlanet.setText("150 steps");
                 healPlanet.setTouchable(Touchable.disabled);
             }
-            habitableLabel.setText("Inhabitable");
+            habitableLabel.setText("unInhabitable");
         } else {
             healPlanet.setVisible(false);
             healPlanet.setTouchable(Touchable.disabled);

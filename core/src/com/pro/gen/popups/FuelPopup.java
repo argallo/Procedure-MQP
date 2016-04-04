@@ -36,8 +36,8 @@ public class FuelPopup extends AbsPopup {
         question.setPosition(300, 500);
 
         final int selection = MathUtils.random(2);
-        wait = new Button(Pic.Curve_square, Tint.PURPLE, "Wait 10 Minutes", Assets.getInstance().getSmallFont());
-        walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 150 Steps", Assets.getInstance().getSmallFont());
+        wait = new Button(Pic.Curve_square, Tint.PURPLE, "Wait 20 Minutes", Assets.getInstance().getSmallFont());
+        walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 300 Steps", Assets.getInstance().getSmallFont());
 
 
         if(selection == 0 || selection == 2) {

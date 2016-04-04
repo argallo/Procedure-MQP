@@ -59,7 +59,6 @@ public class ExploreView extends BaseView {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         stars = new StarMap(1, 120, new Item(Pic.Circle_Small, new Range(1f,1f), 3f, 12f));
         rareStars = new StarMap(1, 10, new Item(Pic.Star_Twinkle, new Range(1f,1f), 15f, 25f));
-        popup = new ExplorePopup(this);
         starTracker = new StarTracker(stars, rareStars);
         shipUI = new TintedImage(Pic.UI_Open);
         shipUI.setTouchable(Touchable.disabled);
@@ -67,6 +66,7 @@ public class ExploreView extends BaseView {
         shipDoor = new ShipDoor(true);
         fuelUnits = new FuelUnits(this);
         fuelPopup = new FuelPopup(this);
+        popup = new ExplorePopup(this);
         if(XmlManager.getInstance().hasHabitable() && fuelUnits.getUnits() > 0) {
             flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
         } else if(!XmlManager.getInstance().hasHabitable()) {
