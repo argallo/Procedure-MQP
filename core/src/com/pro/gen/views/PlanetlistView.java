@@ -1,6 +1,8 @@
 package com.pro.gen.views;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.pro.gen.App;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
@@ -46,10 +48,9 @@ public class PlanetlistView extends BaseView {
     private TechPlanetStats techPlanetStats;
     private Button remove;
     private TextLabel todaysStepsLabel, habitableLabel;
-    private Button healPlanet;
     private ArrayList<TintedImage> miniPlanets;
     private HatsInventory hatsInventory;
-    private Button deletePlanet, moveLeft, moveRight;
+    private Button deletePlanet, moveLeft, moveRight, healPlanet;
     private HealPlanetPopup healPlanetPopup;
 
     private int restartSlot = 0;
@@ -135,6 +136,8 @@ public class PlanetlistView extends BaseView {
         });
 
 
+
+
     }
 
     @Override
@@ -146,7 +149,7 @@ public class PlanetlistView extends BaseView {
         deletePlanet.setSize(200, 40);
         moveLeft.setSize(60, 60);
         moveRight.setSize(60, 60);
-        healPlanet.setSize(120, 60);
+        healPlanet.setSize(120, 80);
 
 
     }
@@ -157,7 +160,7 @@ public class PlanetlistView extends BaseView {
         header.setPosition(Constants.VIRTUAL_WIDTH / 2 - header.getWidth() / 2, 620);
         headerText.setPosition(Constants.VIRTUAL_WIDTH / 2 - headerText.getWidth() / 2, 640);
         backBtn.setPosition(50, 590);
-        habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 20);
+        habitableLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - habitableLabel.getWidth() / 2, (Constants.VIRTUAL_HEIGHT / 2) + 100);
         deletePlanet.setPosition(150, 220);
         moveLeft.setPosition(180, 330);
         moveRight.setPosition(250, 330);
@@ -189,9 +192,17 @@ public class PlanetlistView extends BaseView {
     @Override
     public void handle(int outcome) {
         if(outcome == HealPlanetPopup.WALK){//TODO:save these through xml and load them back based on the planet.
-            healPlanet.setText("0/100 Steps");
+            planets.get(selectedPlanetIndex).setTimeStart(TimeUtils.millis());
+            planets.get(selectedPlanetIndex).setAmtofTime(150);
+            XmlManager.getInstance().savePlanet(planets.get(selectedPlanetIndex), XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
+            healPlanet.setText("150 Steps");
+            healPlanet.setTouchable(Touchable.disabled);
         } else if(outcome == HealPlanetPopup.WAIT){
+            planets.get(selectedPlanetIndex).setTimeStart(TimeUtils.millis());
+            planets.get(selectedPlanetIndex).setAmtofTime(600000);
+            XmlManager.getInstance().savePlanet(planets.get(selectedPlanetIndex), XmlManager.getInstance().convertSlotintToString(selectedPlanetIndex));
             healPlanet.setText("10 mins");
+            healPlanet.setTouchable(Touchable.disabled);
         } else {
             for (Button button : slots) {
                 button.setTint(Tint.MEDIUM_GRAY);
@@ -210,22 +221,22 @@ public class PlanetlistView extends BaseView {
         Planet planet4 = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.SLOT_4);
 
         if(planet1 !=null){
-            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet1.getBasePlanetColor()));
+            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet1.getShowColor()));
             planets.add(planet1);
         }
 
         if(planet2 !=null){
-            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet2.getBasePlanetColor()));
+            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet2.getShowColor()));
             planets.add(planet2);
         }
 
         if(planet3 !=null){
-            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet3.getBasePlanetColor()));
+            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet3.getShowColor()));
             planets.add(planet3);
         }
 
         if(planet4 !=null){
-            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet4.getBasePlanetColor()));
+            miniPlanets.add(new TintedImage(Pic.Solar_Planet, planet4.getShowColor()));
             planets.add(planet4);
         }
 
@@ -258,15 +269,35 @@ public class PlanetlistView extends BaseView {
 
         }
 
-        for(Planet planet : planets){
-            planet.setSize(250,250);
-            planet.setPosition(510,100);
-            planet.setVisible(false);
-            if (planet.isInhabitable()){
-                planet.instantBurn();
+        for(int i = 0; i < planets.size(); i++){
+            planets.get(i).setSize(250, 250);
+            planets.get(i).setPosition(510, 100);
+            planets.get(i).setVisible(false);
+            if (planets.get(i).isInhabitable()){
+                if(planets.get(i).getAmtofTime() == 600000){
+                    if(planets.get(i).getTimeStart()+600000 < TimeUtils.millis()){
+                        planets.get(i).setInhabitable(false);
+                        XmlManager.getInstance().savePlanet(planets.get(i), XmlManager.getInstance().convertSlotintToString(i));
+                    } else {
+                        planets.get(i).instantBurn();
+                        healPlanet.setText("10 mins");
+                    }
+                } else if(planets.get(i).getAmtofTime() == 150){
+                    int steps = App.stepCallback.getStepsSince(planets.get(i).getTimeStart());
+                    if( steps >= 150){
+                        planets.get(i).setInhabitable(false);
+                        XmlManager.getInstance().savePlanet(planets.get(i), XmlManager.getInstance().convertSlotintToString(i));
+                    } else {
+                        planets.get(i).instantBurn();
+                        healPlanet.setText("150 Steps");
+                    }
+                } else {
+                    planets.get(i).instantBurn();
+                }
+
             }
-            planet.setBackgroundTint(Tint.DARK_PURPLE);
-            addActor(planet);
+            planets.get(i).setBackgroundTint(Tint.DARK_PURPLE);
+            addActor(planets.get(i));
         }
 
         globeRank = new GlobeRank(1,0,100); // default init params
@@ -292,10 +323,21 @@ public class PlanetlistView extends BaseView {
         globeRank.newPlanetRanks(selectedPlanet.getGlobeRank(), selectedPlanet.getCurrentXP(), selectedPlanet.getRankXP());
         techPlanetStats.setParams(selectedPlanet.getPlanetSize(), selectedPlanet.getPlanetEnergy(), selectedPlanet.getColorType());
         if(selectedPlanet.isInhabitable()){
-            healPlanet.setVisible(false);
+            healPlanet.setVisible(true);
+            if(planets.get(selectedPlanetIndex).getAmtofTime() == 0) {
+                healPlanet.setTouchable(Touchable.enabled);
+                healPlanet.setText("Heal Planet");
+            } else if(planets.get(selectedPlanetIndex).getAmtofTime() == 600000){
+                healPlanet.setText("10 mins");
+                healPlanet.setTouchable(Touchable.disabled);
+            } else {
+                healPlanet.setText("150 steps");
+                healPlanet.setTouchable(Touchable.disabled);
+            }
             habitableLabel.setText("Inhabitable");
         } else {
-            healPlanet.setVisible(true);
+            healPlanet.setVisible(false);
+            healPlanet.setTouchable(Touchable.disabled);
             habitableLabel.setText("");
         }
     }

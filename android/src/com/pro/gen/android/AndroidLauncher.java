@@ -1,12 +1,19 @@
 package com.pro.gen.android;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,20 +43,46 @@ import java.util.concurrent.TimeUnit;
 import static java.text.DateFormat.getDateInstance;
 import static java.text.DateFormat.getTimeInstance;
 
-public class AndroidLauncher extends AndroidApplication {
+public class AndroidLauncher extends FragmentActivity implements AndroidFragmentApplication.Callbacks {
 
     private boolean finished = false;
 
+    @Override
+    protected void onCreate (Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
-	@Override
+        // 6. Finally, replace the AndroidLauncher activity content with the Libgdx Fragment.
+        GameFragment fragment = new GameFragment();
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.replace(android.R.id.content, fragment);
+        trans.commit();
+    }
+
+    // 4. Create a Class that extends AndroidFragmentApplication which is the Fragment implementation for Libgdx.
+    @SuppressLint("ValidFragment")
+    protected class GameFragment extends AndroidFragmentApplication
+    {
+        // 5. Add the initializeForView() code in the Fragment's onCreateView method.
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {  return initializeForView(new App());   }
+    }
+
+
+    @Override
+    public void exit() {}
+
+
+	/*@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new App(), config);
 	}
-
-
+*/
+/*
     @Override
     protected void onResume() {
         Map<String, String> params = new HashMap<String, String>();
@@ -92,4 +125,5 @@ public class AndroidLauncher extends AndroidApplication {
     protected void onDestroy() {
         super.onDestroy();
     }
+    */
 }

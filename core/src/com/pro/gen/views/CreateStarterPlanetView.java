@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.pro.gen.App;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
@@ -16,6 +18,7 @@ import com.pro.gen.random.RandomPlanet;
 import com.pro.gen.random.RareRandomPlanet;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.Pic;
 import com.pro.gen.utils.Tint;
 import com.pro.gen.utils.TransitionType;
@@ -28,6 +31,7 @@ import com.pro.gen.worldcomponents.ShipDoor;
 import com.pro.gen.worldcomponents.TechPlanetStats;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +57,6 @@ public class CreateStarterPlanetView extends BaseView{
 
     @Override
     public void init() {
-        PreferenceManager.getInstance().clear();
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
         choosePlanet = new TitleLabel(CHOOSE_PLANET);
         selectButton = new Button(Pic.Pixel, Tint.PINK, SELECT_BTN, Assets.getInstance().getMidFont());
@@ -76,6 +79,9 @@ public class CreateStarterPlanetView extends BaseView{
             }
         });
         shipDoor = new ShipDoor(false);
+
+        LogUtils.Log("CurrentTime = "+(TimeUtils.millis()-36000000));
+        LogUtils.Log("Steps since time" + App.stepCallback.getStepsSince(new Date().getTime() - 36000000));
 
     }
 
@@ -124,39 +130,43 @@ public class CreateStarterPlanetView extends BaseView{
                 XmlManager manager = XmlManager.getInstance();
                 manager.savePlanet(planet);
 
+               // Planet p = new Planet(new RandomPlanet(2,3));
+               // p.setInhabitable(true);
                 //test code
-               manager.savePlanet(new Planet(new RandomPlanet(2,3)));
-                manager.savePlanet(new Planet(new RandomPlanet(6,15)));
+               //manager.savePlanet(p);
                 //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
-                manager.savePowerCrystals(300);
 
+                //manager.savePlanet(new Planet(new RandomPlanet(6,15)));
+               // manager.savePowerCrystals(300);
+            /*
+
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+                hats.add(new Hat(10));
+*/
                 ArrayList<Hat> hats = new ArrayList<Hat>();
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-                hats.add(new Hat(10));
-
                 manager.saveHatList(hats);
 
 
@@ -164,7 +174,7 @@ public class CreateStarterPlanetView extends BaseView{
                 manager.saveBossLevel(1);
                 manager.saveBossPlanet(new Planet(new RareRandomPlanet(4, 4, (MathUtils.random(0, 100) > 70) ? false : true, (MathUtils.random(0, 100) > 10) ? false : true)));
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", "Jim");
+                params.put("username", XmlManager.getInstance().getUsername());
                 params.put("score", "0");
                 DatabaseManager.getInstance().makeDBCall(DatabaseManager.INIT, params, null);
 

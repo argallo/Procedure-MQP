@@ -33,6 +33,7 @@ public class Planet extends Group {
     private long timeStart; // the time at which it became inhabitable
     private long amtofTime; // the amount of time from timeStart to become habitable
     private String planetName;
+    private Color originalColor;
 
     public Planet(RandomPlanet randomPlanet){
        this(randomPlanet, Tint.UNIVERSE_BACKGROUND_COLOR);
@@ -61,6 +62,7 @@ public class Planet extends Group {
                    boolean inhabitable, long timeStart, long amtofTime, Hat hat, Color background, String planetName){
 
         this.colorType = colorType;
+        originalColor = new Color(planetColor);
         basePlanet = new TintedImage(Pic.Circle_Large, planetColor);
         this.lands = lands;
         this.clouds = clouds;
@@ -128,8 +130,7 @@ public class Planet extends Group {
 
     public void burn(){
         setInhabitable(true);
-        setTimeStart(TimeUtils.millis());
-        setAmtofTime(600000);
+        setAmtofTime(0);
         addAction(Actions.sequence(Actions.delay(6.5f), new Action() {
             @Override
             public boolean act(float delta) {
@@ -207,8 +208,12 @@ public class Planet extends Group {
         return lands;
     }
 
-    public Color getBasePlanetColor() {
+    public Color getShowColor(){
         return basePlanet.getTint();
+    }
+
+    public Color getBasePlanetColor() {
+        return originalColor;
     }
 
     public boolean isInhabitable() {

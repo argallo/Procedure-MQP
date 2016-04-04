@@ -5,7 +5,6 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
@@ -15,6 +14,7 @@ import com.pro.gen.components.TextLabel;
 import com.pro.gen.components.TitleLabel;
 import com.pro.gen.managers.DatabaseManager;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
@@ -26,66 +26,48 @@ import com.pro.gen.utils.ViewID;
 import java.util.HashMap;
 import java.util.Map;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by Gallo on 9/2/2015.
  */
 public class CreateAccountView extends BaseView {
 
     private static final int LOGIN_ACTION = 2;
-    private static final int OPTIONS_ACTION = 3;
 
     private static final String TITLE = "WELCOME";
     private static final String USERNAME = "Username";
-    private static final String PASSWORD = "Password";
-    private static final String EMAIL = "Email";
-    private static final String CONFIRMPW = "Confirm-Password";
+    private static final String PASSWORD = "Player ID";
+
 
     private static final String CREATE_ACCOUNT = "Create an Account Below";
-    private static final String LOGIN_ACCOUNT = "Login to Your Account Below";
-    private static final String LOGIN = "Login";
     private static final String CREATE = "Create";
-    private static final String SUBMIT = "Submit";
-    private static final String EMAIL_FAIL = "Email already active with another account";
     private static final String USER_FAIL = "Username has already been taken, try again";
     private static final String ERROR_FAIL = "Error couldn't connect, try again";
-    private static final float ANIMATION_DURATION = 0.5f;
-    private static final Interpolation INTERPOLATION = Interpolation.swing;
 
     private Background background;
-    private Button loginCreate, optionButton;
-    private TextBox usernameTBox, emailTBox, passwordTBox, confirmTBox;
+    private Button loginCreate;
+    private TextBox usernameTBox, passwordTBox;
     private TitleLabel titleLabel;
     private TextLabel informationalHeaderLabel, errorLabel;
-    private boolean isLogin = false;
 
     @Override
     public void init() {
         background = new Background(Pic.Pixel, Tint.UNIVERSE_BACKGROUND_COLOR);
-        loginCreate = new Button(Pic.Pixel, Tint.PINK, SUBMIT, Assets.getInstance().getMidFont());
-        optionButton = new Button(Pic.Pixel, Tint.PINK, LOGIN, Assets.getInstance().getMidFont());
-        usernameTBox = new TextBox(12, USERNAME, TextBox.CHARDIG);
-        emailTBox = new TextBox(35, EMAIL, TextBox.EMAIL);
-        passwordTBox = new TextBox(35, PASSWORD, TextBox.ALL, true);
-        confirmTBox = new TextBox(35, CONFIRMPW, TextBox.ALL, true);
+        loginCreate = new Button(Pic.Pixel, Tint.PINK, CREATE, Assets.getInstance().getMidFont());
+
+        usernameTBox = new TextBox(9, USERNAME, TextBox.CHARDIG);
+        passwordTBox = new TextBox(15, PASSWORD, TextBox.CHARDIG);
         titleLabel = new TitleLabel(TITLE);
         informationalHeaderLabel = new TextLabel(CREATE_ACCOUNT);
         //Use error label to also address other issues that might come up like not enough chars for username or pw
         errorLabel = new TextLabel("", Color.RED);
-
-
         loginCreate.setButtonAction(new ButtonAction() {
             @Override
             public void buttonPressed() {
                 handle(LOGIN_ACTION);
             }
         });
-        optionButton.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                handle(OPTIONS_ACTION);
-            }
-        });
-
 
         /**
          * background listener:
@@ -105,21 +87,16 @@ public class CreateAccountView extends BaseView {
     @Override
     public void setSizes() {
         loginCreate.setSize(300, 150);
-        optionButton.setSize(300, 150);
         usernameTBox.setSize(500, 60);
-        emailTBox.setSize(500, 60);
         passwordTBox.setSize(500, 60);
-        confirmTBox.setSize(500, 60);
+
     }
 
     @Override
     public void setPositions() {
-        loginCreate.setPosition(Constants.VIRTUAL_WIDTH/2 + loginCreate.getWidth()/4, 50);
-        optionButton.setPosition(Constants.VIRTUAL_WIDTH/2 - (optionButton.getWidth()*1.25f), 50);
+        loginCreate.setPosition(Constants.VIRTUAL_WIDTH/2 - loginCreate.getWidth()/2, 50);
         usernameTBox.setPosition(120, 400);
-        emailTBox.setPosition(120, 335);
         passwordTBox.setPosition(650, 400);
-        confirmTBox.setPosition(650, 335);
         titleLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - titleLabel.getWidth() / 2, Constants.VIRTUAL_HEIGHT - titleLabel.getHeight());
         informationalHeaderLabel.setPosition(Constants.VIRTUAL_WIDTH / 2 - informationalHeaderLabel.getWidth() / 2, 400 + informationalHeaderLabel.getHeight() + 10);
         errorLabel.setPosition(Constants.VIRTUAL_WIDTH/2 - errorLabel.getWidth()/2, 250);
@@ -129,26 +106,16 @@ public class CreateAccountView extends BaseView {
     public void addActors() {
         addActor(background);
         addActor(usernameTBox);
-        addActor(emailTBox);
         addActor(passwordTBox);
-        addActor(confirmTBox);
         addActor(titleLabel);
         addActor(informationalHeaderLabel);
         addActor(errorLabel);
         addActor(loginCreate);
-        addActor(optionButton);
     }
 
     @Override
     public void handle(int outcome) {
-        switch (outcome){
-            case LOGIN_ACTION:
-                login();
-                break;
-            case OPTIONS_ACTION:
-                option();
-                break;
-        }
+        login();
     }
 
     /**
@@ -161,53 +128,26 @@ public class CreateAccountView extends BaseView {
      */
     public void login(){
         errorLabel.setText("");
-        if (validateFields()) {
-            //TODO:LOGINING IN WORK AND SAVE PREFERENCES
-            if (isLogin) {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", usernameTBox.getText());
-                params.put("password", passwordTBox.getSecureString());
-                Net.HttpResponseListener listener = new Net.HttpResponseListener() {
-                    @Override
-                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                        //if(response is correct){ save infor to preferences, transition to home view }
-                        //else { incorrectLogin() }
-                    }
 
-                    @Override
-                    public void failed(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void cancelled() {
-
-                    }
-                };
-                DatabaseManager.getInstance().makeDBCall(DatabaseManager.LOGIN, params, listener);
-            } else {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", emailTBox.getText());
-                params.put("username", usernameTBox.getText());
-                params.put("password", passwordTBox.getSecureString());
-                Net.HttpResponseListener listener = new Net.HttpResponseListener() {
-                    @Override
-                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                        String response = httpResponse.getResultAsString();
-                        LogUtils.Log(response);
-                        if (response.equals("email")) {
-                            emailTaken();
-                        } else if (response.equals("username")) {
-                            usernameTaken();
-                        } else if (response.startsWith("error")) {
-                            error();
-                        } else if (response.equals("success")) {
-                            Gdx.app.postRunnable(new Runnable() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", usernameTBox.getText());
+        params.put("id", passwordTBox.getText());
+        Net.HttpResponseListener listener = new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                String response = httpResponse.getResultAsString();
+                LogUtils.Log(response);
+                if (response.equals("username")) {
+                    usernameTaken();
+                } else if (response.startsWith("error")) {
+                    error();
+                } else if (response.equals("success")) {
+                    Gdx.app.postRunnable(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // PreferenceManager.getInstance().getPreferences().putBoolean(PreferenceManager.HAS_ACCOUNT, true);
-                                    // PreferenceManager.getInstance().getPreferences().putString(PreferenceManager.ACCOUNT_NAME, usernameTBox.getText());
-                                    // PreferenceManager.getInstance().getPreferences().flush();
+                                    XmlManager.getInstance().setAccount();
+                                    XmlManager.getInstance().setUsername(usernameTBox.getText());
+                                    XmlManager.getInstance().setID(passwordTBox.getText());
                                     ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.SLIDE_R_TRANSITION);
                                 }
                             });
@@ -225,66 +165,8 @@ public class CreateAccountView extends BaseView {
                     }
                 };
                 DatabaseManager.getInstance().makeDBCall(DatabaseManager.CREATE, params, listener);
-            }
-        }
     }
 
-    /**
-     * Option Listener:
-     * Switches the state between loging into and account
-     * and creating a new account.
-     */
-    public void option(){
-        errorLabel.setText("");
-        if (optionButton.getText().equals(LOGIN)) {
-            optionButton.setText(CREATE);
-            informationalHeaderLabel.setText(LOGIN_ACCOUNT);
-            emailTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
-            confirmTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
-            isLogin = true;
-        } else {
-            optionButton.setText(LOGIN);
-            informationalHeaderLabel.setText(CREATE_ACCOUNT);
-            emailTBox.addAction(Actions.moveBy(800, 0, ANIMATION_DURATION, INTERPOLATION));
-            confirmTBox.addAction(Actions.moveBy(-800, 0, ANIMATION_DURATION, INTERPOLATION));
-            isLogin = false;
-        }
-    }
-
-    /**
-     * Validates all fields currently on screen checking they are not empty, passwords match, and they are of email regex
-     * @return true if all fields are valid
-     */
-    public boolean validateFields(){
-        ViewManager.getInstance().unfocusAll();
-        boolean isValid = true;
-        if(!usernameTBox.isValid()){
-            usernameTBox.addAction(Actions.sequence(Actions.moveBy(30,0,0.1f,Interpolation.pow2), Actions.moveBy(-60,0,0.1f,Interpolation.pow2), Actions.moveBy(30,0,0.1f,Interpolation.pow2)));
-            isValid = false;
-        }
-        if(!passwordTBox.isValid()){
-            passwordTBox.addAction(Actions.sequence(Actions.moveBy(30,0,0.1f,Interpolation.pow2), Actions.moveBy(-60,0,0.1f,Interpolation.pow2), Actions.moveBy(30,0,0.1f,Interpolation.pow2)));
-            isValid = false;
-        }
-        if(!isLogin){
-            if(!emailTBox.isValid()){
-                emailTBox.addAction(Actions.sequence(Actions.moveBy(30,0,0.1f,Interpolation.pow2), Actions.moveBy(-60,0,0.1f,Interpolation.pow2), Actions.moveBy(30,0,0.1f,Interpolation.pow2)));
-                isValid = false;
-            }
-            if(!confirmTBox.isValid() || !confirmTBox.getText().equals(passwordTBox.getText())){
-                confirmTBox.addAction(Actions.sequence(Actions.moveBy(30,0,0.1f,Interpolation.pow2), Actions.moveBy(-60,0,0.1f,Interpolation.pow2), Actions.moveBy(30,0,0.1f,Interpolation.pow2)));
-                isValid = false;
-            }
-        }
-        return isValid;
-    }
-
-    /**
-     * Called when email is already linked to a different account
-     */
-    public void emailTaken(){
-        errorLabel.setText(EMAIL_FAIL);
-    }
 
     /**
      * Called when username has already been taken by another user

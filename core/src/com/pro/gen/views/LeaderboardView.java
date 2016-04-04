@@ -47,7 +47,7 @@ public class LeaderboardView extends BaseView {
         header = new TintedImage(Pic.Header_Bar, Tint.PURPLE);
         headerText = new TextLabel("LeaderBoard", Assets.getInstance().getSmallFont());
         backBtn = new TravelButton(Pic.Back_Button, ViewID.MAIN_MENU, shipDoor);
-        rank = new Button(Pic.Pixel, Tint.LIGHT_BLUE, "Rank 23", Assets.getInstance().getSmallFont());
+        rank = new Button(Pic.Pixel, Tint.LIGHT_BLUE, XmlManager.getInstance().getUsername(), Assets.getInstance().getXSmallFont());
         rank.setTouchable(Touchable.disabled);
         homePlanet = XmlManager.getInstance().getPlanetFromSlot(PreferenceManager.SLOT_1);
         homePlanet.setBackgroundTint(Tint.DARK_PURPLE);

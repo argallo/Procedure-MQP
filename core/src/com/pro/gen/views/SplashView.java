@@ -3,7 +3,9 @@ package com.pro.gen.views;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pro.gen.managers.PreferenceManager;
 import com.pro.gen.managers.ViewManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
+import com.pro.gen.utils.LogUtils;
 import com.pro.gen.utils.TransitionType;
 import com.pro.gen.utils.ViewID;
 
@@ -74,12 +76,13 @@ public class SplashView extends BaseView{
      */
     public void completeSplashView(){
         counting = false;
-        if(PreferenceManager.getInstance().hasAccount()){
+        LogUtils.Log("ACCOUNT "+XmlManager.getInstance().getAccount());
+        if(XmlManager.getInstance().getAccount().equals("TRUE")){
             //Users account can be found in local storage, go straight to Home Screen
             ViewManager.getInstance().transitionViewTo(ViewID.MAIN_MENU, TransitionType.DEFAULT_TRANSITION);
         } else {
             //User either does not have an account or is not logged in. Go to login screen
-            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ALIEN, TransitionType.DEFAULT_TRANSITION);
+            ViewManager.getInstance().transitionViewTo(ViewID.CREATE_ACCOUNT, TransitionType.DEFAULT_TRANSITION);
         }
     }
 

@@ -17,6 +17,7 @@ package com.pro.gen.android;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -24,11 +25,18 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.net.HttpStatus;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
@@ -43,10 +51,15 @@ import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResult;
+import com.pro.gen.App;
 import com.pro.gen.common.logger.Log;
 import com.pro.gen.common.logger.LogView;
 import com.pro.gen.common.logger.LogWrapper;
 import com.pro.gen.common.logger.MessageOnlyLogFilter;
+import com.pro.gen.managers.DatabaseManager;
+import com.pro.gen.managers.XmlManager;
+import com.pro.gen.utils.LogUtils;
+import com.pro.gen.utils.StepCallback;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -77,11 +90,11 @@ import static java.text.DateFormat.getTimeInstance;
  * query against existing data, and remove data. It also demonstrates how to authenticate
  * a user with Google Play Services and how to properly represent data in a {@link DataSet}.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AndroidFragmentApplication.Callbacks, StepCallback{
     public static final String TAG = "BasicHistoryApi";
     //private static final int REQUEST_OAUTH = 1;
     //private static final String DATE_FORMAT = "yyyy.MM.dd HH:mm:ss";
-
+    private boolean finished = false;
     /**
      *  Track whether an authorization activity is stacking over the current activity, i.e. when
      *  a known auth error is being resolved, such as showing the account chooser or presenting a
@@ -96,32 +109,57 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String restoredText = prefs.getString("steps", null);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Calendar cal = Calendar.getInstance();
-        if (restoredText == null || !restoredText.equals(dateFormat.format(cal.getTime()))) {
-            SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-            editor.putString("steps", dateFormat.format(cal.getTime()));
-            editor.commit();
-            builder = new StringBuilder();
-            // This method sets up our custom logger, which will print all log messages to the device
-            // screen, as well as to adb logcat.
-            initializeLogging();
+        GameFragment fragment = new GameFragment();
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.replace(android.R.id.content, fragment);
+        trans.commit();
 
-            if (savedInstanceState != null) {
-                authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
-            }
+        // This method sets up our custom logger, which will print all log messages to the device
+        // screen, as well as to adb logcat.
+        initializeLogging();
 
-            buildFitnessClient();
-        } else {
-            MainActivity.this.finish();
-            startActivity(new Intent(MainActivity.this, AndroidLauncher.class));
+        if (savedInstanceState != null) {
+            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
         }
 
+        buildFitnessClient();
 
+
+
+    }
+
+    @Override
+    public int getStepsSince(long time) {
+        // Begin by creating the query.
+        DataReadRequest readRequest = queryFitnessDataSince(time);
+
+        // [START read_dataset]
+        // Invoke the History API to fetch the data with the query and await the result of
+        // the read request.
+        DataReadResult dataReadResult =
+                Fitness.HistoryApi.readData(mClient, readRequest).await(1, TimeUnit.MINUTES);
+        // [END read_dataset]
+
+        // For the sake of the sample, we'll print the data so we can see what we just added.
+        // In general, logging fitness information should be avoided for privacy reasons.
+        return getData(dataReadResult);
+    }
+
+    @SuppressLint("ValidFragment")
+    protected class GameFragment extends AndroidFragmentApplication
+    {
+        // 5. Add the initializeForView() code in the Fragment's onCreateView method.
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            App app = new App();
+            app.setStepCallback(MainActivity.this);
+            return initializeForView(new App());
+        }
     }
 
     /**
@@ -144,7 +182,19 @@ public class MainActivity extends AppCompatActivity {
                                 Log.i(TAG, "Connected!!!");
                                 // Now you can make calls to the Fitness APIs.  What to do?
                                 // Look at some data!!
-                                new InsertAndVerifyDataTask().execute();
+                                SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                                String restoredText = prefs.getString("steps", null);
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                                Calendar cal = Calendar.getInstance();
+                                if(XmlManager.getInstance().getUsername().equals("")){
+
+                                } else if (restoredText == null || !restoredText.equals(dateFormat.format(cal.getTime()))) {
+                                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                                    editor.putString("steps", dateFormat.format(cal.getTime()));
+                                    editor.commit();
+                                    builder = new StringBuilder();
+                                    new InsertAndVerifyDataTask().execute();
+                                }
                             }
 
                             @Override
@@ -174,6 +224,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
+    @Override
+    public void exit() {
+
+    }
+
     /**
      *  Create a {@link DataSet} to insert data into the History API, and
      *  then create and execute a {@link DataReadRequest} to verify the insertion succeeded.
@@ -185,28 +240,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private class InsertAndVerifyDataTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... params) {
-            // Create a new dataset and insertion request.
-            // DataSet dataSet = insertFitnessData();
-
-            // [START insert_dataset]
-            // Then, invoke the History API to insert the data and await the result, which is
-            // possible here because of the {@link AsyncTask}. Always include a timeout when calling
-            // await() to prevent hanging that can occur from the service being shutdown because
-            // of low memory or other conditions.
-            //Log.i(TAG, "Inserting the dataset in the History API.");
-            //com.google.android.gms.common.api.Status insertStatus =
-              //      Fitness.HistoryApi.insertData(mClient, dataSet)
-                //            .await(1, TimeUnit.MINUTES);
-
-            // Before querying the data, check to see if the insertion succeeded.
-            //if (!insertStatus.isSuccess()) {
-              //  Log.i(TAG, "There was a problem inserting the dataset.");
-                //return null;
-            //}
-
-            // At this point, the data has been inserted and can be read.
-            //Log.i(TAG, "Data insert was successful!");
-            // [END insert_dataset]
 
             // Begin by creating the query.
             DataReadRequest readRequest = queryFitnessData();
@@ -226,44 +259,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Create and return a {@link DataSet} of step count data for insertion using the History API.
-     */
-    /*
-    private DataSet insertFitnessData() {
-        Log.i(TAG, "Creating a new data insert request.");
 
-        // [START build_insert_data_request]
-        // Set a start and end time for our data, using a start time of 1 hour before this moment.
-        Calendar cal = Calendar.getInstance();
-        Date now = new Date();
-        cal.setTime(now);
-        long endTime = cal.getTimeInMillis();
-        cal.add(Calendar.HOUR_OF_DAY, -1);
-        long startTime = cal.getTimeInMillis();
-
-        // Create a data source
-        DataSource dataSource = new DataSource.Builder()
-                .setAppPackageName(this)
-                .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
-                .setStreamName(TAG + " - step count")
-                .setType(DataSource.TYPE_RAW)
-                .build();
-
-        // Create a data set
-        int stepCountDelta = 950;
-        DataSet dataSet = DataSet.create(dataSource);
-        // For each data point, specify a start time, end time, and the data value -- in this case,
-        // the number of new steps.
-        DataPoint dataPoint = dataSet.createDataPoint()
-                .setTimeInterval(startTime, endTime, TimeUnit.MILLISECONDS);
-        dataPoint.getValue(Field.FIELD_STEPS).setInt(stepCountDelta);
-        dataSet.add(dataPoint);
-        // [END build_insert_data_request]
-
-        return dataSet;
-    }
-    */
 
     /**
      * Return a {@link DataReadRequest} for all step count changes in the past week.
@@ -301,6 +297,73 @@ public class MainActivity extends AppCompatActivity {
         return readRequest;
     }
 
+
+    public DataReadRequest queryFitnessDataSince(long time) {
+        // [START build_read_data_request]
+        // Setting a start and end date using a range of 1 week before this moment.
+        Calendar cal = Calendar.getInstance();
+        Date before = new Date(time);
+        cal.setTime(before);
+        long startTime = cal.getTimeInMillis();
+
+        long endTime = new Date().getTime();
+
+        java.text.DateFormat dateFormat = getDateInstance();
+        Log.i(TAG, "Range Start: " + dateFormat.format(startTime));
+        Log.i(TAG, "Range End: " + dateFormat.format(endTime));
+
+        DataReadRequest readRequest = new DataReadRequest.Builder()
+                // The data request can specify multiple data types to return, effectively
+                // combining multiple data queries into one call.
+                // In this example, it's very unlikely that the request is for several hundred
+                // datapoints each consisting of a few steps and a timestamp.  The more likely
+                // scenario is wanting to see how many steps were walked per day, for 7 days.
+                .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                        // Analogous to a "Group By" in SQL, defines how data should be aggregated.
+                        // bucketByTime allows for a time span, whereas bucketBySession would allow
+                        // bucketing by "sessions", which would need to be defined in code.
+                .bucketByTime(1, TimeUnit.DAYS)
+                .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+                .build();
+        // [END build_read_data_request]
+
+        return readRequest;
+    }
+
+
+
+    public int getData(DataReadResult dataReadResult) {
+        // [START parse_read_data_result]
+        // If the DataReadRequest object specified aggregated data, dataReadResult will be returned
+        // as buckets containing DataSets, instead of just DataSets.
+        int counter = 0;
+        if (dataReadResult.getBuckets().size() > 0) {
+            Log.i(TAG, "Number of returned buckets of DataSets is: "
+                    + dataReadResult.getBuckets().size());
+            for (Bucket bucket : dataReadResult.getBuckets()) {
+                List<DataSet> dataSets = bucket.getDataSets();
+                for (DataSet dataSet : dataSets) {
+                    for (DataPoint dp : dataSet.getDataPoints()) {
+                        DateFormat dateFormat = getTimeInstance();
+                        //Log.i(TAG, "Data point:");
+                        //Log.i(TAG, "\tType: " + dp.getDataType().getName());
+                        Log.i(TAG, "\tdate" + new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS))));
+                        Log.i(TAG, "\tStart: " + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
+                        Log.i(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
+                        for (Field field : dp.getDataType().getFields()) {
+                            Log.i(TAG, "\tField: " + field.getName() + " Value: " + dp.getValue(field));
+                            counter += Integer.parseInt(dp.getValue(field).toString());
+                        }
+                    }
+                }
+            }
+        }
+        return counter;
+        // [END parse_read_data_result]
+    }
+
+
+
     /**
      * Log a record of the query result. It's possible to get more constrained data sets by
      * specifying a data source or data type, but for demonstrative purposes here's how one would
@@ -325,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put("username", "Jim");
+                params.put("username", XmlManager.getInstance().getUsername());
                 String encodedString = URLEncoder.encode(builder.toString(), "UTF-8");
                 Log.i(TAG, builder.toString());
                 params.put("stepdata", encodedString);
@@ -336,20 +399,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Log.d("FINSIHED", "SENT");
-            MainActivity.this.finish();
-            startActivity(new Intent(MainActivity.this, AndroidLauncher.class));
+           // MainActivity.this.finish();
+           // startActivity(new Intent(MainActivity.this, AndroidLauncher.class));
 
 
         }
 
-        /*else if (dataReadResult.getDataSets().size() > 0) {
-            Log.i(TAG, "Number of returned DataSets is: "
-                    + dataReadResult.getDataSets().size());
-            for (DataSet dataSet : dataReadResult.getDataSets()) {
-                dumpDataSet(dataSet);
-            }
-        }
-        */
         // [END parse_read_data_result]
     }
 
@@ -441,48 +496,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // [END parse_dataset]
-
-    /**
-     * Delete a {@link DataSet} from the History API. In this example, we delete all
-     * step count data for the past 24 hours.
-     */
-   /* private void deleteData() {
-        Log.i(TAG, "Deleting today's step count data.");
-
-        // [START delete_dataset]
-        // Set a start and end time for our data, using a start time of 1 day before this moment.
-        Calendar cal = Calendar.getInstance();
-        Date now = new Date();
-        cal.setTime(now);
-        long endTime = cal.getTimeInMillis();
-        cal.add(Calendar.DAY_OF_YEAR, -1);
-        long startTime = cal.getTimeInMillis();
-
-        //  Create a delete request object, providing a data type and a time interval
-        DataDeleteRequest request = new DataDeleteRequest.Builder()
-                .setTimeInterval(startTime, endTime, TimeUnit.MILLISECONDS)
-                .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
-                .build();
-
-        // Invoke the History API with the Google API client object and delete request, and then
-        // specify a callback that will check the result.
-        Fitness.HistoryApi.deleteData(mClient, request)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        if (status.isSuccess()) {
-                            Log.i(TAG, "Successfully deleted today's step count data.");
-                        } else {
-                            // The deletion will fail if the requesting app tries to delete data
-                            // that it did not insert.
-                            Log.i(TAG, "Failed to delete today's step count data.");
-                        }
-                    }
-                });
-        // [END delete_dataset]
-    }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -510,14 +523,51 @@ public class MainActivity extends AppCompatActivity {
         MessageOnlyLogFilter msgFilter = new MessageOnlyLogFilter();
         logWrapper.setNext(msgFilter);
         // On screen logging via a customized TextView.
-        LogView logView = (LogView) findViewById(R.id.sample_logview);
+        //LogView logView = (LogView) findViewById(R.id.sample_logview);
 
         // Fixing this lint error adds logic without benefit.
         //noinspection AndroidLintDeprecation
 
 
-        logView.setBackgroundColor(Color.WHITE);
-        msgFilter.setNext(logView);
+        //logView.setBackgroundColor(Color.WHITE);
+        //msgFilter.setNext(logView);
         Log.i(TAG, "Ready.");
+    }
+
+
+    @Override
+    protected void onResume() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", XmlManager.getInstance().getUsername());
+        DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPENED, params, null);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", XmlManager.getInstance().getUsername());
+        DatabaseManager.getInstance().makeDBCall(DatabaseManager.CLOSED, params, new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                LogUtils.Log("FINISHED CLOSING");
+                finished = true;
+            }
+
+            @Override
+            public void failed(Throwable t) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        });
+        while (!finished){
+
+        }
+        finished = false;
+        super.onPause();
     }
 }

@@ -17,12 +17,14 @@ public class RandomGlobeMapInfo {
 
     private ArrayList<TintedImage> globePieces;
     private Color color;
+    private Color realColor;
     private RandomPlacement rp;
     private float speed;
     private GlobeObjectType globeObjectType;
 
     public RandomGlobeMapInfo(Color color, RandomPlacement rp, float speed){
         this.color = color;
+        this.realColor = new Color(color);
         this.rp = rp;
         this.speed = speed;
         initGlobeGeneration();
@@ -40,11 +42,13 @@ public class RandomGlobeMapInfo {
                 rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.LandCylinder : Item.LandCircle, 1125, 500, 10);
                 speed = Constants.VIRTUAL_WIDTH/300;
                 color = ColorHelper.generateGoodColor();
+                realColor = new Color(color);
                 break;
             case Cloud:
                 rp = new RandomPlacement((MathUtils.random(0,1) == 1) ? Item.CloudCylinder : Item.CloudCircle, 1125, 500, 10);
                 speed = Constants.VIRTUAL_WIDTH/400;
                 color = ColorHelper.generateLightColor();
+                realColor = new Color(color);
                 break;
         }
     }
@@ -78,6 +82,6 @@ public class RandomGlobeMapInfo {
     }
 
     public Color getColor() {
-        return color;
+        return realColor;
     }
 }

@@ -1,12 +1,14 @@
 package com.pro.gen.popups;
 
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
 import com.pro.gen.components.TextLabel;
 import com.pro.gen.managers.DatabaseManager;
+import com.pro.gen.managers.XmlManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.Pic;
@@ -30,32 +32,63 @@ public class HealPlanetPopup extends AbsPopup{
     public HealPlanetPopup(BaseView baseView) {
         super(baseView);
 
-        question = new TextLabel("How would you like to replenish Fuel?", Assets.getInstance().getSmallFont());
+        question = new TextLabel("How would you like to re-habit Planet?", Assets.getInstance().getSmallFont());
         question.setPosition(300, 500);
 
-
+        final int selection = MathUtils.random(2);
         wait = new Button(Pic.Curve_square, Tint.PURPLE, "Wait 10 Minutes", Assets.getInstance().getSmallFont());
+        walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 150 Steps", Assets.getInstance().getSmallFont());
 
-        walk = new Button(Pic.Curve_square, Tint.PURPLE, "Walk 100 Steps", Assets.getInstance().getSmallFont());
-        numberOfSteps = 100;
 
-        setupButtons();
+        if(selection == 0 || selection == 2) {
 
-        wait.setSize(280, 100);
-        walk.setSize(280, 100);
+            wait.setButtonAction(new ButtonAction() {
+                @Override
+                public void buttonPressed() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("username", XmlManager.getInstance().getUsername());
+                    if(selection == 0) {
+                        params.put("options", "wait");
+                    } else {
+                        params.put("options", "choice wait");
+                    }
+                    DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPTION, params, null);
+                    deactivatePopup();
+                    HealPlanetPopup.this.baseView.handle(WAIT);
+                }
+            });
+            wait.setSize(280, 100);
+            wait.setPosition(280, 200);
+            wait.setVisible(false);
+            addActor(wait);
+        }
 
-        wait.setPosition(280, 200);
-        walk.setPosition(740, 200);
+        if(selection == 1 || selection == 2) {
+
+            walk.setButtonAction(new ButtonAction() {
+                @Override
+                public void buttonPressed() {//TODO: add google fit to this
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("username", XmlManager.getInstance().getUsername());
+                    if(selection == 1) {
+                        params.put("options", "walk");
+                    } else {
+                        params.put("options", "choice walk");
+                    }
+                    DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPTION, params, null);
+                    deactivatePopup();
+                    HealPlanetPopup.this.baseView.handle(WALK);
+                }
+            });
+            walk.setSize(280, 100);
+            walk.setPosition(740, 200);
+            walk.setVisible(false);
+            addActor(walk);
+        }
+
 
         question.setVisible(false);
-
-        wait.setVisible(false);
-        walk.setVisible(false);
-
-
         addActor(question);
-        addActor(wait);
-        addActor(walk);
 
     }
 
@@ -88,31 +121,6 @@ public class HealPlanetPopup extends AbsPopup{
                                               }, Actions.delay(0.1f),
                 Actions.parallel(Actions.sizeTo(0, 0, 0.5f, Interpolation.exp10), Actions.moveTo(Constants.VIRTUAL_WIDTH / 2, Constants.VIRTUAL_HEIGHT / 2, 0.5f, Interpolation.exp10)), Actions.visible(false)));
 
-    }
-
-    public void setupButtons(){
-        walk.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {//TODO: add google fit to this
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", "Jim");
-                params.put("options", "walk");
-                DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPTION, params, null);
-                deactivatePopup();
-                baseView.handle(WALK);
-            }
-        });
-        wait.setButtonAction(new ButtonAction() {
-            @Override
-            public void buttonPressed() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", "Jim");
-                params.put("options", "wait");
-                DatabaseManager.getInstance().makeDBCall(DatabaseManager.OPTION, params, null);
-                deactivatePopup();
-                baseView.handle(WAIT);
-            }
-        });
     }
 
     public int getNumberOfSteps() {

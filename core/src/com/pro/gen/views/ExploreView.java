@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.pro.gen.components.Background;
 import com.pro.gen.components.Button;
 import com.pro.gen.components.ButtonAction;
@@ -66,10 +67,13 @@ public class ExploreView extends BaseView {
         shipDoor = new ShipDoor(true);
         fuelUnits = new FuelUnits(this);
         fuelPopup = new FuelPopup(this);
-        if(XmlManager.getInstance().hasHabitable()) {
+        if(XmlManager.getInstance().hasHabitable() && fuelUnits.getUnits() > 0) {
             flyToStar = new Button(Pic.Pixel, Tint.MED_PURPLE, "Fly To Star", Assets.getInstance().getSmallFont());
-        } else {
+        } else if(!XmlManager.getInstance().hasHabitable()) {
             flyToStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "No Habitable Planets\nin Slots", Assets.getInstance().getXSmallFont());
+            flyToStar.setTouchable(Touchable.disabled);
+        } else if(fuelUnits.getUnits() == 0){
+            flyToStar = new Button(Pic.Pixel, Tint.DARK_PURPLE, "No Fuel!", Assets.getInstance().getXSmallFont());
             flyToStar.setTouchable(Touchable.disabled);
         }
         if(XmlManager.getInstance().hasSolarSystem() && XmlManager.getInstance().hasHabitable()) {
@@ -160,10 +164,14 @@ public class ExploreView extends BaseView {
                 fuelPopup.activatePopup();
                 break;
             case FuelPopup.WALK:
-                fuelUnits.walker(fuelPopup.getNumberOfSteps()); //TODO: XMLmanager handle setting steps
+                XmlManager.getInstance().setFuelTimer(TimeUtils.millis());
+                XmlManager.getInstance().setFuelAmt(300);
+                fuelUnits.walker();
                 break;
             case FuelPopup.WAIT:
-                fuelUnits.waiter(); //TODO: XMLmanager handle setting
+                XmlManager.getInstance().setFuelTimer(TimeUtils.millis());
+                XmlManager.getInstance().setFuelAmt(1200000);
+                fuelUnits.waiter();
                 break;
             default:
                 stars.unpause();

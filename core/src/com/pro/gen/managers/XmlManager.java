@@ -163,9 +163,6 @@ public class XmlManager {
     // the new units amount if less than replenish max then set the fuel timer to current time
     public void saveFuelUnits(int units){
         PreferenceManager.getInstance().saveInt(PreferenceManager.FUEL_UNITS, units);
-        if(units < FuelUnits.MAX_FUEL_REPLENISH){
-            setFuelTimer();
-        }
     }
 
     //gets the current amount of fuel units
@@ -174,20 +171,20 @@ public class XmlManager {
     }
 
     //sets the timer to the current time
-    public void setFuelTimer(){
-        PreferenceManager.getInstance().saveString(PreferenceManager.FUEL_TIMER, String.valueOf(TimeUtils.millis()));
+    public void setFuelTimer(long time){
+        PreferenceManager.getInstance().saveString(PreferenceManager.FUEL_TIMER, String.valueOf(time));
     }
 
-    //if fuel units is less than max replenish than check timer to see if time past since set is greater than replenish time then add unit
-    public long checkFuelTimer(){
-        long timeStart = 0;
-        if(getFuelUnits() < FuelUnits.MAX_FUEL_REPLENISH) {
-            timeStart = Long.parseLong(PreferenceManager.getInstance().getString(PreferenceManager.FUEL_TIMER));
-            if(TimeUtils.timeSinceMillis(timeStart) > FuelUnits.FUEL_REPLENISH_TIME) {
-                saveFuelUnits(getFuelUnits()+1);
-            }
-        }
-        return timeStart;
+    public long getFuelTimer(){
+        return Long.parseLong(PreferenceManager.getInstance().getString(PreferenceManager.FUEL_TIMER));
+    }
+
+    public void setFuelAmt(int amt){
+        PreferenceManager.getInstance().saveInt(PreferenceManager.FUEL_AMT, amt);
+    }
+
+    public int getFuelAmt(){
+        return PreferenceManager.getInstance().getInt(PreferenceManager.FUEL_AMT);
     }
 
     //saves/updates power crystals
@@ -374,6 +371,31 @@ public class XmlManager {
         }
         return null;
     }
+
+    public void setAccount(){
+        PreferenceManager.getInstance().saveString(PreferenceManager.HAS_ACCOUNT, "TRUE");
+    }
+
+    public String getAccount(){
+        return PreferenceManager.getInstance().getString(PreferenceManager.HAS_ACCOUNT);
+    }
+
+    public void setUsername(String username){
+        PreferenceManager.getInstance().saveString(PreferenceManager.ACCOUNT_NAME, username);
+    }
+
+    public String getUsername(){
+        return PreferenceManager.getInstance().getString(PreferenceManager.ACCOUNT_NAME);
+    }
+
+    public void setID(String id){
+        PreferenceManager.getInstance().saveString(PreferenceManager.ACCOUNT_ID, id);
+    }
+
+    public String getID(){
+        return PreferenceManager.getInstance().getString(PreferenceManager.ACCOUNT_ID);
+    }
+
 
     public ArrayList<String> getUsernames(String xmlString){
         ArrayList<String> usernames = new ArrayList<String>();

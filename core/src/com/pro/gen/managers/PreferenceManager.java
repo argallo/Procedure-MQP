@@ -11,6 +11,7 @@ public class PreferenceManager {
     public static final String PREFERENCES = "Pref";
     public static final String HAS_ACCOUNT = "HasAcc";
     public static final String ACCOUNT_NAME = "AccName";
+    public static final String ACCOUNT_ID = "AccID";
 
 
     public static final String SLOT_1 = "PlanetSlot1";
@@ -23,6 +24,7 @@ public class PreferenceManager {
     public static final String POWER_CRYSTALS = "PowerCrystals";
     public static final String FUEL_UNITS = "FuelUnits";
     public static final String FUEL_TIMER = "FuelTimer";
+    public static final String FUEL_AMT = "FuelAmt";
     public static final String BOSS_LEVEL = "BossLevel";
     public static final String BOSS_SLOT = "BossSlot";
     public static final String SOLAR_SYSTEM = "SolarSystem";
@@ -45,14 +47,6 @@ public class PreferenceManager {
         return preferences;
     }
 
-    /**
-     * Determine if a user already has an account
-     * @return true if the user currently has an account saved locally
-     */
-    public boolean hasAccount(){
-        return preferences.getBoolean(HAS_ACCOUNT, false);
-    }
-
 
     public void saveString(String key, String value){
         preferences.putString(key, value);
@@ -70,11 +64,6 @@ public class PreferenceManager {
 
     public int getInt(String key){
         return preferences.getInteger(key, 0);
-    }
-
-    public void clear(){
-        preferences.clear();
-        preferences.flush();
     }
 
 }

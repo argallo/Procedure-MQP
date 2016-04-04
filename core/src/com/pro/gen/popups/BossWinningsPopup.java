@@ -158,7 +158,7 @@ public class BossWinningsPopup extends AbsPopup{
                         XmlManager.getInstance().saveMegaCrystals(megaCounter.getCurrentAmount() + ((BossBattleView) baseView).getEnemyPlanet().getGlobeRank());
                         megaCounter.updateAmount(megaCounter.getCurrentAmount() + ((BossBattleView) baseView).getEnemyPlanet().getGlobeRank());
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("username", "Jim");
+                        params.put("username", XmlManager.getInstance().getUsername());
                         params.put("score", String.valueOf(XmlManager.getInstance().getMegaCrystals()));
                         DatabaseManager.getInstance().makeDBCall(DatabaseManager.SCORE, params, null);
                         return true;

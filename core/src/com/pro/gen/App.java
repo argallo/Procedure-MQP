@@ -15,6 +15,7 @@ import com.pro.gen.managers.ViewManager;
 import com.pro.gen.utils.Assets;
 import com.pro.gen.utils.Constants;
 import com.pro.gen.utils.LogUtils;
+import com.pro.gen.utils.StepCallback;
 import com.pro.gen.utils.ViewID;
 
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class App implements ApplicationListener {
     private Viewport viewport;
     private FPSLogger fpsLogger;
     long startTime;
-
+    public static StepCallback stepCallback;
 
     @Override
     public void create () {
@@ -94,7 +95,7 @@ public class App implements ApplicationListener {
         LogUtils.Log("DISPOSING");
     }
 
-
-
-
+    public void setStepCallback(StepCallback stepCallback) {
+        App.stepCallback = stepCallback;
+    }
 }
