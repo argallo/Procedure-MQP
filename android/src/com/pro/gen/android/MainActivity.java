@@ -18,10 +18,7 @@ package com.pro.gen.android;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -37,7 +34,6 @@ import android.view.WindowManager;
 
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
-import com.badlogic.gdx.net.HttpStatus;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -53,7 +49,6 @@ import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResult;
 import com.pro.gen.App;
 import com.pro.gen.common.logger.Log;
-import com.pro.gen.common.logger.LogView;
 import com.pro.gen.common.logger.LogWrapper;
 import com.pro.gen.common.logger.MessageOnlyLogFilter;
 import com.pro.gen.managers.DatabaseManager;
@@ -63,7 +58,6 @@ import com.pro.gen.utils.StepCallback;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -195,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
                                     builder = new StringBuilder();
                                     new InsertAndVerifyDataTask().execute();
                                 }
+                                //builder = new StringBuilder();
+                                //new InsertAndVerifyDataTask().execute();
                             }
 
                             @Override
@@ -254,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
             // For the sake of the sample, we'll print the data so we can see what we just added.
             // In general, logging fitness information should be avoided for privacy reasons.
             printData(dataReadResult);
-
+//comments
             return null;
         }
     }
@@ -380,8 +376,10 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
             Log.i(TAG, "Number of returned buckets of DataSets is: "
                     + dataReadResult.getBuckets().size());
             for (Bucket bucket : dataReadResult.getBuckets()) {
+                LogUtils.Log("Step 1");
                 List<DataSet> dataSets = bucket.getDataSets();
                 for (DataSet dataSet : dataSets) {
+                    LogUtils.Log("Step 2");
                     dumpDataSet(dataSet);
                 }
             }
@@ -390,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("username", XmlManager.getInstance().getUsername());
                 String encodedString = URLEncoder.encode(builder.toString(), "UTF-8");
-                Log.i(TAG, builder.toString());
+                LogUtils.Log(builder.toString());
                 params.put("stepdata", encodedString);
 
                 performPostCall("http://2firestudios.com/www/weeklysteps.php", params);
@@ -411,18 +409,19 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
     // [START parse_dataset]
     private void dumpDataSet(DataSet dataSet) {
         DateFormat dateFormat = getTimeInstance();
-
+        LogUtils.Log("SIZE ="+dataSet.getDataPoints().size());
         for (DataPoint dp : dataSet.getDataPoints()) {
+            LogUtils.Log("Step 3");
             //Log.i(TAG, "Data point:");
             //Log.i(TAG, "\tType: " + dp.getDataType().getName());
             builder.append("<DayEntry date=\""+ new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS)))+"\" "+
                     "starttime=\""+dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS))+"\" "+
                     "endtime=\""+dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS))+"\" ");
-            Log.i(TAG, "\tdate" + new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS))));
-            Log.i(TAG, "\tStart: " + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
-            Log.i(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
+            Log.d(TAG, "\tdate" + new SimpleDateFormat("yyyy-MM-dd H:m:s").format(new Date(dp.getStartTime(TimeUnit.MILLISECONDS))));
+            Log.d(TAG, "\tStart: " + dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
+            Log.d(TAG, "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)));
             for(Field field : dp.getDataType().getFields()) {
-                Log.i(TAG, "\tField: " + field.getName() +
+                Log.d(TAG, "\tField: " + field.getName() +
                         " Value: " + dp.getValue(field));
                 builder.append("steps=\""+dp.getValue(field)+"\"");
             }

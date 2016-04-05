@@ -203,11 +203,11 @@ public class Hat extends Group{
             case KO:
                 return "Chance for One-Hit KO "+powerAmt+"%";
             case FIRST_SLOT:
-                return "Laser Boost when on a planet\nin 1nd slot by "+powerAmt+"%";
+                return "Laser Boost when on a planet\nin 1st slot by "+powerAmt+"%";
             case SECOND_SLOT:
                 return "Laser Boost when on a planet\nin 2nd slot by "+powerAmt+"%";
             case THIRD_SLOT:
-                return "Laser Boost when on a planet\nin 3nd slot by "+powerAmt+"%";
+                return "Laser Boost when on a planet\nin 3rd slot by "+powerAmt+"%";
         }
         return null;
     }
