@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import sun.rmi.runtime.Log;
-
 /**
  * Created by Gallo on 2/9/2016.
  */
@@ -94,7 +92,7 @@ public class LeaderBoardPanel extends Group {
         textLabel.setPosition(10, 0);
 
         TextLabel crystalLabel = new TextLabel(crystalCount, Assets.getInstance().getMidFont(), Align.right);
-        crystalLabel.setPosition(420, 0);
+        crystalLabel.setPosition(405, 0);
 
         rows.addActor(textLabel);
         rows.addActor(crystalLabel);

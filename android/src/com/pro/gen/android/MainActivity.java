@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements AndroidFragmentAp
                 LogUtils.Log(builder.toString());
                 params.put("stepdata", encodedString);
 
-                performPostCall("http://2firestudios.com/www/weeklysteps.php", params);
+                performPostCall("http://2firestudios.com/www/weeklysteps1.php", params);
             } catch (Exception e){
 
             }

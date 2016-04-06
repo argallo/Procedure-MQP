@@ -53,6 +53,7 @@ public class FuelUnits extends Group {
                     replenishBtn.setVisible(false);
                     units = 3;
                     XmlManager.getInstance().saveFuelUnits(units);
+                    XmlManager.getInstance().setFuelAmt(0);
                 } else {
                     replenishBtn.setTouchable(Touchable.disabled);
                     replenishBtn.setText("20 mins");
@@ -63,6 +64,7 @@ public class FuelUnits extends Group {
                     replenishBtn.setVisible(false);
                     units = 3;
                     XmlManager.getInstance().saveFuelUnits(units);
+                    XmlManager.getInstance().setFuelAmt(0);
                 } else {
                     replenishBtn.setTouchable(Touchable.disabled);
                     replenishBtn.setText("300 Steps");

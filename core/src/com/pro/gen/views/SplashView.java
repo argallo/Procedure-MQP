@@ -75,6 +75,13 @@ public class SplashView extends BaseView{
      * Make the transition to the next view
      */
     public void completeSplashView(){
+
+        String update = PreferenceManager.getInstance().getString(PreferenceManager.RESET);
+        if(update.equals("")){
+            PreferenceManager.getInstance().clear();
+            PreferenceManager.getInstance().saveString(PreferenceManager.RESET, "updates");
+        }
+
         counting = false;
         LogUtils.Log("ACCOUNT "+XmlManager.getInstance().getAccount());
         if(XmlManager.getInstance().getAccount().equals("TRUE")){

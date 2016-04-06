@@ -12,6 +12,7 @@ public class PreferenceManager {
     public static final String HAS_ACCOUNT = "HasAcc";
     public static final String ACCOUNT_NAME = "AccName";
     public static final String ACCOUNT_ID = "AccID";
+    public static final String RESET = "Reset";
 
 
     public static final String SLOT_1 = "PlanetSlot1";
@@ -64,6 +65,11 @@ public class PreferenceManager {
 
     public int getInt(String key){
         return preferences.getInteger(key, 0);
+    }
+
+    public void clear(){
+        preferences.clear();
+        preferences.flush();
     }
 
 }

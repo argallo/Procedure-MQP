@@ -110,12 +110,12 @@ public class BossWinningsPopup extends AbsPopup{
             }
         });
         addActor(moneyBtn);
-        if(XmlManager.getInstance().hasEmptySlot()){
-            keepBtn = new Button(Pic.Pixel, Tint.PURPLE, "Keep Planet", Assets.getInstance().getSmallFont());
-        } else {
-            keepBtn = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "Keep Planet\n(no slots open)", Assets.getInstance().getXSmallFont());
+       // if(XmlManager.getInstance().hasEmptySlot()){
+           // keepBtn = new Button(Pic.Pixel, Tint.PURPLE, "Keep Planet", Assets.getInstance().getSmallFont());
+       // } else {
+            keepBtn = new Button(Pic.Pixel, Tint.MEDIUM_GRAY, "Can't Keep\nBoss Planets", Assets.getInstance().getXSmallFont());
             keepBtn.setTouchable(Touchable.disabled);
-        }
+       // }
         keepBtn.setSize(250, 100);
         keepBtn.setPosition(780, Constants.VIRTUAL_HEIGHT / 4 - 30);
         keepBtn.setVisible(false);

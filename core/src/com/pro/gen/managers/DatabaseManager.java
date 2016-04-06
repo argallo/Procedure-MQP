@@ -12,14 +12,14 @@ import java.util.Map;
  */
 public class DatabaseManager {
 
-    public static final String CREATE = "create.php";
-    public static final String OPENED = "opened.php";
-    public static final String CLOSED = "closed.php";
-    public static final String OPTION = "options.php";
-    public static final String WEEKLY = "weeklysteps.php";
-    public static final String SCORE = "leaderboard.php";
-    public static final String INIT = "leaderboardinit.php";
-    public static final String LEADERBOARD = "getleaderboard.php";
+    public static final String CREATE = "create1.php";
+    public static final String OPENED = "opened1.php";
+    public static final String CLOSED = "closed1.php";
+    public static final String OPTION = "options1.php";
+    public static final String WEEKLY = "weeklysteps1.php";
+    public static final String SCORE = "leaderboard1.php";
+    public static final String INIT = "leaderboardinit1.php";
+    public static final String LEADERBOARD = "getleaderboard1.php";
 
 
     private static final DatabaseManager INSTANCE = new DatabaseManager();
