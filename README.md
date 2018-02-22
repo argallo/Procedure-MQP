@@ -1,3 +1,3 @@
 # Procedure-MQP
 
-![alt text](https://imgur.com/bcxcZLc)
+![alt text](https://i.imgur.com/bcxcZLc.png)
